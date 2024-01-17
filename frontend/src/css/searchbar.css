@@ -1,0 +1,96 @@
+.search-bar {
+    position: fixed;
+    top: 15px;
+    left: 220px; 
+    right: 15px; /* Adjust to not stretch the full width, and add some margin */
+    background-color: #2c2f33; /* Dark gray background */
+    border-radius: 20px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    display: flex;
+    align-items: center;
+  }
+  .search-results {
+    position: absolute;
+    top: 100%; /* Position directly below the input field */
+    left: 25px;
+    right: 25px;
+    background-color: #393939; /* Dark background for the dropdown */
+    border-bottom-left-radius: 4px; /* Rounded corners */
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.25); /* Box shadow for a 'raised' effect */
+    overflow: hidden; /* Ensures the child elements don't overflow the rounded corners */
+  }
+  
+  .search-result {
+    color: white; /* White text color */
+    padding: 10px; /* Spacing inside each result */
+    border-bottom: 1px solid #444; /* A line between each result */
+    text-align: left; /* Align text to the left */
+  }
+  
+  /* Style for the last search result to remove the bottom border */
+  .search-result:last-child {
+    border-bottom: none;
+  }
+  
+  .search-result:hover {
+    background-color: #b4b4b4; /* Change background color on hover */
+    cursor: pointer;
+  }
+  .search-result.highlighted {
+    background-color: #2e2e2e; /* Or any other color to indicate highlight */
+  }
+  
+  .search-bar input {
+    width: 100%; /* Full width of the search bar */
+    padding: 10px;
+    margin: 0;
+    border: none; /* No border for the input field */
+    border-radius: 20px; /* Match the border radius of the search bar */
+    font-size: 16px; /* Increase the font size */
+  }
+
+  .result-type {
+    font-size: 0.6em;
+    margin-right: 10px;
+    color: rgb(150, 150, 150);
+  }
+
+  .album-artist {
+    color: rgb(150, 150, 150); /* Or any other color you prefer for the artist name */
+  }
+  
+  .album-year {
+    color: #a6a6a6; /* Or any other color you prefer for the release year */
+  }
+
+  .search-controls {
+    position: fixed;
+    top: 57px; /* Replace with actual value */
+    left: 220px;
+    display: flex;
+    justify-content: flex-start; /* This centers the buttons horizontally */
+    flex-direction: row; /* This will place the buttons in a row */
+    gap: 10px; /* Adds space between buttons */
+    padding: 10px; /* Adds some padding above and below the buttons */
+  }
+
+  .search-mode-button {
+    position: relative;
+    background-color: rgb(90, 90, 90);
+    color: white;
+    border: 2px solid white;
+    padding: 5px 10px;
+    margin: 2px; /* Slight space between buttons */
+    cursor: pointer;
+    border-radius: 15px;
+  }
+  
+  .search-mode-button.active, .search-mode-button:hover {
+    color: rgb(72, 219, 72);
+    border-color: rgb(72, 219, 72);
+  }
+
+  
+  
+  

@@ -1,0 +1,25 @@
+.sidebar {
+    position: fixed;
+    color: #fff;
+    left: 0;
+    top: 0;
+    width: 200px; /* Adjust width as necessary */
+    height: 100%;
+    text-align: center;
+    background-color: #333;
+    padding-top: px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+  }
+
+  .sidebar a {
+    display: block;
+    color: #fff;
+    padding: 16px;
+    text-decoration: none;
+  }
+
+  .sidebar .home-link {
+    font-size: 30px;  
+    text-decoration: underline;
+  }
+  
