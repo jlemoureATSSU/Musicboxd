@@ -1,0 +1,93 @@
+.create-list-page {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .list-form {
+    width: 100%;
+    max-width: 600px;
+    background: #333;
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .list-title-input,
+  .list-description-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .list-title-input {
+    font-size: 1.2em;
+  }
+  
+  .list-description-input {
+    height: 100px;
+    resize: none;
+  }
+  
+  .album-list {
+    border-top: 1px solid #555;
+    padding-top: 10px;
+  }
+  
+  .album-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .album-number {
+    font-size: 2em;
+    margin-right: 10px;
+  }
+  
+  .album-details {
+    flex-grow: 1;
+  }
+  
+  .album-name,
+  .album-artist,
+  .album-year {
+    margin-bottom: 5px;
+  }
+  
+  .add-album-btn {
+    width: 50px;
+    height: 50px;
+    background: #888;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    cursor: pointer;
+  }
+  
+  .list-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .discard-btn,
+  .save-btn {
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .discard-btn {
+    background: #d9534f;
+  }
+  
+  .save-btn {
+    background: #5cb85c;
+  }
+  

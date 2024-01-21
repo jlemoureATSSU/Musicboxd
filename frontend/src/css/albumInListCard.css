@@ -1,0 +1,30 @@
+.album-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background: #1e1e1e; /* Or any other color that fits your design */
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .album-rank {
+    font-size: 1.5em;
+    margin-right: 10px;
+  }
+  
+  .album-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .album-name {
+    font-weight: bold;
+  }
+  
+  .album-artist,
+  .album-year,
+  .album-added {
+    font-size: 0.9em;
+  }
+  
