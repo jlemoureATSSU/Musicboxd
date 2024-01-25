@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import './css/style.css';
+import './css/albumCard.css';
 import './css/sidebar.css';
 import './css/searchbar.css';
 import './css/login.css';

@@ -1,0 +1,66 @@
+.album-card {
+  background-color: #333;
+  color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 370px;
+  width: 200px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+}
+
+
+.cover-art {
+  height:180px;
+  width: 180px;
+  margin: 10px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 8px 16px rgba(141, 141, 141, 0.35);
+}
+
+.album-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: 100%; /* Make sure the container takes full height of the parent */
+  justify-content: space-between; /* Push the elements to the top and bottom */
+}
+
+.album-title {
+  overflow: hidden;
+  height: 40px; /* Fixed height for title to accommodate potential two lines */
+  line-height: 18px; /* Adjust based on your desired line height */
+  margin-top: 2px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: ellipsis;
+}
+
+.album-artist {
+  padding-top: 1px;
+  font-size: clamp(12px, 1.5vw, 25px); /* Adjust padding as needed */
+  /* ... other styles ... */
+}
+
+.album-release-date {
+  padding-top: 1px; /* Adjust padding as needed */
+  /* ... other styles ... */
+}
+
+.album-info p {
+  margin-top: 1px;
+}
+
+.albums-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+}

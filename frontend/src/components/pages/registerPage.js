@@ -18,16 +18,11 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(url, data);
-      // const {accessToken} = res
-      //store token in localStorage
+      const { data: res } = await axios.post(url, data);
+      const {accessToken} = res;
       navigate("/login");
     } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
+      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);
       }
     }
@@ -36,7 +31,7 @@ const Register = () => {
   return (
     <div className="main">
       <div className="main login-container">
-        <h2>Register to your account</h2>
+        <h2>Sign Up</h2>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicUsername">
             <Form.Control
@@ -66,7 +61,7 @@ const Register = () => {
             />
           </Form.Group>
           <Button variant="primary" type="submit" className="login-button">
-            Register
+            Sign Up
                 </Button>
               </Form>
             </div>

@@ -39,7 +39,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     if (!isOpen) return null;
   
     const handleSelectAlbum = (album) => {
-      onSelectAlbum(album);
+      onSelectAlbum(album.id);
       onClose(); // Close the modal
     };
 

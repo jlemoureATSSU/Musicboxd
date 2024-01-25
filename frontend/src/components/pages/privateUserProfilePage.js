@@ -31,7 +31,7 @@ const PrivateUserProfile = () => {
   // <span><b>{<FollowingCount username = {username}/>}</b></span>;
   if (!user) return (<div><h4>Log in to view this page.</h4></div>)
   return (
-    <div class="container">
+    <div class="main">
       <div class="col-md-12 text-center">
         <h1>{user && user.username}</h1>
         <div class="col-md-12 text-center">

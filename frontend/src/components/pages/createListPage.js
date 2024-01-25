@@ -1,7 +1,10 @@
 //react page that allows users to add songs to a numbered list.
 import React, { useState } from 'react';
+import axios from 'axios';
 import AlbumSearchModal from '../albumSearchModal';
-import AlbumInListCard from '../albumInListCard';
+import AlbumCard from '../albumCard';
+
+const url = "http://localhost:8081/list/create";
 
 const CreateListPage = () => {
   const [listTitle, setListTitle] = useState('');
@@ -9,21 +12,72 @@ const CreateListPage = () => {
   const [albums, setAlbums] = useState([]); // This will hold the albums added to the list
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleTitleChange = (e) => {
-    setListTitle(e.target.value);
+  const handleTitleChange = (e) => setListTitle(e.target.value);
+  const handleDescriptionChange = (e) => setListDescription(e.target.value);
+  
+  const fetchCoverArt = async (albumMBID) => {
+    try {
+      const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
+      return coverResponse.data.images[0].image; // Return the URL of the first image
+    } catch (error) {
+      console.error("Error fetching cover art", error);
+      return ''; // Return empty string if no cover art is found
+    }
   };
 
-  const handleDescriptionChange = (e) => {
-    setListDescription(e.target.value);
+  const fetchAlbumDetails = async (albumId) => {
+    try {
+      const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/${albumId}?inc=artist-credits&fmt=json`, {
+        headers: { 'User-Agent': 'YourAppName/1.0 (youremail@example.com)' }
+      });
+      const album = response.data;
+      return {
+        id: albumId,
+        name: album.title,
+        artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
+        year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
+      };
+    } catch (error) {
+      console.error("Error fetching album details", error);
+      return { id: albumId, name: '', artist: '', year: '' };
+    }
   };
 
-  const handleSaveList = () => {
-    // Logic to save the list
-    console.log('List saved:', { listTitle, listDescription, albums });
-    // Reset state
-    setListTitle('');
-    setListDescription('');
-    setAlbums([]);
+  const addAlbumToList = async (albumId) => {
+    if (albums.some((a) => a.id === albumId)) {
+      alert("This album is already added to the list.");
+      return;
+    }
+    
+    const albumDetails = await fetchAlbumDetails(albumId);
+    const coverArtUrl = await fetchCoverArt(albumId);
+
+    setAlbums(prevAlbums => [
+      ...prevAlbums,
+      { ...albumDetails, coverArtUrl }
+    ]);
+
+    setIsModalOpen(false);
+  };
+
+  
+
+  const handleSaveList = async () => {
+    const listData = {
+      listName: listTitle,
+      listDescription: listDescription,
+      albums: albums.map((album) => ({ id: album.id })) // Include only the MBIDs
+    };
+
+    try {
+      const response = await axios.post(url, listData);
+      // Handle success here
+      console.log('List saved:', response.data);
+      // Redirect to the list page or clear the form, etc.
+    } catch (error) {
+      // Handle error here
+      console.error('Error saving the list:', error);
+    }
   };
 
   const handleDiscardList = () => {
@@ -33,28 +87,9 @@ const CreateListPage = () => {
     setAlbums([]);
   };
 
-  const handleAddAlbum = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const addAlbumToList = (album) => {
-    setAlbums((prevAlbums) => {
-      // Add the album if it is not already in the list
-      if (!prevAlbums.some((a) => a.id === album.id)) {
-        return [...prevAlbums, album];
-      }
-      return prevAlbums;
-    });
-    setIsModalOpen(false); // Close the modal after adding the album
-  };
-
   return (
-    <div className="main">
-      <div className="list-form">
+    <div className="create-list-page">
+      <div className="list-input-card">
         <input 
           type="text" 
           placeholder="List Title" 
@@ -68,20 +103,29 @@ const CreateListPage = () => {
           onChange={handleDescriptionChange}
           className="list-description-input"
         />
-        <div className="album-list-container">
-          {albums.map((album, index) => (
-            <AlbumInListCard key={album.id} album={album} index={index} />
-          ))}
-          <div className="add-album-btn" onClick={handleAddAlbum}>+</div>
-        </div>
         <div className="list-actions">
           <button onClick={handleDiscardList} className="discard-btn">Discard</button>
           <button onClick={handleSaveList} className="save-btn">Save List</button>
         </div>
       </div>
+      <div className="album-list-card">
+        <div className="album-list">
+          {albums.map((album) => (
+            <AlbumCard 
+            key={album.id}
+            coverArtUrl={album.coverArtUrl}
+            title={album.title}
+            artist={album.artist}
+            releaseDate={album.year}
+            mbid={album.id}
+            />
+          ))}
+          <div className="add-album-btn" onClick={() => setIsModalOpen(true)}>+</div>
+        </div>
+      </div>
       <AlbumSearchModal 
         isOpen={isModalOpen} 
-        onClose={handleCloseModal} 
+        onClose={() => setIsModalOpen(false)}
         onSelectAlbum={addAlbumToList}
       />
     </div>
