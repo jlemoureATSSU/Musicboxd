@@ -15,7 +15,6 @@ const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, mbid }) => {
       titleRef.current.style.fontSize = `${currentFontSize}px`;
     }
   };
-  
 
   useEffect(() => {
     if (titleRef.current) {
@@ -26,14 +25,13 @@ const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, mbid }) => {
   const goToAlbumPage = () => {
     navigate(`/albumPage/${mbid}`);
   };
+  
 
   return (
     <div className="album-card" onClick={goToAlbumPage} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') goToAlbumPage(); }}>
       <div className="cover-art" style={{ backgroundImage: `url(${coverArtUrl})` }}></div>
       <div className="album-info">
-        <div ref={titleRef} className="album-title" style={{ fontSize: `${MAX_FONT_SIZE}px` }}>
-          {title}
-        </div>
+        <div ref={titleRef} className="album-title" style={{ fontSize: `${MAX_FONT_SIZE}px` }}>{title}</div>
         <p className="album-artist">{artist}</p>
         <p className="album-release-date">{releaseDate}</p>
       </div>

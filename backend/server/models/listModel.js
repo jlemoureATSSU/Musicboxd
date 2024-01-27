@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
-//list schema/model
 const newListSchema = new mongoose.Schema(
   {
+    userName: {
+      type: String,
+      required: true,
+      label: "userName",
+    },
     listName: {
       type: String,
       required: true,

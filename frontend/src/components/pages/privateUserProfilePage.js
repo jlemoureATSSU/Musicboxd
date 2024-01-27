@@ -20,6 +20,7 @@ const PrivateUserProfile = () => {
   const handleLogout = (async) => {
     localStorage.clear();
     navigate("/");
+    window.location.reload();
   };
 
   useEffect(() => {

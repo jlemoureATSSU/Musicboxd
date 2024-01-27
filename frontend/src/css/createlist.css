@@ -1,37 +1,50 @@
 .create-list-page {
   display: flex;
   margin-left: 225px;
-  padding-top: 125px; /* Height of the search bar */  
-  gap: 20px; /* Space between the input card and album list */
+  padding-top: 125px;
+  gap: 20px;
 }
 
 .list-input-card {
-  background: #333;
-  padding: 20px;
+  background: #656565;
   border-radius: 8px;
   width: 100%;
-  max-width: 500px;
-  max-height: 600px;
+  max-width: 600px;
+  height: 260px;
   display: flex;
   flex-direction: column;
 }
 
 .album-list-card {
-  background: #333; /* Adjust the color to match the mockup */
-  padding: 20px;
+  background: #656565;
   border-radius: 8px;
   width: 500px;
   display: flex;
   flex-direction: column;
 }
 
-.list-title-input,
+.list-title-input
+{
+  background: #252525;
+  color: white;
+  border: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  padding: 10px;
+  font-size: 1.2em;
+  border-bottom: 1px solid #656565;
+
+}
+
 .list-description-input {
+  background: #252525;
+  color: white;
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
   border: none;
-  border-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom: 1px solid #252525;
 }
 
 .list-title-input {
@@ -41,6 +54,12 @@
 .list-description-input {
   height: 100px;
   resize: none;
+}
+
+.list-title-input:focus,
+.list-description-input:focus {
+  outline: none;
+  border-bottom: 1px solid #656565;
 }
 
 .album-list {
@@ -59,7 +78,7 @@
   font-size: 2em;
   cursor: pointer;
   margin-top: 10px;
-  align-self: center; /* Align the button to center within the card */
+  align-self: center;
 }
 
 .list-actions {
@@ -77,9 +96,16 @@
 }
 
 .discard-btn {
+  height: 45px;
+  margin-top: 10px;
   background: #d9534f;
 }
 
 .save-btn {
+  height: 45px;
+  min-width: 130px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 320px;
   background: #5cb85c;
 }

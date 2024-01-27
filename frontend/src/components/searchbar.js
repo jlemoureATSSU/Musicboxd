@@ -59,7 +59,7 @@ const SearchBar = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
           if (!event.target.closest('.search-bar') && !event.target.closest('.search-results')) {
-            setResults([]); // This will clear the results, effectively hiding them
+            setResults([]);
           }
         };
       
@@ -95,7 +95,7 @@ const SearchBar = () => {
         <div className="search-bar">
             <input
             type="text"
-            placeholder={`Search for ${searchMode}...`} // This will change based on the selected search mode
+            placeholder={`Search for an ${searchMode}...`}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}

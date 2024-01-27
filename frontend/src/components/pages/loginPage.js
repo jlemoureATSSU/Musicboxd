@@ -29,6 +29,7 @@ const Login = () => {
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("accessToken", res.accessToken);
       navigate("/home");
+      window.location.reload();
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);

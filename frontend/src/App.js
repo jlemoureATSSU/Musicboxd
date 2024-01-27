@@ -6,7 +6,8 @@ import './css/sidebar.css';
 import './css/searchbar.css';
 import './css/login.css';
 import './css/createlist.css';
-import Sidebar from "./components/sidebar";
+import './css/listCard.css';
+import Sidebar from "./components/sideBar";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
@@ -14,10 +15,9 @@ import PrivateUserProfile from "./components/pages/privateUserProfilePage";
 import AlbumPage from "./components/pages/albumPage";
 import ArtistPage from "./components/pages/artistPage";
 import CreateListPage from "./components/pages/createListPage";
-import SearchBar from "./components/searchbar";
-import AlbumCard from "./components/albumCard";
-import TracklistBox from "./components/tracklistBox";
+import SearchBar from "./components/searchBar";
 import getUserInfo from "./utilities/decodeJwt";
+import ListPage from "./components/pages/listPage";
 
 export const UserContext = createContext();
 
@@ -28,13 +28,15 @@ const App = () => {
     setUser(getUserInfo());
   }, []);
 
+  const isLoggedIn = Boolean(user);
+
   return (
     <div className="app">
-      <Sidebar />
-      <SearchBar />
       <UserContext.Provider value={user}>
+      <Sidebar isLoggedIn={isLoggedIn} />
+      <SearchBar />
         <Routes>
-          <Route path="/home" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
@@ -42,6 +44,7 @@ const App = () => {
           <Route path="/albumPage/:mbid" element={<AlbumPage />} />
           <Route path="/artistPage/:mbid" element={<ArtistPage />} />
           <Route path="/searchBar" element={<SearchBar />} />
+          <Route path="/listPage/:listId" element={<ListPage />} />
         </Routes>
       </UserContext.Provider>
     </div>

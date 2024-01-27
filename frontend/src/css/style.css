@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 .app {
   font-family: 'JetBrains Mono', monospace;
-  background-color: #7a7a7a;
+  background-color: #656565;
   min-height: 100vh;
   color: #fff;
 }
 
 .main {
-  margin-left: 225px; /* Same as sidebar width */
-  padding-top: 125px; /* Height of the search bar */
+  margin-left: 225px;
+  padding-top: 125px;
   font-family: 'JetBrains Mono', monospace;
-  background-color: #7a7a7a;
+  background-color: #656565;
 }
 
 .tracklist-box {
@@ -35,8 +35,27 @@
   font-size: 14px;
 }
 
+.recent-lists-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+  gap: 20px;
+  padding: 20px;
+}
 
+.list-card {
+  background: #333; 
+  border-radius: 8px;
+  color: white;
+  padding: 15px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.list-card-title {
+  font-size: 1rem;
+}
 
-  
-
-  
+.list-card-album-count {
+  font-size: 0.8rem;
+  align-self: end;
+}

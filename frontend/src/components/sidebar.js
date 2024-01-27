@@ -1,15 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from '../App';
 
 const Sidebar = () => {
-  return (
+  const user = useContext(UserContext);
+
+
+  if (!user) return (
     <div className="sidebar">
-      <Link to="/home" className='home-link'>Musicboxd</Link>
-      <Link to="/createListPage">Create A List</Link>
+      <Link to="/" className='home-link'>Musicboxd</Link>
       <Link to="/login">Login</Link>
       <Link to="/signup">Signup</Link>
-      <Link to="/privateUserProfile">Private User Profile</Link>
-
+    </div>
+  );
+  return (
+    <div className="sidebar">
+      <Link to="/" className='home-link'>Musicboxd</Link>
+      <Link to="/createListPage">Create a List</Link>
+      <Link to="/privateUserProfile">Profile</Link>
     </div>
   );
 };

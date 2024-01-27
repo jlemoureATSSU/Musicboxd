@@ -1,20 +1,33 @@
 //react page that allows users to add songs to a numbered list.
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import AlbumSearchModal from '../albumSearchModal';
 import AlbumCard from '../albumCard';
+import getUserInfo from "../../utilities/decodeJwt"
 
 const url = "http://localhost:8081/list/create";
 
 const CreateListPage = () => {
+  const [user, setUser] = useState({})
   const [listTitle, setListTitle] = useState('');
   const [listDescription, setListDescription] = useState('');
   const [albums, setAlbums] = useState([]); // This will hold the albums added to the list
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const navigate = useNavigate();
   const handleTitleChange = (e) => setListTitle(e.target.value);
   const handleDescriptionChange = (e) => setListDescription(e.target.value);
   
+  useEffect(() => {
+    const setUserInfo = async () => {
+      const info = await getUserInfo();
+      setUser(info);
+    };
+    
+    setUserInfo();
+  }, []);
+  
+
   const fetchCoverArt = async (albumMBID) => {
     try {
       const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
@@ -28,18 +41,18 @@ const CreateListPage = () => {
   const fetchAlbumDetails = async (albumId) => {
     try {
       const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/${albumId}?inc=artist-credits&fmt=json`, {
-        headers: { 'User-Agent': 'YourAppName/1.0 (youremail@example.com)' }
+        headers: { 'User-Agent': 'Musicboxd (joelem316@gmail.com)' }
       });
       const album = response.data;
       return {
         id: albumId,
-        name: album.title,
+        title: album.title,
         artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
         year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
       };
     } catch (error) {
       console.error("Error fetching album details", error);
-      return { id: albumId, name: '', artist: '', year: '' };
+      return { id: albumId, title: '', artist: '', year: '' };
     }
   };
 
@@ -64,18 +77,18 @@ const CreateListPage = () => {
 
   const handleSaveList = async () => {
     const listData = {
+      userName: user.username,
       listName: listTitle,
       listDescription: listDescription,
-      albums: albums.map((album) => ({ id: album.id })) // Include only the MBIDs
+      albums: albums.map((album) => ({ id: album.id }))
     };
 
     try {
       const response = await axios.post(url, listData);
-      // Handle success here
       console.log('List saved:', response.data);
-      // Redirect to the list page or clear the form, etc.
+      const newListId = response.data._id; // Get the ID of the new list from the response
+      navigate(`/listPage/${newListId}`);
     } catch (error) {
-      // Handle error here
       console.error('Error saving the list:', error);
     }
   };

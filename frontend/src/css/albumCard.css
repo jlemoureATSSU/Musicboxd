@@ -1,11 +1,11 @@
 .album-card {
-  background-color: #333;
+  background-color: #222;
   color: white;
   border-radius: 8px;
   overflow: hidden;
   height: 370px;
   width: 200px;
-  margin: 10px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 16px rgba(0,0,0,0.25);
@@ -18,7 +18,7 @@
   margin: 10px;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 8px 16px rgba(141, 141, 141, 0.35);
+  box-shadow: 0 8px 16px rgba(86, 86, 86, 0.20);
 }
 
 .album-info {
@@ -28,14 +28,14 @@
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  height: 100%; /* Make sure the container takes full height of the parent */
-  justify-content: space-between; /* Push the elements to the top and bottom */
+  height: 100%;
+  justify-content: space-between;
 }
 
 .album-title {
   overflow: hidden;
-  height: 40px; /* Fixed height for title to accommodate potential two lines */
-  line-height: 18px; /* Adjust based on your desired line height */
+  height: 40px;
+  line-height: 18px;
   margin-top: 2px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -45,13 +45,11 @@
 
 .album-artist {
   padding-top: 1px;
-  font-size: clamp(12px, 1.5vw, 25px); /* Adjust padding as needed */
-  /* ... other styles ... */
+  font-size: clamp(12px, 1.5vw, 25px);
 }
 
 .album-release-date {
-  padding-top: 1px; /* Adjust padding as needed */
-  /* ... other styles ... */
+  padding-top: 1px;
 }
 
 .album-info p {

@@ -9,6 +9,8 @@ const dbConnection = require('./config/db.config')
 const editUser = require('./routes/user/userEditUser')
 const deleteUser = require('./routes/user/userDeleteAll')
 const createList = require('./routes/list/listCreate')
+const getListById = require('./routes/list/listGetListById')
+const getAllLists = require('./routes/list/listGetAllLists')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -23,6 +25,9 @@ app.use('/user', getUserByIdRoute)
 app.use('/user', editUser)
 app.use('/user', deleteUser)
 app.use('/list', createList)
+app.use('/list', getListById)
+app.use('/list', getAllLists)
+
 
 app.listen(SERVER_PORT, (req, res) => {
     console.log(`The backend service is running on port ${SERVER_PORT} and waiting for requests.`);

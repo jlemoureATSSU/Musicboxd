@@ -10,7 +10,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
       if (search) {
         try {
           const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/?query=${search}&fmt=json`, {
-            headers: { 'User-Agent': 'MusicBoxd/1.0 (youremail@example.com)' }
+            headers: { 'User-Agent': 'MusicBoxd (joelem316@gmail.com)' }
           });
           const albums = response.data['release-groups'].slice(0, 7).map(album => ({
             id: album.id,
@@ -27,6 +27,14 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
         setResults([]);
       }
     }, 300);
+
+    useEffect(() => {
+      // Clear the search term whenever the modal is opened
+      if (isOpen) {
+        setSearchTerm('');
+        setResults([]);
+      }
+    }, [isOpen]);
   
     useEffect(() => {
       searchMusicBrainz(searchTerm);

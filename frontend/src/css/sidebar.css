@@ -3,12 +3,12 @@
     color: #fff;
     left: 0;
     top: 0;
-    width: 200px; /* Adjust width as necessary */
+    width: 200px;
     height: 100%;
     text-align: center;
-    background-color: #333;
+    background-color: #222;
     padding-top: px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
 
   .sidebar a {
@@ -18,8 +18,16 @@
     text-decoration: none;
   }
 
+  .sidebar a:hover {
+    color: white;
+    font-size: 18px;
+  }
+
   .sidebar .home-link {
     font-size: 30px;  
     text-decoration: underline;
   }
   
+  .sidebar .home-link:hover {
+    font-size: 30px;
+  }
