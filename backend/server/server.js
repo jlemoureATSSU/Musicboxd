@@ -11,6 +11,8 @@ const deleteUser = require('./routes/user/userDeleteAll')
 const createList = require('./routes/list/listCreate')
 const getListById = require('./routes/list/listGetListById')
 const getAllLists = require('./routes/list/listGetAllLists')
+const getAllListsByUser = require('./routes/list/listGetAllListsByUser')
+
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -27,6 +29,7 @@ app.use('/user', deleteUser)
 app.use('/list', createList)
 app.use('/list', getListById)
 app.use('/list', getAllLists)
+app.use('/list', getAllListsByUser)
 
 
 app.listen(SERVER_PORT, (req, res) => {

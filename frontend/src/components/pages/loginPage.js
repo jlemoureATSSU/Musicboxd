@@ -8,7 +8,7 @@ import getUserInfo from "../../utilities/decodeJwt";
 const url = "http://localhost:8081/user/login";
 
 const Login = () => {
-  const [data, setData] = useState({ username: "", password: "" });
+  const [data, setData] = useState({ usename: "", password: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
