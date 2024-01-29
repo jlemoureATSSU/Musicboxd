@@ -12,42 +12,40 @@ const SearchBar = () => {
 
 
     const searchMusicBrainz = debounce(async (search) => {
-        if (search) {
-          try {
-            let results = [];
-            if (searchMode === 'artist') {
-              const response = await axios.get(`https://musicbrainz.org/ws/2/artist/?query=${search}&fmt=json`, {
-                headers: { 'User-Agent': 'MusicBoxd/1.0 (joelem316@gmail.com)' }
-              });
-              results = response.data.artists.slice(0, 7).map(artist => ({
-                id: artist.id,
-                name: artist.name,
-                type: 'artist'
-              }));
-            } else if (searchMode === 'album') {
-              const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/?query=${search}&fmt=json`, {
-                headers: { 'User-Agent': 'MusicBoxd/1.0 (joelem316@gmail.com)' }
-              });
-              results = response.data['release-groups'].slice(0, 7).map(album => ({
-                id: album.id,
-                name: album.title,
-                artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
-                year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
-                type: 'album'
-              }));
-            }
-            setResults(results);
-          } catch (error) {
-            console.error('Error fetching search results', error);
-            setResults([]);
+      if (search) {
+        try {
+          let results = [];
+          if (searchMode === 'artist') {
+            const response = await axios.get(`https://musicbrainz.org/ws/2/artist/?query=${search}&fmt=json&limit=7`, {
+              headers: { 'User-Agent': 'MusicBoxd/1.0 (joelem316@gmail.com)' }
+            });
+            results = response.data.artists.map(artist => ({
+              id: artist.id,
+              name: artist.name,
+              type: 'artist'
+            }));
+          } else if (searchMode === 'album') {
+            const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/?query=${search}&fmt=json&limit=7`, {
+              headers: { 'User-Agent': 'MusicBoxd/1.0 (joelem316@gmail.com)' }
+            });
+            results = response.data['release-groups'].map(album => ({
+              id: album.id,
+              name: album.title,
+              artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
+              year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
+              type: 'album'
+            }));
           }
-        } else {
+          setResults(results);
+        } catch (error) {
+          console.error('Error fetching search results', error);
           setResults([]);
         }
-      }, 300);
-      
-      
-
+      } else {
+        setResults([]);
+      }
+    }, 300);
+    
     useEffect(() => {
         searchMusicBrainz(searchTerm);
 

@@ -7,6 +7,7 @@ import './css/searchbar.css';
 import './css/login.css';
 import './css/createlist.css';
 import './css/listCard.css';
+import './css/albumPage.css';
 import Sidebar from "./components/sideBar";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
@@ -18,6 +19,7 @@ import CreateListPage from "./components/pages/createListPage";
 import SearchBar from "./components/searchBar";
 import getUserInfo from "./utilities/decodeJwt";
 import ListPage from "./components/pages/listPage";
+import AllAlbums from "./components/pages/allAlbumsPage";
 
 export const UserContext = createContext();
 
@@ -45,6 +47,7 @@ const App = () => {
           <Route path="/artistPage/:mbid" element={<ArtistPage />} />
           <Route path="/searchBar" element={<SearchBar />} />
           <Route path="/listPage/:listId" element={<ListPage />} />
+          <Route path="/allAlbumsPage" element={<AllAlbums />} />
         </Routes>
       </UserContext.Provider>
     </div>

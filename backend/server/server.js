@@ -12,6 +12,7 @@ const createList = require('./routes/list/listCreate')
 const getListById = require('./routes/list/listGetListById')
 const getAllLists = require('./routes/list/listGetAllLists')
 const getAllListsByUser = require('./routes/list/listGetAllListsByUser')
+const addAlbumToList = require('./routes/list/listAddAlbumToList')
 
 
 require('dotenv').config();
@@ -30,6 +31,7 @@ app.use('/list', createList)
 app.use('/list', getListById)
 app.use('/list', getAllLists)
 app.use('/list', getAllListsByUser)
+app.use('/list', addAlbumToList)
 
 
 app.listen(SERVER_PORT, (req, res) => {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
-import ListCard from '../listCard'; // Ensure this path is correct
+import ListCard from '../listCard';
 import getUserInfo from "../../utilities/decodeJwt";
 
 const PrivateUserProfile = () => {
@@ -18,7 +18,7 @@ const PrivateUserProfile = () => {
     const userInfo = getUserInfo();
     setUser(userInfo);
     if (userInfo) {
-      fetchUserLists(userInfo.username); // Assuming the username is in the decoded token
+      fetchUserLists(userInfo.username);
     }
   }, []);
 
@@ -44,16 +44,11 @@ const PrivateUserProfile = () => {
 
   return (
     <div className="main">
-      <div className="col-md-12 text-center">
         <h1>{user.username}</h1>
-      </div>
-      <div className="container">
-        <h2 className="text-center">Your Lists</h2>
-        <div className="user-lists">
+        <h1>Your Lists</h1>
           {userLists.map(list => (
-            <ListCard userName={username} title={list.listName} listId={list._id} />
+            <ListCard userName={user.username} title={list.listName} listId={list._id} />
           ))}
-        </div>
         <div className="col-md-12 text-center">
         <>
               <Button className="me-2" onClick={handleShow}>
@@ -79,7 +74,6 @@ const PrivateUserProfile = () => {
                 </Modal.Footer>
               </Modal>
               </>
-            </div>
             </div>
         </div>
 );

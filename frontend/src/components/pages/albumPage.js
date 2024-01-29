@@ -2,11 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import getUserInfo from "../../utilities/decodeJwt";
+
 
 const AlbumPage = () => {
     const [albumDetails, setAlbumDetails] = useState(null);
     const [coverArtUrl, setCoverArtUrl] = useState('');
+    const [userLists, setUserLists] = useState([]);
+    const [showModal, setShowModal] = useState(false);
     const { mbid } = useParams();
+    const user = getUserInfo();
 
     useEffect(() => {
         const fetchAlbumDetails = async () => {
@@ -35,6 +42,30 @@ const AlbumPage = () => {
         fetchAlbumDetails();
     }, [mbid]);
 
+    const fetchUserLists = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8081/list/getAllListsByUser/${user.username}`);
+            setUserLists(response.data);
+            setShowModal(true); // Show the modal with the list options
+        } catch (error) {
+            console.error("Error fetching user's lists", error);
+        }
+    };
+
+    const addAlbumToList = async (listId) => {
+        const albumMBID = mbid;  // The MBID of the album
+    
+        try {
+          await axios.post(`http://localhost:8081/list/addAlbumToList/${listId}`, { albumMBID });
+          setShowModal(false); // Close the modal after adding
+          // Add success notification or other UI updates here
+        } catch (error) {
+          console.error('Error adding album to list:', error);
+          // Handle errors, such as showing an error notification
+        }
+      };
+      
+
     if (!albumDetails) {
         return <div>Loading...</div>;
     }
@@ -52,8 +83,30 @@ const AlbumPage = () => {
               releaseDate={releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date'}
               mbid={mbid}
             />
-        </div>
-    );
+          <button onClick={fetchUserLists} className="add-album-btn">Add Album to a List</button>
+          <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
+            <Modal.Header>
+                <Modal.Title>Add {title} by {artist} to one of your lists...</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                {userLists.map(list => (
+                    <Button 
+                        key={list._id} 
+                        onClick={() => addAlbumToList(list._id)} 
+                        className="list-select-btn"
+                        variant="outline-secondary"
+                    >
+                        {list.listName}
+                    </Button>
+                ))}
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={() => setShowModal(false)}>
+                    Close
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    </div>
+  );
 };
-
 export default AlbumPage;

@@ -17,6 +17,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <Link to="/" className='home-link'>Musicboxd</Link>
       <Link to="/createListPage">Create a List</Link>
+      <Link to="/allAlbumsPage">Albums</Link>
       <Link to="/privateUserProfile">Profile</Link>
     </div>
   );

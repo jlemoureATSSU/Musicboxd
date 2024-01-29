@@ -9,10 +9,11 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     const searchMusicBrainz = debounce(async (search) => {
       if (search) {
         try {
-          const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/?query=${search}&fmt=json`, {
+          const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/?query=${search}&fmt=json&limit=7&type=album`, {
             headers: { 'User-Agent': 'MusicBoxd (joelem316@gmail.com)' }
           });
-          const albums = response.data['release-groups'].slice(0, 7).map(album => ({
+      
+          const albums = response.data['release-groups'].map(album => ({
             id: album.id,
             name: album.title,
             artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
@@ -25,7 +26,8 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
         }
       } else {
         setResults([]);
-      }
+      }      
+      
     }, 300);
 
     useEffect(() => {

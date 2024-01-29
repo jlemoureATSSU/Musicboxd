@@ -133,7 +133,7 @@ const CreateListPage = () => {
             mbid={album.id}
             />
           ))}
-          <div className="add-album-btn" onClick={() => setIsModalOpen(true)}>+</div>
+          <div className="add-album-plus" onClick={() => setIsModalOpen(true)}>+</div>
         </div>
       </div>
       <AlbumSearchModal 
