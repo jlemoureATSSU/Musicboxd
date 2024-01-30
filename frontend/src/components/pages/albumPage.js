@@ -12,6 +12,7 @@ const AlbumPage = () => {
     const [coverArtUrl, setCoverArtUrl] = useState('');
     const [userLists, setUserLists] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [albumListCount, setAlbumListCount] = useState(0);
     const { mbid } = useParams();
     const user = getUserInfo();
 
@@ -39,7 +40,17 @@ const AlbumPage = () => {
             }
         };
 
+        const fetchAlbumListCount = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8081/list/albumInListsCount/${mbid}`);
+                setAlbumListCount(response.data.count);
+            } catch (error) {
+                console.error("Error fetching album list count", error);
+            }
+        };
+
         fetchAlbumDetails();
+        fetchAlbumListCount();
     }, [mbid]);
 
     const fetchUserLists = async () => {
@@ -83,6 +94,9 @@ const AlbumPage = () => {
               releaseDate={releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date'}
               mbid={mbid}
             />
+        <div>
+            This album appears in {albumListCount} user-created List(s).
+        </div>
           <button onClick={fetchUserLists} className="add-album-btn">Add Album to a List</button>
           <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
             <Modal.Header>
