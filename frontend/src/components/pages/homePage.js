@@ -19,15 +19,15 @@ const HomePage = () => {
       }, []);
 
   return (
-    <div className="main">
-      <h2>Recently Uploaded Lists</h2>
+    <div>
+      <div className='homepage-containter-title'>Recently Created Lists</div>
       <div className="recent-lists-container">
         {recentLists.map(list => (
           <ListCard
-            key={list._id}
-            userName={list.userName}
-            title={list.listName}
-            listId={list._id}
+          userName={list.userName}
+          title={list.listName}
+          listId={list._id}
+          albums={list.albums} 
           />
         ))}
       </div>

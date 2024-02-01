@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+.page{
+    margin-left: 25px;
+}
 .add-album-btn {
     background-color: #222;
     border: none;

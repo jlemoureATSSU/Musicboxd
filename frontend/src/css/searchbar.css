@@ -96,7 +96,7 @@
   }
 
   .search-mode-button:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2.5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
   }
   

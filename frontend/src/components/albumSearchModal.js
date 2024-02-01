@@ -53,8 +53,6 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
       onClose(); // Close the modal
     };
 
-    
-    
   const overlayStyle = {
     position: 'fixed',
     top: 0,

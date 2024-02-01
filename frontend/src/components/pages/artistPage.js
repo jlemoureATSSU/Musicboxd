@@ -76,7 +76,7 @@ const ArtistPage = () => {
     };
     
     return (
-        <div className='main'>
+        <div className='album-page'>
             <h1>{artistName}</h1>
             <div className="albums-container">
                 {albums.map((album) => (

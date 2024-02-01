@@ -1,26 +1,67 @@
 .list-card {
-    background: #333;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    max-width: 300px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
-    cursor: pointer;
-  }
-  
-  .list-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-  }
-  
-  .list-card h3 {
-    margin: 0;
-    color: white;
-    font-size: 1.2em;
-  }
-  
-  .list-card-album-count {
-    font-size: 0.8rem;
-    align-self: end;
-  }
+  background: #333;
+  border-radius: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 7px;
+  padding-bottom: 1px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 350px;
+  max-width: 350px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 125px; 
+}
+
+.list-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.list-card-title {
+  color: white;
+  margin-top: 4px;
+  margin-left: 2px;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-bottom: 5px; 
+
+}
+.list-card-username {
+  color: #aaa; /* Example color for the username */
+  font-size: 1em; /* Example size, adjust as needed */
+  margin-left: 15px; /* Optional: Adjust the spacing between the title and the username */
+}
+
+.list-card-album-previews {
+  display: flex; /* Aligns children (img and div) in a row */
+  background-color: #222; /* Example color for the background */
+  padding: 7px;
+  border-radius: 8px;
+
+  align-items: center; /* Aligns children vertically in the center */
+  gap: 10px; /* Spacing between children */
+  margin-bottom: 10px; /* Space before the 'more' indicator */
+}
+
+.list-card-album-previews img {
+  width: 55px; /* Example size, adjust as needed */
+  height: 55px; /* Example size, adjust as needed */
+  border-radius: 1px; /* Rounded corners for images */
+  object-fit: cover; /* Ensures the cover art fills the box without stretching */
+}
+
+.list-card-album-previews div {
+  font-size: 0.8rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+  border-radius: 4px; /* Consistent with image rounding */
+  padding: 5px 10px; /* Padding inside the 'more' indicator */
+}

@@ -69,7 +69,7 @@ const AlbumPage = () => {
         try {
           await axios.post(`http://localhost:8081/list/addAlbumToList/${listId}`, { albumMBID });
           setShowModal(false); // Close the modal after adding
-          // Add success notification or other UI updates here
+          setAlbumListCount(albumListCount + 1);
         } catch (error) {
           console.error('Error adding album to list:', error);
           // Handle errors, such as showing an error notification
@@ -86,7 +86,7 @@ const AlbumPage = () => {
     const releaseDate = albumDetails['first-release-date'] || 'Unknown Release Date';
 
     return (
-        <div className='main'>
+        <div className= "album-page">
             <AlbumCard
               coverArtUrl={coverArtUrl}
               title={title}

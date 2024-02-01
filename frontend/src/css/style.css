@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 .app {
   font-family: 'JetBrains Mono', monospace;
-  background-color: #656565;
+  padding-left: 200px;
+  padding-top: 125px;
+  background-image: linear-gradient(to bottom, #727272, #505050 35%);
+
   min-height: 100vh;
   color: #fff;
 }
 
-.main {
-  margin-left: 225px;
-  padding-top: 125px;
-  font-family: 'JetBrains Mono', monospace;
-  background-color: #656565;
+.page{
+  margin-left: 25px;
 }
 
 .tracklist-box {
@@ -35,27 +35,43 @@
   font-size: 14px;
 }
 
+.homepage-containter-title {
+  font-size: 18px;
+  text-align: left;
+  margin-left: 30px;
+}
+
 .recent-lists-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-  gap: 20px;
-  padding: 20px;
-}
-
-.list-card {
-  background: #333; 
-  border-radius: 8px;
-  color: white;
-  padding: 15px; 
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-.list-card-title {
-  font-size: 1rem;
+  flex-wrap: nowrap;
+  padding-top: 10px;
+  padding-left: 25px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  justify-content: flex-start; 
+
 }
 
-.list-card-album-count {
-  font-size: 0.8rem;
-  align-self: end;
+/* This styles the scrollbar track (the part the thumb slides within) */
+.recent-lists-container::-webkit-scrollbar-track {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: transparent; /* Makes the track transparent */
 }
+
+/* This styles the scrollbar thumb (the part that you drag) */
+.recent-lists-container::-webkit-scrollbar-thumb {
+  background-color: #363636; /* Gray thumb */
+  border-radius: 10px; /* Rounded corners on the thumb */
+}
+
+/* This styles the scrollbar itself (including the thumb, track, and buttons) */
+.recent-lists-container::-webkit-scrollbar {
+  height: 8px; /* Sets a fixed height for horizontal scrollbar */
+}
+
+/* Optional: styles for when the thumb is hovered, clicked, or being dragged */
+.recent-lists-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2b2b2b; /* Slightly darker thumb on hover */
+}
+
+

@@ -43,11 +43,16 @@ const PrivateUserProfile = () => {
   if (!user) return (<div><h4>Log in to view this page.</h4></div>);
 
   return (
-    <div className="main">
+    <div className="page">
         <h1>{user.username}</h1>
         <h1>Your Lists</h1>
           {userLists.map(list => (
-            <ListCard userName={user.username} title={list.listName} listId={list._id} />
+            <ListCard
+              userName={list.userName}
+              title={list.listName}
+              listId={list._id}
+              albums={list.albums} 
+            />
           ))}
         <div className="col-md-12 text-center">
         <>
