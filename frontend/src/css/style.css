@@ -1,10 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
 .app {
   font-family: 'JetBrains Mono', monospace;
   padding-left: 200px;
   padding-top: 125px;
   background-image: linear-gradient(to bottom, #727272, #505050 35%);
-
   min-height: 100vh;
   color: #fff;
 }
@@ -46,32 +46,31 @@
   flex-wrap: nowrap;
   padding-top: 10px;
   padding-left: 25px;
-  overflow-x: auto; /* Enable horizontal scrolling */
+  overflow-x: auto;
   justify-content: flex-start; 
 
 }
 
-/* This styles the scrollbar track (the part the thumb slides within) */
 .recent-lists-container::-webkit-scrollbar-track {
   margin-left: 20px;
   margin-right: 20px;
-  background-color: transparent; /* Makes the track transparent */
+  background-color: transparent;
 }
 
-/* This styles the scrollbar thumb (the part that you drag) */
+
 .recent-lists-container::-webkit-scrollbar-thumb {
-  background-color: #363636; /* Gray thumb */
-  border-radius: 10px; /* Rounded corners on the thumb */
+  background-color: #363636; 
+  border-radius: 10px;
 }
 
-/* This styles the scrollbar itself (including the thumb, track, and buttons) */
+
 .recent-lists-container::-webkit-scrollbar {
-  height: 8px; /* Sets a fixed height for horizontal scrollbar */
+  height: 8px;
 }
 
-/* Optional: styles for when the thumb is hovered, clicked, or being dragged */
+
 .recent-lists-container::-webkit-scrollbar-thumb:hover {
-  background-color: #2b2b2b; /* Slightly darker thumb on hover */
+  background-color: #2b2b2b;
 }
 
 

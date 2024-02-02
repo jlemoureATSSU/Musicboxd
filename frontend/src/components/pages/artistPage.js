@@ -31,10 +31,10 @@ const ArtistPage = () => {
     const fetchCoverArt = async (albumMBID) => {
         try {
             const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
-            return coverResponse.data.images[0].image; // Return the URL of the first image
+            return coverResponse.data.images[0].image; 
         } catch (error) {
             console.error("Error fetching cover art", error);
-            return ''; // Return empty string if no cover art is found
+            return ''; 
         }
     };
 
@@ -76,7 +76,7 @@ const ArtistPage = () => {
     };
     
     return (
-        <div className='album-page'>
+        <div className='page'>
             <h1>{artistName}</h1>
             <div className="albums-container">
                 {albums.map((album) => (

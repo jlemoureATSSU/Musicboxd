@@ -5,6 +5,7 @@
   overflow: hidden;
   height: 370px;
   width: 200px;
+  min-width: 200px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -67,6 +68,6 @@
 .albums-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 10px;
+  justify-content: left;
+  gap: 20px;
 }

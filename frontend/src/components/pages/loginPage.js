@@ -15,7 +15,7 @@ const Login = () => {
   useEffect(() => {
     const user = getUserInfo();
     if (user) {
-      navigate('/home');
+      navigate('/');
     }
   }, [navigate]);
 
@@ -28,7 +28,7 @@ const Login = () => {
     try {
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("accessToken", res.accessToken);
-      navigate("/home");
+      navigate("/");
       window.location.reload();
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {

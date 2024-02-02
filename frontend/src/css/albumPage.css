@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
-.page{
+
+.album-page {
     margin-left: 25px;
 }
 .add-album-btn {
@@ -15,75 +16,186 @@
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
-
 .add-album-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5);
 }
-
 .album-modal .modal-content {
     margin-top: 100px;
-    background-color: #222; /* Dark background for the modal */
-    color: white; /* Light text for contrast */
-    border-radius: 8px; /* Rounded corners for the modal */
+    background-color: #222;
+    color: white;
+    border-radius: 8px;
 }
-
-/* Modal header with close button */
 .album-modal .modal-header {
     text-align: center;
-    border-bottom: 1px solid #3c3c3c; /* Slightly lighter border for separation */
-    padding: 16px 24px; /* Comfortable padding around the content */
-    align-items: center; /* Vertically center the title and close button */
-    justify-content: space-between; /* Space between title and close button */
+    border-bottom: 1px solid #3c3c3c;
+    padding: 16px 24px;
+    align-items: center;
+    justify-content: space-between;
 }
-
-/* Modal title styles */
 .album-modal .modal-title {
-    font-size: 1.5rem; /* Larger font size for the title */
-    font-weight: bold; /* Bold font for the title */
+    font-size: 1.5rem;
+    font-weight: bold;
 }
-
 .album-modal .modal-body {
-    padding: 20px 24px; /* Consistent padding with the header */
+    padding: 20px 24px;
 }
-
-/* Styles for list item container within modal body */
 .album-modal .list-item-container {
-    display: flex; /* Use flexbox for alignment */
-    align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Space between list name and button */
-    margin-bottom: 12px; /* Space between each list item */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
 }
-
-/* List name styles */
 .album-modal .list-name {
-    font-size: 1.2rem; /* Slightly larger font size for the list name */
-    margin: 0; /* Reset margins */
+    font-size: 1.2rem;
+    margin: 0;
 }
-
-/* Button to add album to the list */
 .album-modal .list-select-btn {
-    display: block; /* Make the button fill the container */
-    width: 100%; /* Full width */
-    text-align: left; /* Align text to the left */
-    padding: 12px 16px; /* Comfortable padding */
-    background-color: #333; /* Dark background for the button */
-    color: white; /* Light text for contrast */
-    border: none; /* No border for a flat design */
-    border-radius: 4px; /* Slightly rounded corners */
-    margin-bottom: 8px; /* Space between buttons */
-    cursor: pointer; /* Cursor indicates an actionable button */
-    font-weight: bold; /* Bold font for the list names */
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 12px 16px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    font-weight: bold;
     box-shadow: 0 4px 8px rgba(0,0,0,0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
-
 .album-modal .list-select-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
     background-color: #444;
 }
-
 .album-modal .close-modal-btn {
 }
+.list-count {
+    background-color: #222;
+    color: white;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 200px;
+    font-size: 12px;
+    margin: 0;
+}
+.avg-rating-box {
+    position: absolute;
+    width: 300px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-align: center;
+    margin-bottom: 15px;
+}
+.rating-box {
+    position: absolute;
+    width: 300px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-align: center;
+    margin-bottom: 15px;
+    margin-top: 100px;
+}
+.rating-title {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+.rating-input {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 80px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 100%;
+    background-color: #222;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+.rating-red {
+    color: rgba(255, 0, 0, 0.844);
+}
+.rating-orange {
+    color: rgb(255, 204, 0);
+}
+.rating-green {
+    color: rgb(12, 197, 12);
+}
+.submit-rating-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px
+}
+
+.submit-rating-btn:hover {
+    background-color: #555; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.rating-message {
+    position: fixed;
+    left: 55%;
+    bottom: -100px;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white; 
+    padding: 16px 32px; 
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); 
+    transition: all 0.5s ease-in-out;
+    z-index: 1000;
+    white-space: nowrap;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    max-width: 80%;
+    box-sizing: border-box;
+}
+
+.rating-message.visible {
+    bottom: 40px;
+    visibility: visible;
+    animation: fadeInUp 0.5s forwards;
+    opacity: 1;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        bottom: -100px;
+    }
+    to {
+        opacity: 1;
+        bottom: 40px;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        bottom: 40px;
+    }
+    to {
+        opacity: 0;
+        bottom: -100px;
+    }
+}
+
+.rating-message.fade-out {
+    animation: fadeOut 2s forwards;
+}
+
+
 
