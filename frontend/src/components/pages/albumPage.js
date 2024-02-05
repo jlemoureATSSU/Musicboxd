@@ -24,23 +24,11 @@ const AlbumPage = () => {
     useEffect(() => {
         const fetchAlbumDetailsAndRating = async () => {
             try {
-                const detailsResponse = await axios.get(`https://musicbrainz.org/ws/2/release-group/${mbid}?fmt=json&inc=artist-credits+releases`, {
-                    headers: {
-                        'User-Agent': 'Musicboxd (joelem316@gmail.com)'
-                    }
-                });
-                setAlbumDetails(detailsResponse.data);
-    
-                const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${mbid}`, {
-                    headers: {
-                        'User-Agent': 'Musicboxd (joelem316@gmail.com)'
-                    }
-                });
-                if (coverResponse.data.images && coverResponse.data.images.length > 0) {
-                    setCoverArtUrl(coverResponse.data.images[0].image);
-                }
+                const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
+                setAlbumDetails(detailsResponse.data.details);
+                setCoverArtUrl(detailsResponse.data.coverArtUrl || '');
             } catch (error) {
-                console.error("Error fetching album details", error);
+                console.error("Error fetching album details from backend", error);
             }
     
             try {

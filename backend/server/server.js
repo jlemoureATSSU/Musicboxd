@@ -17,6 +17,8 @@ const albumInListsCount = require('./routes/list/listAlbumInListsCount')
 const saveRating = require('./routes/rating/ratingSave')
 const getRatingByUserAndAlbum = require('./routes/rating/ratingGetByUserAndAlbum')
 const getAvgRatingByAlbum = require('./routes/rating/ratingGetAvgByAlbum')
+const getHighestRatedAlbums = require('./routes/rating/ratingGetHighestRatedAlbums')
+const getAlbumDetails = require('./routes/api/apiGetAlbumDetails')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -39,6 +41,9 @@ app.use('/list', albumInListsCount)
 app.use('/rating', saveRating)
 app.use('/rating', getRatingByUserAndAlbum)
 app.use('/rating', getAvgRatingByAlbum)
+app.use('/rating', getHighestRatedAlbums)
+app.use('/api', getAlbumDetails)
+
 
 
 app.listen(SERVER_PORT, (req, res) => {

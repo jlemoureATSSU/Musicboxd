@@ -1,38 +1,107 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import AlbumCard from '../albumCard'; // Assuming AlbumCard requires coverArtUrl, title, artist, releaseDate, and mbid props
 import ListCard from '../listCard';
 
 const HomePage = () => {
     const [recentLists, setRecentLists] = useState([]);
+    const [highestRatedAlbums, setHighestRatedAlbums] = useState([]);
+    const [albumDetails, setAlbumDetails] = useState({}); // This will store album details keyed by mbid
+    const fetchInProgress = useRef(new Set());
 
     useEffect(() => {
+        // Fetch recent lists
         const fetchRecentLists = async () => {
-          try {
-            const response = await axios.get('http://localhost:8081/list/getAllLists');
-            setRecentLists(response.data);
-          } catch (error) {
-            console.error('Error fetching recent lists:', error);
-          }
+            try {
+                const response = await axios.get(`http://localhost:8081/list/getAllLists`);
+                setRecentLists(response.data);
+            } catch (error) {
+                console.error('Error fetching recent lists:', error);
+            }
         };
-    
-        fetchRecentLists();
-      }, []);
 
-  return (
-    <div>
-      <div className='homepage-containter-title'>Recently Created Lists</div>
-      <div className="recent-lists-container">
-        {recentLists.map(list => (
-          <ListCard
-          userName={list.userName}
-          title={list.listName}
-          listId={list._id}
-          albums={list.albums} 
-          />
-        ))}
-      </div>
-    </div>
-  );
+        const fetchHighestRatedAlbums = async () => {
+            try {
+                const response = await axios.get('http://localhost:8081/rating/getHighestRatedAlbums');
+                setHighestRatedAlbums(response.data);
+            } catch (error) {
+                console.error('Error fetching highest rated albums:', error);
+            }
+        };
+
+        fetchRecentLists();
+        fetchHighestRatedAlbums();
+    }, []);
+
+    useEffect(() => {
+        highestRatedAlbums.forEach(({ albumId }) => {
+          if (albumDetails[albumId] || fetchInProgress.current.has(albumId)) {
+            // Details already exist or fetch in progress for this album, skip
+            return;
+          }
+    
+          fetchInProgress.current.add(albumId);
+    
+          const fetchAlbumDetailsAndCoverArt = async (mbid) => {
+            try {
+              const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
+              setAlbumDetails(prevDetails => ({
+                ...prevDetails,
+                [mbid]: response.data
+              }));
+              fetchInProgress.current.delete(mbid);
+            } catch (error) {
+              console.error("Error fetching details for album MBID:", mbid, error);
+              fetchInProgress.current.delete(mbid);
+              // Optionally update an error state here
+            }
+          };
+    
+          fetchAlbumDetailsAndCoverArt(albumId);
+        });
+      }, [highestRatedAlbums]); // This effect depends on the highestRatedAlbums
+
+    return (
+        <div>
+            <div className='homepage-container-title'>Recently Created Lists</div>
+            <div className="recent-lists-container">
+                {recentLists.map(list => (
+                    <ListCard
+                        key={list._id}
+                        userName={list.userName}
+                        title={list.listName}
+                        listId={list._id}
+                        albums={list.albums} 
+                    />
+                ))}
+            </div>
+            <div className='homepage-container-title'>Highest Rated Albums</div>
+            <div className="highest-rated-albums-container">
+                {highestRatedAlbums.map(({ albumId }) => {
+                    const details = albumDetails[albumId]?.details;
+                    const coverArtUrl = albumDetails[albumId]?.coverArtUrl;
+
+                    if (!details) return null; // Only render AlbumCards with fetched details
+
+                    const title = details.title || 'Unknown Title';
+                    const artist = details['artist-credit']?.map(ac => ac.name).join(', ') || 'Unknown Artist';
+                    const releaseDate = details['first-release-date'] || 'Unknown Release Date';
+                    const formattedReleaseDate = releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date';
+
+                    return (
+                        <AlbumCard
+                            key={albumId}
+                            coverArtUrl={coverArtUrl}
+                            title={title}
+                            artist={artist}
+                            releaseDate={formattedReleaseDate}
+                            mbid={albumId}
+                        />
+                    );
+                })}
+            </div>
+        </div>
+    );
 };
 
 export default HomePage;

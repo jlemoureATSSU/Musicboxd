@@ -7,6 +7,7 @@
   width: 200px;
   min-width: 200px;
   margin-bottom: 20px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 8px rgba(0,0,0,0.35);
@@ -26,7 +27,7 @@
   border-radius: 2px;
   background-size: cover;
   background-position: center;
-  box-shadow: 0 8px 16px rgba(86, 86, 86, 0.20);
+  box-shadow: 0 8px 16px rgba(53, 53, 53, 0.2);
 }
 
 .album-info {
@@ -54,7 +55,7 @@
 
 .album-artist {
   padding-top: 1px;
-  font-size: clamp(12px, 1.5vw, 25px);
+  font-size: clamp(20px);
 }
 
 .album-release-date {

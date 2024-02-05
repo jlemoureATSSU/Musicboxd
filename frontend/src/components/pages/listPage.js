@@ -22,45 +22,26 @@ const ListPage = () => {
         fetchListData();
     }, [listId]);
 
-    const fetchAlbumDetails = async (albumId) => {
+    const fetchAlbumDetailsFromBackend = async (mbid) => {
         try {
-            const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/${albumId}?inc=artist-credits&fmt=json`, {
-                headers: { 'User-Agent': 'Musicboxd (joelem316@gmail.com)' }
-            });
-            const album = response.data;
-            const coverArtUrl = await fetchCoverArt(albumId);
-            return {
-                id: albumId,
-                title: album.title,
-                artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
-                year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
-                coverArtUrl
-            };
+            const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
+            return response.data;
         } catch (error) {
-            console.error("Error fetching album details", error);
-            return { id: albumId, title: '', artist: '', year: '', coverArtUrl: '' };
-        }
-    };
-
-    const fetchCoverArt = async (albumMBID) => {
-        try {
-            const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
-            return coverResponse.data.images[0].image;
-        } catch (error) {
-            console.error("Error fetching cover art", error);
-            return '';
+            console.error("Error fetching album details from backend", error);
+            return null; // or return a default object with empty fields
         }
     };
 
     const fetchAlbumsDetails = async (albums) => {
-        const details = await Promise.all(albums.map(album => fetchAlbumDetails(album.id)));
-        setAlbumDetails(details);
+        const details = await Promise.all(albums.map(album => fetchAlbumDetailsFromBackend(album.id)));
+        // Filter out any null responses due to errors
+        const validDetails = details.filter(detail => detail !== null);
+        setAlbumDetails(validDetails);
     };
 
     if (!listData) {
         return <div>Loading...</div>;
     }
-
 
     return (
         <div className="create-list-page">
@@ -72,12 +53,12 @@ const ListPage = () => {
                 <div className="album-list">
                     {albumDetails.map((album) => (
                         <AlbumCard
-                            key={album.id}
+                            key={album.details.id || album.id}
                             coverArtUrl={album.coverArtUrl}
-                            title={album.title}
-                            artist={album.artist}
-                            releaseDate={album.year}
-                            mbid={album.id}
+                            title={album.details.title}
+                            artist={album.details['artist-credit'] ? album.details['artist-credit'][0].name : 'Unknown Artist'}
+                            releaseDate={album.details['first-release-date'] ? new Date(album.details['first-release-date']).getFullYear() : 'Unknown Year'}
+                            mbid={album.details.id || album.id} 
                         />
                     ))}
                 </div>

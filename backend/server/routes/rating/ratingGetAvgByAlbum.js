@@ -1,23 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const Rating = require('../../models/ratingModel');
+const AvgRating = require('../../models/avgRatingModel');
 
 router.get('/getAvgByAlbum/:albumId', async (req, res) => {
     const { albumId } = req.params;
 
     try {
-        const averageRating = await Rating.aggregate([
-            { $match: { albumId: albumId } }, 
-            {
-                $group: {
-                    _id: '$albumId',
-                    averageRating: { $avg: '$ratingNum' }
-                }
-            }
-        ]);
+        const avgRatingDoc = await AvgRating.findOne({ albumId: albumId });
 
-        if (averageRating.length > 0) {
-            res.status(200).json({ albumId: albumId, averageRating: averageRating[0].averageRating });
+        if (avgRatingDoc) {
+            res.status(200).json({
+                albumId: albumId,
+                averageRating: avgRatingDoc.averageRating,
+                numberOfRatings: avgRatingDoc.numberOfRatings
+            });
         } else {
             res.status(404).json({ message: 'No ratings found for this album' });
         }

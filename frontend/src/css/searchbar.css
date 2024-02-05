@@ -2,7 +2,7 @@
     position: fixed;
     top: 15px;
     left: 220px; 
-    right: 15px;
+    width: 750px;
     background-color: #2c2f33;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -73,8 +73,8 @@
 
   .search-controls {
     position: fixed;
-    top: 63px;
-    left: 220px;
+    top: 10px;
+    left: 970px;
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
