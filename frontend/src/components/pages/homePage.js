@@ -44,14 +44,21 @@ const HomePage = () => {
     
           const fetchAlbumDetailsAndCoverArt = async (mbid) => {
             try {
-              const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
+              const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
+              const ratingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${mbid}`);
+              
               setAlbumDetails(prevDetails => ({
                 ...prevDetails,
-                [mbid]: response.data
+                [mbid]: {
+                  ...detailsResponse.data,
+                  averageRating: ratingResponse.data.averageRating,
+                  numberOfRatings: ratingResponse.data.numberOfRatings
+                }
               }));
+              
               fetchInProgress.current.delete(mbid);
             } catch (error) {
-              console.error("Error fetching details for album MBID:", mbid, error);
+              console.error("Error fetching details or ratings for album MBID:", mbid, error);
               fetchInProgress.current.delete(mbid);
               // Optionally update an error state here
             }
@@ -77,25 +84,25 @@ const HomePage = () => {
             </div>
             <div className='homepage-container-title'>Highest Rated Albums</div>
             <div className="highest-rated-albums-container">
-                {highestRatedAlbums.map(({ albumId }) => {
-                    const details = albumDetails[albumId]?.details;
-                    const coverArtUrl = albumDetails[albumId]?.coverArtUrl;
+            {highestRatedAlbums.map(({ albumId }) => {
+                    const album = albumDetails[albumId];
+                    if (!album?.details) return null; // Only render AlbumCards with fetched details
 
-                    if (!details) return null; // Only render AlbumCards with fetched details
-
-                    const title = details.title || 'Unknown Title';
-                    const artist = details['artist-credit']?.map(ac => ac.name).join(', ') || 'Unknown Artist';
-                    const releaseDate = details['first-release-date'] || 'Unknown Release Date';
-                    const formattedReleaseDate = releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date';
+                    const title = album.details.title || 'Unknown Title';
+                    const artist = album.details['artist-credit']?.map(ac => ac.name).join(', ') || 'Unknown Artist';
+                    const releaseDate = album.details['first-release-date'] || 'Unknown Release Date';
+                    const formattedReleaseDate = releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric'}) : 'Unknown Date';
 
                     return (
                         <AlbumCard
                             key={albumId}
-                            coverArtUrl={coverArtUrl}
+                            coverArtUrl={album.coverArtUrl}
                             title={title}
                             artist={artist}
                             releaseDate={formattedReleaseDate}
                             mbid={albumId}
+                            averageRating={album.averageRating}
+                            numberOfRatings={album.numberOfRatings}
                         />
                     );
                 })}

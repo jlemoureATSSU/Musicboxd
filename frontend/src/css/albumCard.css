@@ -21,6 +21,7 @@
 
 .cover-art {
   height:180px;
+  min-height: 180px;
   width: 180px;
   margin-left: 10px;
   margin-top: 10px;
@@ -47,6 +48,7 @@
   height: 40px;
   line-height: 18px;
   margin-top: 0px;
+  margin-bottom: 3px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -56,12 +58,39 @@
 .album-artist {
   padding-top: 1px;
   font-size: clamp(20px);
+  margin-bottom: 80px;
 }
 
 .album-release-date {
+  position: sticky;
   padding-top: 1px;
+  font-size: 18px;
+  bottom: 10px;
+  margin-left: 0px;
+  margin-bottom: 10px;
 }
 
+.album-rating {
+  position: sticky;
+  background-color: #313131;;
+  border-radius: 10%;
+  font-size: 36px; /* Adjust based on your design */
+  color: #ccc; /* Lighter text color for contrast or as fits your design */
+  bottom: 10px; /* Adjust the bottom value as needed */
+  margin-left: 85px;
+  margin-right: 5px;
+  padding-left: 15px;
+}
+
+.rating-red {
+  color: rgba(255, 0, 0, 0.844);
+}
+.rating-orange {
+  color: rgb(255, 204, 0);
+}
+.rating-green {
+  color: rgb(12, 197, 12);
+}
 .album-info p {
   margin-top: 1px;
 }
