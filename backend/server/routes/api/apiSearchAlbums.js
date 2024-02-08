@@ -35,7 +35,6 @@ router.get('/searchAlbums', async (req, res) => {
                 coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
             };
 
-            // Cache the individual album detail using a standardized key
             myCache.set(`album-${album.id}`, albumDetail);
 
             return albumDetail;

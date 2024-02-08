@@ -8,25 +8,24 @@ const ListCard = ({ userName, title, listId, albums }) => {
 
   useEffect(() => {
     const fetchCoverArts = async () => {
-      const arts = [];
-      if (albums && albums.length) {
-        for (let i = 0; i < Math.min(4, albums.length); i++) {
-          try {
-            const albumId = albums[i].id;
-            const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumId}`);
-            if (coverResponse.data.images && coverResponse.data.images.length > 0) {
-              arts.push(coverResponse.data.images[0].image);
-            }
-          } catch (error) {
-            console.error("Error fetching cover art", error);
-          }
-        }
+      const requests = albums.slice(0, 4).map(album => 
+        axios.get(`http://localhost:8081/api/getAlbumDetails/${album.id}`)
+      );
+  
+      try {
+        const responses = await Promise.all(requests);
+        const coverArts = responses.map(res => res.data.coverArtUrl).filter(url => url);
+        setCoverArts(coverArts);
+      } catch (error) {
+        console.error("Error fetching album details", error);
       }
-      setCoverArts(arts);
     };
-
-    fetchCoverArts();
-  }, [albums]); 
+  
+    if (albums && albums.length > 0) {
+      fetchCoverArts();
+    }
+  }, [albums]);
+  
 
   const handleClick = () => {
     navigate(`/listPage/${listId}`);

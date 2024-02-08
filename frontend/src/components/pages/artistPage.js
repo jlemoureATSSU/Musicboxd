@@ -6,7 +6,7 @@ import AlbumCard from '../albumCard';
 const ArtistPage = () => {
     const [artistDetails, setArtistDetails] = useState(null);
     const [albums, setAlbums] = useState([]);
-    const { artistSpotifyId } = useParams(); // Make sure this matches the URL parameter
+    const { artistSpotifyId } = useParams(); 
 
     console.log("Artist Spotify ID on ArtistPage:", artistSpotifyId);
 

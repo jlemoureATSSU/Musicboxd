@@ -17,7 +17,7 @@ router.get('/searchArtists', async (req, res) => {
     const accessToken = await getSpotifyAccessToken();
     const response = await axios.get(`https://api.spotify.com/v1/search`, {
       headers: {
-        'Authorization': `Bearer ${accessToken}`, // Use the access token for Spotify API
+        'Authorization': `Bearer ${accessToken}`, 
       },
       params: {
         q: searchQuery,
@@ -29,7 +29,6 @@ router.get('/searchArtists', async (req, res) => {
     const artists = response.data.artists.items.map(artist => ({
       id: artist.id,
       name: artist.name,
-      // You can add more artist properties here as needed
     }));
 
     const artistIds = artists.map(artist => artist.id);

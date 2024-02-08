@@ -22,20 +22,21 @@ const ListPage = () => {
         fetchListData();
     }, [listId]);
 
-    const fetchAlbumDetailsFromBackend = async (mbid) => {
-        try {
-            const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
-            return response.data;
-        } catch (error) {
-            console.error("Error fetching album details from backend", error);
-            return null; 
-        }
+    const fetchAlbumsDetails = async (albums) => {
+        const details = await Promise.all(albums.map(album =>
+            fetchAlbumDetailsFromSpotify(album.id)
+        ));
+        setAlbumDetails(details);
     };
 
-    const fetchAlbumsDetails = async (albums) => {
-        const details = await Promise.all(albums.map(album => fetchAlbumDetailsFromBackend(album.id)));
-        const validDetails = details.filter(detail => detail !== null);
-        setAlbumDetails(validDetails);
+    const fetchAlbumDetailsFromSpotify = async (spotifyAlbumId) => {
+        try {
+            const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyAlbumId}`);
+            return response.data; 
+        } catch (error) {
+            console.error("Error fetching album details from backend:", error);
+            return null;
+        }
     };
 
     if (!listData) {
@@ -50,20 +51,20 @@ const ListPage = () => {
             </div>
             <div className="album-list-card">
                 <div className="album-list">
-                    {albumDetails.map((album) => (
+                    {albumDetails.map((album, index) => (
                         <AlbumCard
-                            key={album.details.id || album.id}
+                            key={index}
                             coverArtUrl={album.coverArtUrl}
-                            title={album.details.title}
-                            artist={album.details['artist-credit'] ? album.details['artist-credit'][0].name : 'Unknown Artist'}
-                            releaseDate={album.details['first-release-date'] ? new Date(album.details['first-release-date']).getFullYear() : 'Unknown Year'}
-                            mbid={album.details.id || album.id} 
+                            title={album.name}
+                            artist={album.artists}
+                            releaseDate={new Date(album.release_date).getFullYear()}
+                            id={album.id} 
                         />
                     ))}
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default ListPage;

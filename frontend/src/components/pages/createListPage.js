@@ -1,4 +1,3 @@
-//react page that allows users to add songs to a numbered list.
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -28,46 +27,16 @@ const CreateListPage = () => {
   }, []);
   
 
-  const fetchCoverArt = async (albumMBID) => {
-    try {
-      const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
-      return coverResponse.data.images[0].image; 
-    } catch (error) {
-      console.error("Error fetching cover art", error);
-      return ''; 
-    }
-  };
-
-  const fetchAlbumDetails = async (albumId) => {
-    try {
-      const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/${albumId}?inc=artist-credits&fmt=json`, {
-        headers: { 'User-Agent': 'Musicboxd (joelem316@gmail.com)' }
-      });
-      const album = response.data;
-      return {
-        id: albumId,
-        title: album.title,
-        artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
-        year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
-      };
-    } catch (error) {
-      console.error("Error fetching album details", error);
-      return { id: albumId, title: '', artist: '', year: '' };
-    }
-  };
-
-  const addAlbumToList = async (albumId) => {
-    if (albums.some((a) => a.id === albumId)) {
+  const addAlbumToList = (albumDetails) => {
+    if (albums.some((a) => a.id === albumDetails.id)) {
       alert("This album is already added to the list.");
       return;
     }
     
-    const albumDetails = await fetchAlbumDetails(albumId);
-    const coverArtUrl = await fetchCoverArt(albumId);
 
     setAlbums(prevAlbums => [
       ...prevAlbums,
-      { ...albumDetails, coverArtUrl }
+      albumDetails 
     ]);
 
     setIsModalOpen(false);
@@ -126,9 +95,9 @@ const CreateListPage = () => {
             <AlbumCard 
             key={album.id}
             coverArtUrl={album.coverArtUrl}
-            title={album.title}
+            title={album.name}
             artist={album.artist}
-            releaseDate={album.year}
+            releaseDate={album.releaseDate}
             mbid={album.id}
             />
           ))}

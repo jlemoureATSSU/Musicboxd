@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const myCache = require('../../utilities/cache'); // Make sure this path is correct
+const myCache = require('../../utilities/cache'); 
 const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
@@ -9,7 +9,6 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
   const albumsCacheKey = `artist-albums-${artistSpotifyId}`;
   const artistCacheKey = `artist-name-${artistSpotifyId}`;
 
-  // Attempt to retrieve cached data
   let cachedAlbums = myCache.get(albumsCacheKey);
   let cachedArtist = myCache.get(artistCacheKey);
 
@@ -23,7 +22,6 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
 
   try {
     const accessToken = await getSpotifyAccessToken();
-    // Fetch artist details if not cached
     if (!cachedArtist) {
       const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}`, {
         headers: {
@@ -37,11 +35,9 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
         image: artistResponse.data.images[0]?.url
       };
 
-      // Cache the artist details
       myCache.set(artistCacheKey, cachedArtist);
     }
 
-    // Fetch the albums if not cached
     if (!cachedAlbums) {
       const albumsResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}/albums`, {
         headers: {
@@ -60,8 +56,6 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
         coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
         artists: album.artists.map(artist => artist.name).join(', ')
       }));
-
-      // Cache the albums
       myCache.set(albumsCacheKey, cachedAlbums);
     }
 

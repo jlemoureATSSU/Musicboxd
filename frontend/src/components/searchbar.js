@@ -16,15 +16,14 @@ const SearchBar = () => {
         return;
       }
     
-      // Determine the correct URL based on the search mode
-      const backendBaseUrl = 'http://localhost:8081'; // Replace with your actual backend base URL and PORT
+      const backendBaseUrl = 'http://localhost:8081'; 
       const searchUrl = searchMode === 'artist' 
         ? `${backendBaseUrl}/api/searchArtists?search=${encodeURIComponent(search)}` 
         : `${backendBaseUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`;
     
         try {
           const response = await axios.get(searchUrl);
-          console.log(response.data); // Log the API response to inspect the data structure
+          console.log(response.data); 
         
           let results = [];
           if (searchMode === 'artist' && response.data && Array.isArray(response.data.artists)) {
@@ -138,7 +137,6 @@ const SearchBar = () => {
                 key={index}
                 className={`search-result ${index === highlightedIndex ? 'highlighted' : ''}`}
                 onClick={() => result.type === 'album' ? handleAlbumSelect(result) : handleArtistSelect(result)}
-                // Assuming handleArtistSelect is defined elsewhere for artists
                 onMouseOver={() => setHighlightedIndex(index)}
               >
                 {result.type === 'album' && (

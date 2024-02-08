@@ -6,32 +6,31 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
   
-    const searchMusicBrainz = debounce(async (search) => {
+    const searchAlbums = debounce(async (search) => {
       if (search) {
-        try {
-          const response = await axios.get(`https://musicbrainz.org/ws/2/release-group/?query=${search}&fmt=json&limit=7&type=album`, {
-            headers: { 'User-Agent': 'MusicBoxd (joelem316@gmail.com)' }
-          });
-      
-          const albums = response.data['release-groups'].map(album => ({
-            id: album.id,
-            name: album.title,
-            artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
-            year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
-          }));
-          setResults(albums);
-        } catch (error) {
-          console.error('Error fetching search results', error);
-          setResults([]);
-        }
+          try {
+              const backendBaseUrl = 'http://localhost:8081';
+              const response = await axios.get(`${backendBaseUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`);
+  
+              const albums = response.data.albums.map(album => ({
+                  id: album.id,
+                  name: album.name,
+                  artist: album.artists,
+                  year: album.release_date ? new Date(album.release_date).getFullYear() : 'Unknown Year',
+                  coverArtUrl: album.coverArtUrl
+              }));
+              setResults(albums);
+          } catch (error) {
+              console.error('Error fetching search results', error);
+              setResults([]);
+          }
       } else {
-        setResults([]);
-      }      
-      
-    }, 300);
+          setResults([]);
+      }
+  }, 600);
+  
 
     useEffect(() => {
-      // Clear the search term whenever the modal is opened
       if (isOpen) {
         setSearchTerm('');
         setResults([]);
@@ -39,18 +38,25 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     }, [isOpen]);
   
     useEffect(() => {
-      searchMusicBrainz(searchTerm);
-      // Cleanup the debounce
+      searchAlbums(searchTerm);
       return () => {
-        searchMusicBrainz.cancel();
+        searchAlbums.cancel();
       };
     }, [searchTerm]);
   
     if (!isOpen) return null;
   
-    const handleSelectAlbum = (album) => {
-      onSelectAlbum(album.id);
-      onClose(); // Close the modal
+    const handleSelectAlbum = (selectedAlbum) => {
+      const albumDetails = {
+        id: selectedAlbum.id,
+        name: selectedAlbum.name,
+        artist: selectedAlbum.artist,
+        releaseDate: selectedAlbum.year,
+        coverArtUrl: selectedAlbum.coverArtUrl,
+      };
+    
+      onSelectAlbum(albumDetails);
+      onClose();
     };
 
   const overlayStyle = {
