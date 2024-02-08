@@ -1,92 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
-import getUserInfo from '../../utilities/decodeJwt';
+import { useParams } from 'react-router-dom';
 import AlbumCard from '../albumCard';
 
-
 const ArtistPage = () => {
+    const [artistDetails, setArtistDetails] = useState(null);
     const [albums, setAlbums] = useState([]);
-    const [artistName, setArtistName] = useState('');
-    const { mbid } = useParams();
+    const { artistSpotifyId } = useParams(); // Make sure this matches the URL parameter
+
+    console.log("Artist Spotify ID on ArtistPage:", artistSpotifyId);
 
     useEffect(() => {
-        fetchArtistName(mbid);
-        fetchAlbums(mbid);
-    }, [mbid]);
+        const fetchArtistAndAlbums = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8081/api/getAlbumsByArtist/${artistSpotifyId}`);
+                setArtistDetails(response.data.artist); 
+                setAlbums(response.data.albums);
+            } catch (error) {
+                console.error("Error fetching artist and albums", error);
+            }
+        };
 
-    const fetchArtistName = async (artistMBID) => {
-        try {
-            const response = await axios.get(`https://musicbrainz.org/ws/2/artist/${artistMBID}?fmt=json`, {
-                headers: {
-                    'User-Agent': 'Musicboxd (joelem316@gmail.com)'
-                }
-            });
-            setArtistName(response.data.name);
-        } catch (error) {
-            console.error("Error fetching artist name", error);
-        }
-    };
+        fetchArtistAndAlbums();
+    }, [artistSpotifyId]);
 
-    const fetchCoverArt = async (albumMBID) => {
-        try {
-            const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
-            return coverResponse.data.images[0].image; 
-        } catch (error) {
-            console.error("Error fetching cover art", error);
-            return ''; 
-        }
-    };
-
-    const fetchAlbums = async (artistMBID) => {
-        try {
-            const response = await axios.get('https://musicbrainz.org/ws/2/release-group', {
-                params: {
-                    artist: artistMBID,
-                    type: 'album',
-                    fmt: 'json',
-                    inc: 'artist-credits'
-                },
-                headers: {
-                    'User-Agent': 'Musicboxd (joelem316@gmail.com)'
-                }
-            });
-    
-            const sortedAlbums = response.data['release-groups']
-                .filter(rg => rg['primary-type'] === 'Album' && (!rg['secondary-types'] || rg['secondary-types'].length === 0))
-                .map(album => ({
-                    ...album,
-                    artist: album['artist-credit'] ? album['artist-credit'].map(ac => ac.name).join(', ') : '',
-                    releaseDate: album['first-release-date'] || 'Unknown Date'
-                }))
-                .sort((a, b) => b.releaseDate.localeCompare(a.releaseDate));
-    
-            const albumsWithCoverArt = await Promise.all(sortedAlbums.map(async album => {
-                const coverArtUrl = await fetchCoverArt(album.id);
-                return {
-                    ...album,
-                    coverArtUrl
-                };
-            }));
-    
-            setAlbums(albumsWithCoverArt);
-        } catch (error) {
-            console.error("Error fetching albums", error);
-        }
-    };
-    
     return (
         <div className='page'>
-            <h1>{artistName}</h1>
+            <h1>{artistDetails?.name || 'Artist'}</h1>
             <div className="albums-container">
                 {albums.map((album) => (
                     <AlbumCard
                         key={album.id}
-                        mbid={album.id}
+                        spotifyId={album.id}
                         coverArtUrl={album.coverArtUrl}
-                        title={album.title}
-                        artist={album.artist}
-                        releaseDate={album.releaseDate !== 'Unknown Date' ? new Date(album.releaseDate).toLocaleDateString('en-US', { year: 'numeric'}) : 'Unknown Date'}
+                        title={album.name}
+                        artist={artistDetails?.name || 'Various Artists'}
+                        releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
                     />
                 ))}
             </div>

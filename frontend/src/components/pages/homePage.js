@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import AlbumCard from '../albumCard'; // Assuming AlbumCard requires coverArtUrl, title, artist, releaseDate, and mbid props
+import AlbumCard from '../albumCard';
 import ListCard from '../listCard';
 
 const HomePage = () => {
     const [recentLists, setRecentLists] = useState([]);
     const [highestRatedAlbums, setHighestRatedAlbums] = useState([]);
-    const [albumDetails, setAlbumDetails] = useState({}); // This will store album details keyed by mbid
+    const [albumDetails, setAlbumDetails] = useState({});
     const fetchInProgress = useRef(new Set());
 
     useEffect(() => {
-        // Fetch recent lists
         const fetchRecentLists = async () => {
             try {
                 const response = await axios.get(`http://localhost:8081/list/getAllLists`);
@@ -36,43 +35,41 @@ const HomePage = () => {
     useEffect(() => {
         highestRatedAlbums.forEach(({ albumId }) => {
           if (albumDetails[albumId] || fetchInProgress.current.has(albumId)) {
-            // Details already exist or fetch in progress for this album, skip
             return;
           }
     
           fetchInProgress.current.add(albumId);
     
-          const fetchAlbumDetailsAndCoverArt = async (mbid) => {
+          const fetchAlbumDetails = async (spotifyId) => {
             try {
-              const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
-              const ratingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${mbid}`);
+              const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
+              const ratingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${spotifyId}`);
               
               setAlbumDetails(prevDetails => ({
                 ...prevDetails,
-                [mbid]: {
+                [spotifyId]: {
                   ...detailsResponse.data,
                   averageRating: ratingResponse.data.averageRating,
                   numberOfRatings: ratingResponse.data.numberOfRatings
                 }
               }));
               
-              fetchInProgress.current.delete(mbid);
+              fetchInProgress.current.delete(spotifyId);
             } catch (error) {
-              console.error("Error fetching details or ratings for album MBID:", mbid, error);
-              fetchInProgress.current.delete(mbid);
-              // Optionally update an error state here
+              console.error("Error fetching details or ratings for album spotifyId:", spotifyId, error);
+              fetchInProgress.current.delete(spotifyId);
             }
           };
     
-          fetchAlbumDetailsAndCoverArt(albumId);
+          fetchAlbumDetails(albumId);
         });
-      }, [highestRatedAlbums]); // This effect depends on the highestRatedAlbums
+      }, [highestRatedAlbums]);
 
     return (
         <div>
             <div className='homepage-container-title'>Recently Created Lists</div>
             <div className="recent-lists-container">
-                {recentLists.map(list => (
+                {/* {recentLists.map(list => (
                     <ListCard
                         key={list._id}
                         userName={list.userName}
@@ -80,32 +77,26 @@ const HomePage = () => {
                         listId={list._id}
                         albums={list.albums} 
                     />
-                ))}
+                ))}  */}
             </div>
             <div className='homepage-container-title'>Highest Rated Albums</div>
             <div className="highest-rated-albums-container">
-            {highestRatedAlbums.map(({ albumId }) => {
-                    const album = albumDetails[albumId];
-                    if (!album?.details) return null; // Only render AlbumCards with fetched details
-
-                    const title = album.details.title || 'Unknown Title';
-                    const artist = album.details['artist-credit']?.map(ac => ac.name).join(', ') || 'Unknown Artist';
-                    const releaseDate = album.details['first-release-date'] || 'Unknown Release Date';
-                    const formattedReleaseDate = releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric'}) : 'Unknown Date';
-
-                    return (
-                        <AlbumCard
-                            key={albumId}
-                            coverArtUrl={album.coverArtUrl}
-                            title={title}
-                            artist={artist}
-                            releaseDate={formattedReleaseDate}
-                            mbid={albumId}
-                            averageRating={album.averageRating}
-                            numberOfRatings={album.numberOfRatings}
-                        />
-                    );
-                })}
+            {highestRatedAlbums.map(({ albumId }) => { // Ensure this destructuring matches the property names of the objects in highestRatedAlbums
+                const album = albumDetails[albumId];
+                if (!album) return null; // Since we're accessing the properties directly, we just check if album is not undefined
+                return (
+                <AlbumCard
+                    key={albumId} // Use albumId here
+                    coverArtUrl={album.coverArtUrl}
+                    title={album.name}
+                    artist={album.artists} // This assumes your backend returns a string of concatenated artist names
+                    releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
+                    spotifyId={albumId} // Use albumId here as well
+                    averageRating={album.averageRating}
+                    numberOfRatings={album.numberOfRatings}
+                />
+                );
+            })}
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Rating = require('../../models/ratingModel');
-const AvgRating = require('../../models/avgRatingModel'); // Assuming you've created this model
+const AvgRating = require('../../models/avgRatingModel'); 
 
 router.post('/save', async (req, res) => {
     const { userName, ratingNum, albumId } = req.body;
@@ -11,7 +11,6 @@ router.post('/save', async (req, res) => {
         let oldRatingNum = 0;
 
         if (rating) {
-            // If updating an existing rating, store the old rating value to adjust the average correctly
             oldRatingNum = rating.ratingNum;
             rating.ratingNum = ratingNum;
             rating.dateUpdated = new Date();
@@ -21,28 +20,24 @@ router.post('/save', async (req, res) => {
 
         const savedRating = await rating.save();
 
-        // Check if AvgRating exists for the album
         let avgRating = await AvgRating.findOne({ albumId });
 
         if (avgRating) {
-            // If updating, adjust totalRatings and numberOfRatings accordingly
-            if (oldRatingNum > 0) { // It's an update
+            if (oldRatingNum > 0) { 
                 avgRating.totalRatings = avgRating.totalRatings - oldRatingNum + ratingNum;
-            } else { // It's a new rating
+            } else { 
                 avgRating.totalRatings += ratingNum;
                 avgRating.numberOfRatings += 1;
             }
         } else {
-            // If it's a new AvgRating entry
             avgRating = new AvgRating({
                 albumId,
                 totalRatings: ratingNum,
                 numberOfRatings: 1,
-                averageRating: ratingNum, // Initial average is just the rating itself
+                averageRating: ratingNum, 
             });
         }
 
-        // Recalculate the average rating
         avgRating.averageRating = avgRating.totalRatings / avgRating.numberOfRatings;
         
         await avgRating.save();

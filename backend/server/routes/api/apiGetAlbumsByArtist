@@ -1,0 +1,81 @@
+const express = require('express');
+const router = express.Router();
+const axios = require('axios');
+const myCache = require('../../utilities/cache'); // Make sure this path is correct
+const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
+
+router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
+  const { artistSpotifyId } = req.params;
+  const albumsCacheKey = `artist-albums-${artistSpotifyId}`;
+  const artistCacheKey = `artist-name-${artistSpotifyId}`;
+
+  // Attempt to retrieve cached data
+  let cachedAlbums = myCache.get(albumsCacheKey);
+  let cachedArtist = myCache.get(artistCacheKey);
+
+  if (cachedArtist && cachedAlbums) {
+    console.log(`Artist and album details from cache for ID: ${artistSpotifyId}`);
+    return res.json({
+      artist: cachedArtist,
+      albums: cachedAlbums
+    });
+  }
+
+  try {
+    const accessToken = await getSpotifyAccessToken();
+    // Fetch artist details if not cached
+    if (!cachedArtist) {
+      const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      cachedArtist = {
+        name: artistResponse.data.name,
+        genres: artistResponse.data.genres,
+        image: artistResponse.data.images[0]?.url
+      };
+
+      // Cache the artist details
+      myCache.set(artistCacheKey, cachedArtist);
+    }
+
+    // Fetch the albums if not cached
+    if (!cachedAlbums) {
+      const albumsResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}/albums`, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        },
+        params: {
+          include_groups: 'album',
+          limit: 50
+        }
+      });
+
+      cachedAlbums = albumsResponse.data.items.map(album => ({
+        id: album.id,
+        name: album.name,
+        release_date: album.release_date,
+        coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
+        artists: album.artists.map(artist => artist.name).join(', ')
+      }));
+
+      // Cache the albums
+      myCache.set(albumsCacheKey, cachedAlbums);
+    }
+
+    console.log(`Fetched and cached data for artist ID: ${artistSpotifyId}`);
+
+    res.json({
+      artist: cachedArtist,
+      albums: cachedAlbums
+    });
+
+  } catch (error) {
+    console.error("Error fetching data from Spotify:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+module.exports = router;

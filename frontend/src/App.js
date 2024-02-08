@@ -8,6 +8,7 @@ import './css/login.css';
 import './css/createlist.css';
 import './css/listCard.css';
 import './css/albumPage.css';
+import './css/showMessage.css';
 import Sidebar from "./components/sideBar";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
@@ -43,8 +44,8 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           <Route path="/createListPage" element={<CreateListPage />}/>
-          <Route path="/albumPage/:mbid" element={<AlbumPage />} />
-          <Route path="/artistPage/:mbid" element={<ArtistPage />} />
+          <Route path="/albumPage/:spotifyId" element={<AlbumPage />} />
+          <Route path="/artistPage/:artistSpotifyId" element={<ArtistPage />} />
           <Route path="/searchBar" element={<SearchBar />} />
           <Route path="/listPage/:listId" element={<ListPage />} />
           <Route path="/allAlbumsPage" element={<AllAlbums />} />

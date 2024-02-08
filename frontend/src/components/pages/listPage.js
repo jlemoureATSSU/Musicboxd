@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import AlbumCard from '../albumCard'; // Adjust the path as necessary
+import AlbumCard from '../albumCard'; 
 
 const ListPage = () => {
     const { listId } = useParams();
@@ -28,13 +28,12 @@ const ListPage = () => {
             return response.data;
         } catch (error) {
             console.error("Error fetching album details from backend", error);
-            return null; // or return a default object with empty fields
+            return null; 
         }
     };
 
     const fetchAlbumsDetails = async (albums) => {
         const details = await Promise.all(albums.map(album => fetchAlbumDetailsFromBackend(album.id)));
-        // Filter out any null responses due to errors
         const validDetails = details.filter(detail => detail !== null);
         setAlbumDetails(validDetails);
     };

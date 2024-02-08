@@ -9,7 +9,6 @@ import getUserInfo from "../../utilities/decodeJwt";
 
 const AlbumPage = () => {
     const [albumDetails, setAlbumDetails] = useState(null);
-    const [coverArtUrl, setCoverArtUrl] = useState('');
     const [userLists, setUserLists] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [albumListCount, setAlbumListCount] = useState(0);
@@ -18,28 +17,36 @@ const AlbumPage = () => {
     const [submitMessage, setSubmitMessage] = useState('');
     const [showMessage, setShowMessage] = useState(false);
     const [averageRating, setAverageRating] = useState('');
-    const { mbid } = useParams();
+    const { spotifyId } = useParams();
     const user = getUserInfo();
 
     useEffect(() => {
-        const fetchAlbumDetailsAndRating = async () => {
+        console.log("Spotify ID:", spotifyId);
+        const fetchAlbumDetailsFromSpotify = async () => {
             try {
-                const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${mbid}`);
-                setAlbumDetails(detailsResponse.data.details);
-                setCoverArtUrl(detailsResponse.data.coverArtUrl || '');
+                const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
+                setAlbumDetails(response.data);
             } catch (error) {
                 console.error("Error fetching album details from backend", error);
             }
+           
+        };
     
+        fetchAlbumDetailsFromSpotify();
+    }, [spotifyId]);
+
+
+    useEffect(() => {
+        const fetchAlbumDetailsAndRatingFromMongo = async () => {
+
             try {
-                const listCountResponse = await axios.get(`http://localhost:8081/list/albumInListsCount/${mbid}`);
+                const listCountResponse = await axios.get(`http://localhost:8081/list/albumInListsCount/${spotifyId}`);
                 setAlbumListCount(listCountResponse.data.count);
             } catch (error) {
                 console.error("Error fetching album list count", error);
             }
-    
             try {
-                const ratingResponse = await axios.get(`http://localhost:8081/rating/getByUserAndAlbum/${user.username}/${mbid}`);
+                const ratingResponse = await axios.get(`http://localhost:8081/rating/getByUserAndAlbum/${user.username}/${spotifyId}`);
                 if (ratingResponse.data && ratingResponse.data.ratingNum !== undefined) {
                   setRating(ratingResponse.data.ratingNum.toString());
                 } else {
@@ -53,7 +60,7 @@ const AlbumPage = () => {
                 }
               }
             try {
-                const avgRatingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${mbid}`);
+                const avgRatingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${spotifyId}`);
                 if (avgRatingResponse.data && avgRatingResponse.data.averageRating !== undefined) {
                     setAverageRating(avgRatingResponse.data.averageRating.toFixed(1)); 
                 } else {
@@ -83,9 +90,9 @@ const AlbumPage = () => {
                     clearTimeout(fadeOutTimer);
                 };
             }
-    
-        fetchAlbumDetailsAndRating();
-    }, [mbid, user.username, showMessage]);
+            fetchAlbumDetailsAndRatingFromMongo();
+        }, [spotifyId, showMessage]);
+            
     
     
 
@@ -100,9 +107,9 @@ const AlbumPage = () => {
     };
 
     const addAlbumToList = async (listId) => {
-        const albumMBID = mbid; 
+        const albumId = spotifyId; 
         try {
-          await axios.post(`http://localhost:8081/list/addAlbumToList/${listId}`, { albumMBID });
+          await axios.post(`http://localhost:8081/list/addAlbumToList/${listId}`, { albumId });
           setShowModal(false);
           setAlbumListCount(albumListCount + 1);
         } catch (error) {
@@ -134,7 +141,7 @@ const AlbumPage = () => {
             const response = await axios.post('http://localhost:8081/rating/save', {
                 userName: user.username,
                 ratingNum: parseFloat(rating),
-                albumId: mbid, 
+                albumId: spotifyId, 
             });
 
             setSubmitMessage('Rating submitted successfully!');
@@ -178,18 +185,19 @@ const AlbumPage = () => {
         if (numRating >= 7.5) return 'rating-green';
     };
     
-    const artist = albumDetails['artist-credit']?.map(ac => ac.name).join(', ') ?? 'Unknown Artist';
-    const title = albumDetails.title || 'Unknown Title';
-    const releaseDate = albumDetails['first-release-date'] || 'Unknown Release Date';
+    const artist = albumDetails.artists ?? 'Unknown Artist';
+    const title = albumDetails.name || 'Unknown Title';
+    const releaseDate = albumDetails.release_date || 'Unknown Release Date';
+    
 
     return (
         <div className= "album-page">
             <AlbumCard
-              coverArtUrl={coverArtUrl}
+              coverArtUrl={albumDetails.coverArtUrl}
               title={title}
               artist={artist}
               releaseDate={releaseDate !== 'Unknown Date' ? new Date(releaseDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown Date'}
-              mbid={mbid}
+                id={spotifyId}
             />
         <div className='list-count'>
             This album appears in {albumListCount} user-created List(s).

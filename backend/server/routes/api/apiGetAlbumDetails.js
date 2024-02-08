@@ -1,38 +1,43 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const NodeCache = require("node-cache");
-const myCache = new NodeCache({ stdTTL: 100, checkperiod: 120 });
+const myCache = require('../../utilities/cache'); // Adjust the path as necessary
+const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
-// Define the route for fetching album details and cover art
-router.get('/getAlbumDetails/:mbid', async (req, res) => {
-  const { mbid } = req.params;
-  let cachedResponse = myCache.get(mbid);
-  if (cachedResponse) {
-    return res.json(cachedResponse);
+router.get('/getAlbumDetails/:spotifyAlbumId', async (req, res) => {
+  const { spotifyAlbumId } = req.params;
+  const cacheKey = `album-${spotifyAlbumId}`; // Standardized cache key
+  let albumDetails = myCache.get(cacheKey);
+
+  if (albumDetails) {
+    console.log(`album details from cache for ID: ${spotifyAlbumId}`);
+    return res.json(albumDetails);
   }
-  const userAgent = 'Musicboxd (joelem316@gmail.com)'; // Adjust with your actual User-Agent
 
   try {
-    const detailsPromise = axios.get(`https://musicbrainz.org/ws/2/release-group/${mbid}?fmt=json&inc=artist-credits+releases`, {
-      headers: { 'User-Agent': userAgent }
+    const accessToken = await getSpotifyAccessToken();
+    const response = await axios.get(`https://api.spotify.com/v1/albums/${spotifyAlbumId}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`, // Use the access token for Spotify API
+      },
     });
-    const coverArtPromise = axios.get(`http://coverartarchive.org/release-group/${mbid}`, {
-      headers: { 'User-Agent': userAgent }
-    }).catch(() => ({ data: { images: [] } })); // Gracefully handle no cover art
 
-    const [detailsResponse, coverResponse] = await Promise.all([detailsPromise, coverArtPromise]);
-
+    const album = response.data;
     const albumDetails = {
-      details: detailsResponse.data,
-      coverArtUrl: coverResponse.data.images.length > 0 ? coverResponse.data.images[0].image : undefined
+      name: album.name,
+      artists: album.artists.map(artist => artist.name).join(', '),
+      release_date: album.release_date,
+      coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
     };
 
-    myCache.set(mbid, albumDetails);
+    myCache.set(cacheKey, albumDetails);
+    console.log(`album details from Spotify API for ID: ${spotifyAlbumId}`);
+
 
     res.json(albumDetails);
   } catch (error) {
-    console.error("Error fetching album details:", error);
+    console.error("Error fetching album details from Spotify:", error);
+    // Consider handling different types of errors differently
     res.status(500).send("Internal server error");
   }
 });

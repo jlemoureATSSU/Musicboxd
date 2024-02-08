@@ -19,6 +19,9 @@ const getRatingByUserAndAlbum = require('./routes/rating/ratingGetByUserAndAlbum
 const getAvgRatingByAlbum = require('./routes/rating/ratingGetAvgByAlbum')
 const getHighestRatedAlbums = require('./routes/rating/ratingGetHighestRatedAlbums')
 const getAlbumDetails = require('./routes/api/apiGetAlbumDetails')
+const searchArtists = require('./routes/api/apiSearchArtists')
+const searchAlbums = require('./routes/api/apiSearchAlbums')
+const getAlbumsByArtist = require('./routes/api/apiGetAlbumsByArtist')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -43,6 +46,9 @@ app.use('/rating', getRatingByUserAndAlbum)
 app.use('/rating', getAvgRatingByAlbum)
 app.use('/rating', getHighestRatedAlbums)
 app.use('/api', getAlbumDetails)
+app.use('/api', searchArtists)
+app.use('/api', searchAlbums)
+app.use('/api', getAlbumsByArtist)
 
 
 

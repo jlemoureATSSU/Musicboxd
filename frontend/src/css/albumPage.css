@@ -70,8 +70,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
     background-color: #444;
 }
-.album-modal .close-modal-btn {
-}
+
 .list-count {
     background-color: #222;
     color: white;
@@ -145,57 +144,6 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
-.rating-message {
-    position: fixed;
-    left: 55%;
-    bottom: -100px;
-    transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.75);
-    color: white; 
-    padding: 16px 32px; 
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); 
-    transition: all 0.5s ease-in-out;
-    z-index: 1000;
-    white-space: nowrap;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    max-width: 80%;
-    box-sizing: border-box;
-}
-
-.rating-message.visible {
-    bottom: 40px;
-    visibility: visible;
-    animation: fadeInUp 0.5s forwards;
-    opacity: 1;
-}
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        bottom: -100px;
-    }
-    to {
-        opacity: 1;
-        bottom: 40px;
-    }
-}
-
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-        bottom: 40px;
-    }
-    to {
-        opacity: 0;
-        bottom: -100px;
-    }
-}
-
-.rating-message.fade-out {
-    animation: fadeOut 2s forwards;
-}
 
 
 

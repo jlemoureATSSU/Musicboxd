@@ -12,7 +12,7 @@ const CreateListPage = () => {
   const [user, setUser] = useState({})
   const [listTitle, setListTitle] = useState('');
   const [listDescription, setListDescription] = useState('');
-  const [albums, setAlbums] = useState([]); // This will hold the albums added to the list
+  const [albums, setAlbums] = useState([]); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const handleTitleChange = (e) => setListTitle(e.target.value);
@@ -31,10 +31,10 @@ const CreateListPage = () => {
   const fetchCoverArt = async (albumMBID) => {
     try {
       const coverResponse = await axios.get(`http://coverartarchive.org/release-group/${albumMBID}`);
-      return coverResponse.data.images[0].image; // Return the URL of the first image
+      return coverResponse.data.images[0].image; 
     } catch (error) {
       console.error("Error fetching cover art", error);
-      return ''; // Return empty string if no cover art is found
+      return ''; 
     }
   };
 
@@ -86,7 +86,7 @@ const CreateListPage = () => {
     try {
       const response = await axios.post(url, listData);
       console.log('List saved:', response.data);
-      const newListId = response.data._id; // Get the ID of the new list from the response
+      const newListId = response.data._id; 
       navigate(`/listPage/${newListId}`);
     } catch (error) {
       console.error('Error saving the list:', error);
@@ -94,7 +94,6 @@ const CreateListPage = () => {
   };
 
   const handleDiscardList = () => {
-    // Reset state
     setListTitle('');
     setListDescription('');
     setAlbums([]);

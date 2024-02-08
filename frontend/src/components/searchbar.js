@@ -10,7 +10,7 @@ const SearchBar = () => {
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const [searchMode, setSearchMode] = useState('artist');
 
-    const searchMusicBrainz = debounce(async (search) => {
+    const search = debounce(async (search) => {
       if (!search) {
         setResults([]);
         return;
@@ -22,38 +22,47 @@ const SearchBar = () => {
         ? `${backendBaseUrl}/api/searchArtists?search=${encodeURIComponent(search)}` 
         : `${backendBaseUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`;
     
-      try {
-        const response = await axios.get(searchUrl);
-        let results = [];
-        if (searchMode === 'artist') {
-          results = response.data.artists.map(artist => ({
-            id: artist.id,
-            name: artist.name,
-            type: 'artist'
-          }));
-        } else if (searchMode === 'album') {
-          results = response.data['release-groups'].map(album => ({
-            id: album.id,
-            name: album.title,
-            artist: album['artist-credit'] ? album['artist-credit'][0].name : 'Unknown Artist',
-            year: album['first-release-date'] ? new Date(album['first-release-date']).getFullYear() : 'Unknown Year',
-            type: 'album'
-          }));
+        try {
+          const response = await axios.get(searchUrl);
+          console.log(response.data); // Log the API response to inspect the data structure
+        
+          let results = [];
+          if (searchMode === 'artist' && response.data && Array.isArray(response.data.artists)) {
+            results = response.data.artists.map(artist => ({
+              id: artist.id,
+              name: artist.name,
+              type: 'artist'
+            }));
+          } else if (searchMode === 'album' && response.data && Array.isArray(response.data.albums)) {
+            results = response.data.albums.map(album => {
+              const year = album.release_date ? new Date(album.release_date).getFullYear() : 'Unknown Year';
+              return {
+                id: album.id,
+                name: album.name,
+                artist: album.artists,
+                year,
+                type: 'album'
+              };
+            });
+          } else {
+            console.error('The API response does not have the expected structure.');
+          }
+          
+          setResults(results);
+        } catch (error) {
+          console.error('Error fetching search results', error);
+          setResults([]);
         }
-        setResults(results);
-      } catch (error) {
-        console.error('Error fetching search results', error);
-        setResults([]);
-      }
-    }, 300);
+    }, 600);
+    
     
     
     
     useEffect(() => {
-        searchMusicBrainz(searchTerm);
+        search(searchTerm);
 
         return () => {
-            searchMusicBrainz.cancel();
+            search.cancel();
         };
     }, [searchTerm]);
 
@@ -71,15 +80,15 @@ const SearchBar = () => {
         };
       }, []);
 
-    const handleArtistSelect = (mbid) => {
+      const handleArtistSelect = (artist) => {
         setResults([]);
-        navigate(`/artistPage/${mbid}`);
+        navigate(`/artistPage/${artist.id}`); 
     };
 
-    const handleAlbumSelect = (mbid) => {
-        setResults([]);
-        navigate(`/albumPage/${mbid}`);
-    };
+    const handleAlbumSelect = (album) => {
+      setResults([]);
+        navigate(`/albumPage/${album.id}`);
+      };
 
     const handleKeyDown = (e) => {
         if (e.key === 'ArrowDown' && highlightedIndex < results.length - 1) {
@@ -88,7 +97,15 @@ const SearchBar = () => {
           setHighlightedIndex(prevIndex => prevIndex - 1);
         } else if (e.key === 'Enter' && highlightedIndex >= 0) {
           handleArtistSelect(results[highlightedIndex].id);
+        } else if (e.key === 'Enter' && highlightedIndex >= 0) {
+          const result = results[highlightedIndex];
+          if (result.type === 'album') {
+            handleAlbumSelect(result);
+          } else {
+            handleArtistSelect(result.id);
+          }
         }
+        
       };
       
 
@@ -117,26 +134,27 @@ const SearchBar = () => {
           </div>
           <div className='search-results'>
             {results.map((result, index) => (
-                <div
-                    key={index}
-                    className={`search-result ${index === highlightedIndex ? 'highlighted' : ''}`}
-                    onClick={() => result.type === 'artist' ? handleArtistSelect(result.id) : handleAlbumSelect(result.id)}
-                    onMouseOver={() => setHighlightedIndex(index)}
-                >
-                    {result.type === 'album' && (
-                    <>
-                        <span className="result-type">Album</span> 
-                        {result.name} <span className="album-artist">{result.artist}</span> <span className="album-year">({result.year})</span>
-                    </>
-                    )}
-                    {result.type === 'artist' && (
-                    <>
-                        <span className="result-type">Artist</span> 
-                        {result.name}
-                    </>
-                    )}
-                </div>
-                ))}
+              <div
+                key={index}
+                className={`search-result ${index === highlightedIndex ? 'highlighted' : ''}`}
+                onClick={() => result.type === 'album' ? handleAlbumSelect(result) : handleArtistSelect(result)}
+                // Assuming handleArtistSelect is defined elsewhere for artists
+                onMouseOver={() => setHighlightedIndex(index)}
+              >
+                {result.type === 'album' && (
+                  <>
+                    <span className="result-type">Album</span> 
+                    {result.name} <span className="album-artist">{result.artist}</span> <span className="album-year">({result.year})</span>
+                  </>
+                )}
+                {result.type === 'artist' && (
+                  <>
+                    <span className="result-type">Artist</span> 
+                    {result.name}
+                  </>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       );

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, mbid,averageRating }) => {
+const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId, averageRating }) => {
   const titleRef = useRef(null);
   const artistRef = useRef(null);
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, mbid,averageRating
   }, [artist]); 
 
   const goToAlbumPage = () => {
-    navigate(`/albumPage/${mbid}`);
+    navigate(`/albumPage/${spotifyId}`);
   };
 
   const formattedRating = averageRating ? (averageRating === 10 ? averageRating.toFixed(0) : averageRating.toFixed(1)) : 'N/A';

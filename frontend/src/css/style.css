@@ -5,14 +5,13 @@
   padding-left: 200px;
   padding-top: 70px;
   background-image: linear-gradient(to bottom, #727272, #505050 35%);
-  min-height: 100vh;
   color: #fff;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .page{
   margin-left: 25px;
-  height: 100vh;
+  
 }
 
 .tracklist-box {
