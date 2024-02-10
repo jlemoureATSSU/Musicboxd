@@ -4,9 +4,9 @@ const axios = require('axios');
 const myCache = require('../../utilities/cache');
 const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
-router.get('/getAlbumDetails/:spotifyAlbumId', async (req, res) => {
-  const { spotifyAlbumId } = req.params;
-  const cacheKey = `album-${spotifyAlbumId}`;
+router.get('/getAlbumDetails/:spotifyId', async (req, res) => {
+  const { spotifyId } = req.params;
+  const cacheKey = `album-${spotifyId}`;
   let albumDetails = myCache.get(cacheKey);
 
   if (albumDetails) {
@@ -16,7 +16,7 @@ router.get('/getAlbumDetails/:spotifyAlbumId', async (req, res) => {
 
   try {
     const accessToken = await getSpotifyAccessToken();
-    const response = await axios.get(`https://api.spotify.com/v1/albums/${spotifyAlbumId}`, {
+    const response = await axios.get(`https://api.spotify.com/v1/albums/${spotifyId}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       },
@@ -24,6 +24,7 @@ router.get('/getAlbumDetails/:spotifyAlbumId', async (req, res) => {
 
     const album = response.data;
     const albumDetails = {
+      id: spotifyId,
       name: album.name,
       artists: album.artists.map(artist => artist.name).join(', '),
       release_date: album.release_date,

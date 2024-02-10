@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import AlbumCard from '../albumCard'; 
+import AlbumCard from '../albumCardInList'; 
 
 const ListPage = () => {
     const { listId } = useParams();
@@ -28,10 +28,10 @@ const ListPage = () => {
         ));
         setAlbumDetails(details);
     };
-
-    const fetchAlbumDetailsFromSpotify = async (spotifyAlbumId) => {
+    console.log("Album details:", albumDetails);
+    const fetchAlbumDetailsFromSpotify = async (spotifyId) => {
         try {
-            const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyAlbumId}`);
+            const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
             return response.data; 
         } catch (error) {
             console.error("Error fetching album details from backend:", error);
@@ -46,7 +46,12 @@ const ListPage = () => {
     return (
         <div className="create-list-page">
             <div className="list-input-card">
-                <h1 className="list-title-input">{listData.listName} created by {listData.userName}</h1>
+                <h1 className="list-title-input">{listData.listName}</h1>
+                <p className="list-date-input">List created by {listData.userName} {new Date(listData.dateCreated).toLocaleDateString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                })}</p>
                 <p className="list-description-input">{listData.listDescription}</p>
             </div>
             <div className="album-list-card">
@@ -58,7 +63,7 @@ const ListPage = () => {
                             title={album.name}
                             artist={album.artists}
                             releaseDate={new Date(album.release_date).getFullYear()}
-                            id={album.id} 
+                            spotifyId={album.id} 
                         />
                     ))}
                 </div>

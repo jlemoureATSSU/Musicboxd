@@ -4,7 +4,7 @@ const List = require('../../models/listModel');
 
 router.post('/addAlbumToList/:listId', async (req, res) => {
   const { listId } = req.params;
-  const { albumMBID } = req.body;
+  const { albumId } = req.body;
 
   try {
     const list = await List.findById(listId);
@@ -12,11 +12,11 @@ router.post('/addAlbumToList/:listId', async (req, res) => {
       return res.status(404).json({ message: 'List not found' });
     }
 
-    if (list.albums.some(album => album.id === albumMBID)) {
+    if (list.albums.some(album => album.id === albumId)) {
       return res.status(400).json({ message: 'Album already exists in the list' });
     }
 
-    list.albums.push({ id: albumMBID });
+    list.albums.push({ id: albumId });
     await list.save();
 
     res.status(200).json(list);

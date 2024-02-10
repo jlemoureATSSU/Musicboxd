@@ -25,8 +25,8 @@ const ArtistPage = () => {
     }, [artistSpotifyId]);
 
     return (
-        <div className='page'>
-            <h1>{artistDetails?.name || 'Artist'}</h1>
+        <div>
+            <h1 className="artist-header">{artistDetails?.name || 'Artist'}</h1>
             <div className="albums-container">
                 {albums.map((album) => (
                     <AlbumCard

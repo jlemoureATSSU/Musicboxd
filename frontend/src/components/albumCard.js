@@ -1,12 +1,28 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId, averageRating }) => {
+const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId }) => {
+  const [averageRating, setAverageRating] = useState(null);
   const titleRef = useRef(null);
   const artistRef = useRef(null);
   const navigate = useNavigate();
   const MAX_TITLE_SIZE = 25;
   const MAX_ARTIST_SIZE = 20; 
+
+  useEffect(() => {
+    const fetchAlbumRating = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${spotifyId}`);
+        setAverageRating(response.data.averageRating);
+      } catch (error) {
+        console.error('Error fetching album rating:', error);
+        setAverageRating('N/A'); 
+      }
+    };
+
+    fetchAlbumRating();
+  }, [spotifyId]);
 
   const adjustTitleFontSize = () => {
     const MIN_TITLE_SIZE = 12; 
@@ -44,7 +60,9 @@ const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId, average
     navigate(`/albumPage/${spotifyId}`);
   };
 
-  const formattedRating = averageRating ? (averageRating === 10 ? averageRating.toFixed(0) : averageRating.toFixed(1)) : 'N/A';
+  const formattedRating = typeof averageRating === 'number' 
+  ? (averageRating === 10 ? averageRating.toFixed(0) : averageRating.toFixed(1))
+  : 'N/A';
 
   const getRatingClassName = (ratingValue) => {
     const numRating = parseFloat(ratingValue);

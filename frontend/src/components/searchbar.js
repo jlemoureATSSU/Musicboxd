@@ -119,16 +119,24 @@ const SearchBar = () => {
             />
           <div className="search-controls">
           <button
-            className={`search-mode-button ${searchMode === 'artist' ? 'active' : ''}`}
-            onClick={() => setSearchMode('artist')}
+              className={`search-mode-button ${searchMode === 'artist' ? 'active' : ''}`}
+              onClick={() => {
+                setSearchMode('artist');
+                setSearchTerm('');
+                setResults([]);
+              }}
             >
-            Artists
+              Artists
             </button>
             <button
-            className={`search-mode-button ${searchMode === 'album' ? 'active' : ''}`}
-            onClick={() => setSearchMode('album')}
+              className={`search-mode-button ${searchMode === 'album' ? 'active' : ''}`}
+              onClick={() => {
+                setSearchMode('album');
+                setSearchTerm(''); 
+                setResults([]);
+              }}
             >
-            Albums
+              Albums
             </button>
           </div>
           <div className='search-results'>

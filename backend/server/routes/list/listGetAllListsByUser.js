@@ -5,7 +5,7 @@ const ListModel = require('../../models/listModel');
 router.get('/getAllListsByUser/:userName', async (req, res) => {
     try {
       const { userName } = req.params; 
-      const lists = await ListModel.find({ userName: userName });
+      const lists = await ListModel.find({ userName: userName }).sort({ dateCreated: -1 });
       res.json(lists);
     } catch (error) {
       console.error(error);

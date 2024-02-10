@@ -52,6 +52,7 @@ const PrivateUserProfile = () => {
               title={list.listName}
               listId={list._id}
               albums={list.albums} 
+              dateCreated={list.dateCreated}
             />
           ))}
         <div className="col-md-12 text-center">

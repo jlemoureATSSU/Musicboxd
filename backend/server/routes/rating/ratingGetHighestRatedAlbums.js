@@ -6,7 +6,7 @@ router.get('/getHighestRatedAlbums', async (req, res) => {
     try {
         const highestRatedAlbums = await AvgRating.find({})
             .sort({ averageRating: -1 }) 
-            .limit(10) 
+            .limit(8) 
             .exec(); 
 
         if (!highestRatedAlbums.length) {

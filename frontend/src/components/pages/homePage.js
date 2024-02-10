@@ -21,7 +21,7 @@ const HomePage = () => {
         };
         const fetchRecentLists = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/list/getAllLists`);
+                const response = await axios.get(`http://localhost:8081/list/getRecentLists`);
                 setRecentLists(response.data);
             } catch (error) {
                 console.error('Error fetching recent lists:', error);
@@ -76,6 +76,7 @@ const HomePage = () => {
                         title={list.listName}
                         listId={list._id}
                         albums={list.albums} 
+                        dateCreated={list.dateCreated}
                     />
                 ))}
             </div>
