@@ -24,9 +24,15 @@ const ArtistPage = () => {
         fetchArtistAndAlbums();
     }, [artistSpotifyId]);
 
+    const getSpotifyAlbumUrl = (spotifyId) => {
+        return `https://open.spotify.com/artist/${artistSpotifyId}`;
+      };
+
     return (
         <div>
-            <h1 className="artist-header">{artistDetails?.name || 'Artist'}</h1>
+            <h1 className="artist-header">{artistDetails?.name|| 'Artist'}
+            <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn">Open in <span className="spotify-green">Spotify</span></button>
+            </h1>
             <div className="albums-container">
                 {albums.map((album) => (
                     <AlbumCard

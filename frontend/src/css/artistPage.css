@@ -1,5 +1,8 @@
 .artist-header {
     margin-left: 35px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
   }
 
 .albums-container {
