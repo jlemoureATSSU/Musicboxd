@@ -1,0 +1,101 @@
+.album-card-inlist {
+    background-color: #222;
+    color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 200px;
+    width: 400px;
+    min-width: 400px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  }
+  
+  
+  .album-card-inlist:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  }
+  
+  .cover-art-inlist {
+    flex: 0 0 auto;
+    height:180px;
+    min-height: 180px;
+    width: 180px;
+    min-width: 180px;
+    margin-left: 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 8px 16px rgba(53, 53, 53, 0.2);
+  }
+  
+  .album-info-inlist {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 100%;
+    justify-content: space-between;
+  }
+  
+  .album-title-inlist {
+    overflow: ellipsis;
+    padding-top: 4px;
+    height: 60px;
+    line-height: 18px;
+    margin-top: 10px;
+    margin-bottom: 1px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: ellipsis;
+  }
+  
+  .album-artist-inlist {
+    position: sticky;
+    color: #555;
+    padding-top: 1px;
+    font-size: clamp(20px);
+  }
+  
+  .album-release-date-inlist {
+    position: sticky;
+    padding-top: 1px;
+    font-size: 18px;
+    bottom: 10px;
+    margin-left: 0px;
+    margin-bottom: 10px;
+  }
+  
+  .album-rating-inlist {
+    position: sticky;
+    text-align: center;
+    background-color: #313131;;
+    border-radius: 10%;
+    font-size: 40px; /* Adjust based on your design */
+    color: #ccc; /* Lighter text color for contrast or as fits your design */
+    bottom: 10px; /* Adjust the bottom value as needed */
+    margin-left: 85px;
+    margin-right: 5px;
+  }
+  
+  .rating-red {
+    color: rgba(255, 0, 0, 0.844);
+  }
+  .rating-orange {
+    color: rgb(255, 204, 0);
+  }
+  .rating-green {
+    color: rgb(12, 197, 12);
+  }
+  .album-info-inlist p {
+    margin-top: 1px;
+  }
+  
+  

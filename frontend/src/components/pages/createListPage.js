@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import AlbumSearchModal from '../albumSearchModal';
-import AlbumCard from '../albumCard';
+import AlbumCard from '../albumCardInList';
 import getUserInfo from "../../utilities/decodeJwt"
 
-const url = "http://localhost:8081/list/create";
+const url = "http://localhost:8081/list/save";
 
 const CreateListPage = () => {
   const [user, setUser] = useState({})
@@ -14,17 +14,54 @@ const CreateListPage = () => {
   const [albums, setAlbums] = useState([]); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { listId } = useParams();
   const handleTitleChange = (e) => setListTitle(e.target.value);
   const handleDescriptionChange = (e) => setListDescription(e.target.value);
   
   useEffect(() => {
-    const setUserInfo = async () => {
-      const info = await getUserInfo();
-      setUser(info);
+    const fetchListDetails = async () => {
+      if (listId) { // Check if listId exists
+        try {
+          const listResponse = await axios.get(`http://localhost:8081/list/getListById/${listId}`);
+          const { listName, listDescription, albums } = listResponse.data;
+          
+          // Pre-populate the form with fetched data
+          setListTitle(listName);
+          setListDescription(listDescription);
+          
+          // Fetch detailed album information for each album
+          const albumDetailsResponses = await Promise.all(
+            albums.map((album) =>
+              axios.get(`http://localhost:8081/api/getAlbumDetails/${album.id}`)
+            )
+          );
+          // Extract the data from each response and set it to the albums state
+          const detailedAlbums = albumDetailsResponses.map(response => {
+            return {
+              id: response.data.id,
+              coverArtUrl: response.data.coverArtUrl,
+              name: response.data.name,
+              artist: response.data.artists, // Make sure this matches the backend structure
+              releaseDate: new Date(response.data.release_date).getFullYear() // Adjust this according to the data structure
+            };
+          });
+          setAlbums(detailedAlbums);
+  
+        } catch (error) {
+          console.error('Error fetching list details:', error);
+        }
+      }
+  
+      const setUserInfo = async () => {
+        const info = await getUserInfo();
+        setUser(info);
+      };
+      
+      setUserInfo();
     };
-    
-    setUserInfo();
-  }, []);
+  
+    fetchListDetails();
+  }, [listId]);
   
 
   const addAlbumToList = (albumDetails) => {
@@ -49,18 +86,25 @@ const CreateListPage = () => {
       userName: user.username,
       listName: listTitle,
       listDescription: listDescription,
-      albums: albums.map((album) => ({ id: album.id }))
+      albums: albums.map((album) => ({ id: album.id })),
     };
-
+  
+    // Include the listId as _id in the request if it exists
+    if (listId) {
+      listData._id = listId;
+    }
+  
     try {
       const response = await axios.post(url, listData);
       console.log('List saved:', response.data);
-      const newListId = response.data._id; 
-      navigate(`/listPage/${newListId}`);
+      // Use the existing listId if editing, or the new one if creating
+      const savedListId = response.data._id;
+      navigate(`/listPage/${savedListId}`);
     } catch (error) {
       console.error('Error saving the list:', error);
     }
   };
+  
 
   const handleDiscardList = () => {
     setListTitle('');
@@ -93,17 +137,16 @@ const CreateListPage = () => {
         <div className="album-list">
           {albums.map((album) => (
             <AlbumCard 
-            key={album.id}
             coverArtUrl={album.coverArtUrl}
             title={album.name}
             artist={album.artist}
             releaseDate={album.releaseDate}
-            mbid={album.id}
+            spotifyId={album.id}
             />
           ))}
-          <div className="add-album-plus" onClick={() => setIsModalOpen(true)}>+</div>
         </div>
       </div>
+      <div className="add-album-plus" onClick={() => setIsModalOpen(true)}>+</div>
       <AlbumSearchModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}

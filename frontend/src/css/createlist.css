@@ -127,6 +127,7 @@
 }
 
 .discard-btn,
+.edit-btn,
 .save-btn {
   border: none;
   padding: 10px 20px;
@@ -160,6 +161,20 @@
 }
 
 .save-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.edit-btn {
+  height: 45px;
+  width: 150px;
+  margin-top: 12px;
+  background: rgb(198, 198, 78);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+
+.edit-btn:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
