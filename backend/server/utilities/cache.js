@@ -1,5 +1,4 @@
-// utilities/cache.js
 const NodeCache = require("node-cache");
-const myCache = new NodeCache({ stdTTL: 1000, checkperiod: 1200 });
+const myCache = new NodeCache({ stdTTL: 2000, checkperiod: 2200 });
 
 module.exports = myCache;

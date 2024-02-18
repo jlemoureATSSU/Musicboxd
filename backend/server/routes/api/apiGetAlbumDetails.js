@@ -27,6 +27,7 @@ router.get('/getAlbumDetails/:spotifyId', async (req, res) => {
       id: spotifyId,
       name: album.name,
       artists: album.artists.map(artist => artist.name).join(', '),
+      artistIds: album.artists.map(artist => artist.id),
       release_date: album.release_date,
       coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
     };

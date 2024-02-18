@@ -8,26 +8,25 @@
 .albums-container {
     display: flex;
     flex-wrap: wrap;
-    max-height: calc(100vh - 126px); /* Adjust this value to fit your design */
-    overflow-y: auto; /* Allows vertical scrolling */
+    max-height: calc(100vh - 133px); 
+    overflow-y: auto; 
     padding-left: 25px;
     justify-content: flex-start;
     padding-top: 10px;
+    margin-right: 5px;
 }
 
 .albums-container::-webkit-scrollbar-track {
-  margin-top: 20px; /* Adds a margin at the top of the track */
-  margin-bottom: 20px; /* Adds a margin at the bottom of the track */
-  /* Existing styles */
+  margin-top: 20px;
+  margin-bottom: 20px; 
 }
   
   
 .albums-container::-webkit-scrollbar-thumb {
     background-color: #363636; 
     border-radius: 10px;
-    border: 4px solid transparent; /* Adjusts the width of the border to act as margin */
-    background-clip: padding-box; /* Ensures the background color doesn't bleed into the border */
-    /* Existing styles */
+    border: 4px solid transparent; 
+    background-clip: padding-box; 
   }
   
   

@@ -20,7 +20,7 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
-.cover-art {
+.album-card-cover-art {
   height:180px;
   min-height: 180px;
   width: 180px;
@@ -32,7 +32,7 @@
   box-shadow: 0 8px 16px rgba(53, 53, 53, 0.2);
 }
 
-.album-info {
+.album-card-info {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -43,7 +43,7 @@
   justify-content: space-between;
 }
 
-.album-title {
+.album-card-title {
   overflow: hidden;
   padding-top: 4px;
   height: 40px;
@@ -56,13 +56,22 @@
   overflow: ellipsis;
 }
 
-.album-artist {
+.album-card-artist,
+.album-card-artist-link,
+.album-card-artist a {
   padding-top: 1px;
-  font-size: clamp(20px);
-  margin-bottom: 80px;
+  font-size: clamp(20px, 2.5vw, 20px);
+  margin-bottom: 50px;
+  color: #858585; 
+  text-decoration: none;
 }
 
-.album-release-date {
+.album-card-artist-link:hover {
+  color: #b6b6b6;
+  text-decoration: underline; 
+}
+
+.album-card-release-date {
   position: sticky;
   padding-top: 1px;
   font-size: 18px;
@@ -71,14 +80,14 @@
   margin-bottom: 10px;
 }
 
-.album-rating {
+.album-card-rating {
   position: sticky;
   text-align: center;
   background-color: #313131;;
   border-radius: 10%;
-  font-size: 40px; /* Adjust based on your design */
-  color: #ccc; /* Lighter text color for contrast or as fits your design */
-  bottom: 10px; /* Adjust the bottom value as needed */
+  font-size: 40px; 
+  color: #ccc; 
+  bottom: 10px;
   margin-left: 85px;
   margin-right: 5px;
 }
@@ -92,7 +101,7 @@
 .rating-green {
   color: rgb(12, 197, 12);
 }
-.album-info p {
+.album-card-info p {
   margin-top: 1px;
 }
 

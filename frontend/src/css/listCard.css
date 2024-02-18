@@ -35,9 +35,9 @@
 
 }
 .list-card-username {
-  color: #aaa; /* Example color for the username */
-  font-size: 1em; /* Example size, adjust as needed */
-  margin-left: 15px; /* Optional: Adjust the spacing between the title and the username */
+  color: #aaa; 
+  font-size: 1em; 
+  margin-left: 15px; 
 }
 
 .list-card-content {
@@ -48,40 +48,42 @@
 
 
 .list-card-album-previews {
-  display: flex; /* Aligns children (img and div) in a row */
-  background-color: #222; /* Example color for the background */
+  display: flex; 
+  background-color: #222; 
   padding: 7px;
   width: 240px;
   border-radius: 8px;
-  align-items: center; /* Aligns children vertically in the center */
-  gap: 10px; /* Spacing between children */
-  margin-bottom: 10px; /* Space before the 'more' indicator */
+  align-items: center; 
+  gap: 10px; 
+  margin-bottom: 10px; 
 }
 
 
 .list-card-album-previews img {
-  width: 55px; /* Example size, adjust as needed */
-  height: 55px; /* Example size, adjust as needed */
-  border-radius: 1px; /* Rounded corners for images */;
-  object-fit: cover; /* Ensures the cover art fills the box without stretching */
+  width: 55px; 
+  height: 55px; 
+  border-radius: 1px;
+  object-fit: cover;
 }
 
 .list-card-album-previews div {
   font-size: 0.8rem;
   color: white;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-  border-radius: 4px; /* Consistent with image rounding */
-  padding: 5px 10px; /* Padding inside the 'more' indicator */
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px; 
+  padding: 5px 10px; 
 }
 .list-card-date {
-  color: white; /* Or any color you prefer */
-  background-color: #222; /* Example color for the background */
-  border-radius: 8px; /* Rounded corners for the date */
+  color: white; 
+  background-color: #222;
+  border-radius: 8px;
   height: 60px;
   font-size: 14px;
-  margin-left: 10px; /* Aligns the date to the right */
-  margin-bottom: 10px;
+  margin-left: 6px; 
+  margin-bottom: 6px;
   width: 70px;
   padding-top: 8px;
+  padding-left: 4px;
+  padding-right: 3px;
   text-align: center;
 }

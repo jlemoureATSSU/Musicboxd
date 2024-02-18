@@ -3,16 +3,20 @@ const router = express.Router();
 const AvgRating = require('../../models/avgRatingModel');
 
 router.get('/getHighestRatedAlbums', async (req, res) => {
+    let limit = parseInt(req.query.limit, 10);
+    limit = isNaN(limit) || limit < 1 ? 8 : limit;
+
     try {
-        const highestRatedAlbums = await AvgRating.find({})
-            .sort({ averageRating: -1 }) 
-            .limit(8) 
-            .exec(); 
+        const query = AvgRating.find({}).sort({ averageRating: -1 });
+ 
+        if (limit !== 0) {
+            query.limit(limit);
+        }
+        const highestRatedAlbums = await query.exec();
 
         if (!highestRatedAlbums.length) {
             return res.status(404).json({ message: 'No rated albums found' });
         }
-
 
         res.status(200).json(highestRatedAlbums);
     } catch (error) {

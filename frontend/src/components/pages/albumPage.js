@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
 import Modal from 'react-bootstrap/Modal';
@@ -9,6 +9,7 @@ import getUserInfo from "../../utilities/decodeJwt";
 
 const AlbumPage = () => {
     const [albumDetails, setAlbumDetails] = useState(null);
+    const artistId = albumDetails && albumDetails.artistIds.length > 0 ? albumDetails.artistIds[0] : null;
     const [userLists, setUserLists] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [albumListCount, setAlbumListCount] = useState(0);
@@ -26,6 +27,7 @@ const AlbumPage = () => {
         const fetchAlbumDetailsFromSpotify = async () => {
             try {
                 const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
+                console.log(response.data);
                 setAlbumDetails(response.data);
             } catch (error) {
                 console.error("Error fetching album details from backend", error);
@@ -198,6 +200,12 @@ const AlbumPage = () => {
         day: '2-digit',
       });
     }
+
+    const artistLink = artistId ? (
+        <Link to={`/artistPage/${artistId}`} className="album-artist-link">
+          {albumDetails.artists}
+        </Link>
+      ) : 'Unknown Artist';
   
 
     const getSpotifyAlbumUrl = (spotifyId) => {
@@ -213,7 +221,7 @@ const AlbumPage = () => {
                 <h1 className="album-title">{title}</h1>
                 <img src={albumDetails.coverArtUrl} alt={`${title} cover art`} className="album-cover-art" />
                 <div className="album-info">
-                    <div className="album-artist">{artist}</div>
+                <div className="album-artist">{artistLink}</div>
                     <div className="album-release-date"> {formattedReleaseDate} </div>
                     <div className="rating-title">Average Rating:</div>
                     <div className="average-rating-display">{averageRating} from {numberOfRatings} rating(s)</div> 

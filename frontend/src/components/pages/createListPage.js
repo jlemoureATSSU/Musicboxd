@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import AlbumSearchModal from '../albumSearchModal';
-import AlbumCard from '../albumCardInList';
+import AlbumCard from '../albumCard';
 import getUserInfo from "../../utilities/decodeJwt"
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
 
 const url = "http://localhost:8081/list/save";
 
@@ -20,29 +22,26 @@ const CreateListPage = () => {
   
   useEffect(() => {
     const fetchListDetails = async () => {
-      if (listId) { // Check if listId exists
+      if (listId) { 
         try {
           const listResponse = await axios.get(`http://localhost:8081/list/getListById/${listId}`);
           const { listName, listDescription, albums } = listResponse.data;
           
-          // Pre-populate the form with fetched data
           setListTitle(listName);
           setListDescription(listDescription);
           
-          // Fetch detailed album information for each album
           const albumDetailsResponses = await Promise.all(
             albums.map((album) =>
               axios.get(`http://localhost:8081/api/getAlbumDetails/${album.id}`)
             )
           );
-          // Extract the data from each response and set it to the albums state
           const detailedAlbums = albumDetailsResponses.map(response => {
             return {
               id: response.data.id,
               coverArtUrl: response.data.coverArtUrl,
               name: response.data.name,
-              artist: response.data.artists, // Make sure this matches the backend structure
-              releaseDate: new Date(response.data.release_date).getFullYear() // Adjust this according to the data structure
+              artist: response.data.artists, 
+              releaseDate: new Date(response.data.release_date).getFullYear() 
             };
           });
           setAlbums(detailedAlbums);
@@ -89,7 +88,6 @@ const CreateListPage = () => {
       albums: albums.map((album) => ({ id: album.id })),
     };
   
-    // Include the listId as _id in the request if it exists
     if (listId) {
       listData._id = listId;
     }
@@ -97,7 +95,6 @@ const CreateListPage = () => {
     try {
       const response = await axios.post(url, listData);
       console.log('List saved:', response.data);
-      // Use the existing listId if editing, or the new one if creating
       const savedListId = response.data._id;
       navigate(`/listPage/${savedListId}`);
     } catch (error) {
@@ -111,6 +108,27 @@ const CreateListPage = () => {
     setListDescription('');
     setAlbums([]);
   };
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
+
+const onDragEnd = (result) => {
+  if (!result.destination) {
+    return;
+  }
+
+  const items = reorder(
+    albums,
+    result.source.index,
+    result.destination.index
+  );
+
+  setAlbums(items);
+};
 
   return (
     <div className="create-list-page">
@@ -130,23 +148,49 @@ const CreateListPage = () => {
         />
         <div className="list-actions">
           <button onClick={handleDiscardList} className="discard-btn">Discard</button>
+          <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add Album</div>
           <button onClick={handleSaveList} className="save-btn">Save List</button>
+
         </div>
-      </div>
-      <div className="album-list-card">
-        <div className="album-list">
-          {albums.map((album) => (
-            <AlbumCard 
-            coverArtUrl={album.coverArtUrl}
-            title={album.name}
-            artist={album.artist}
-            releaseDate={album.releaseDate}
-            spotifyId={album.id}
-            />
-          ))}
         </div>
-      </div>
-      <div className="add-album-plus" onClick={() => setIsModalOpen(true)}>+</div>
+            <DragDropContext onDragEnd={onDragEnd}>
+              <Droppable droppableId="droppable" direction="horizontal">
+                {(provided, snapshot) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                    className="album-list-card"
+                  >
+                    <div className="album-list">
+                      {albums.map((album, index) => (
+                        <Draggable key={album.id} draggableId={album.id} index={index}>
+                          {(provided, snapshot) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.draggableProps}
+                              {...provided.dragHandleProps}
+                              style={{
+                                ...provided.draggableProps.style,
+                              }}
+                            >
+                              <AlbumCard
+                                coverArtUrl={album.coverArtUrl}
+                                title={album.name}
+                                artist={album.artist}
+                                releaseDate={album.releaseDate}
+                                spotifyId={album.id}
+                                isClickable={false} 
+                              />
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
       <AlbumSearchModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)}

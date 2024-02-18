@@ -11,7 +11,7 @@ const HomePage = () => {
 
     useEffect(() => {
 
-        const fetchHighestRatedAlbums = async () => {
+        const fetchHighestRatedAlbums = async (limit = 8) => {
           try {
               const response = await axios.get('http://localhost:8081/rating/getHighestRatedAlbums');
               setHighestRatedAlbums(response.data);
@@ -91,10 +91,12 @@ const HomePage = () => {
                     coverArtUrl={album.coverArtUrl}
                     title={album.name}
                     artist={album.artists} 
+                    artistIds={album.artistIds}
                     releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
                     spotifyId={albumId} 
                     averageRating={album.averageRating}
                     numberOfRatings={album.numberOfRatings}
+                    isClickable={true}
                 />
                 );
             })}

@@ -2,7 +2,6 @@ import React, { createContext, useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import './css/style.css';
 import './css/albumCard.css';
-import './css/albumCardInList.css';
 import './css/sidebar.css';
 import './css/searchbar.css';
 import './css/login.css';
@@ -22,7 +21,7 @@ import CreateListPage from "./components/pages/createListPage";
 import SearchBar from "./components/searchBar";
 import getUserInfo from "./utilities/decodeJwt";
 import ListPage from "./components/pages/listPage";
-import AllAlbums from "./components/pages/allAlbumsPage";
+import Albums from "./components/pages/albums";
 
 export const UserContext = createContext();
 
@@ -46,11 +45,13 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
           <Route path="/createListPage" element={<CreateListPage />}/>
+          <Route path="/createListPage/:listId" element={<CreateListPage />} />
           <Route path="/albumPage/:spotifyId" element={<AlbumPage />} />
           <Route path="/artistPage/:artistSpotifyId" element={<ArtistPage />} />
           <Route path="/searchBar" element={<SearchBar />} />
           <Route path="/listPage/:listId" element={<ListPage />} />
-          <Route path="/allAlbumsPage" element={<AllAlbums />} />
+          <Route path="/albums" element={<Albums />} />
+
         </Routes>
       </UserContext.Provider>
     </div>

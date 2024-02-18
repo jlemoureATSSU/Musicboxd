@@ -1,7 +1,7 @@
 .rating-message {
     position: fixed;
     left: 55%;
-    bottom: -100px;
+    bottom: -40px;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.75);
     color: white; 
@@ -26,7 +26,7 @@
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        bottom: -100px;
+        bottom: -40px;
     }
     to {
         opacity: 1;
@@ -41,7 +41,7 @@
     }
     to {
         opacity: 0;
-        bottom: -100px;
+        bottom: -40px;
     }
 }
 

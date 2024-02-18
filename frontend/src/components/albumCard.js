@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
-const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId }) => {
+const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotifyId, isClickable }) => {
   const [averageRating, setAverageRating] = useState(null);
   const titleRef = useRef(null);
   const artistRef = useRef(null);
@@ -57,7 +57,9 @@ const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId }) => {
   }, [artist]); 
 
   const goToAlbumPage = () => {
-    navigate(`/albumPage/${spotifyId}`);
+    if (isClickable) {
+      navigate(`/albumPage/${spotifyId}`);
+    }
   };
 
   const formattedRating = typeof averageRating === 'number' 
@@ -72,16 +74,40 @@ const AlbumCard = ({ coverArtUrl, title, artist, releaseDate, spotifyId }) => {
     if (numRating >= 5 && numRating <= 7.4) return 'rating-orange';
     if (numRating >= 7.5) return 'rating-green';
   };
+
+  if (!Array.isArray(artistIds)) {
+    console.error('Expected artistIds to be an array, but received:', artistIds);
+    artistIds = []; 
+  }
+
+  const artistLink = artistIds.length > 0 ? (
+    <Link 
+      to={`/artistPage/${artistIds[0]}`}
+      className="album-card-artist-link"
+      onClick={(e) => e.stopPropagation()}
+    >
+      {artist}
+    </Link>
+  ) : (
+    <span>{artist}</span>
+  );
+  
   
 
   return (
-    <div className="album-card" onClick={goToAlbumPage} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter') goToAlbumPage(); }}>
-      <div className="cover-art" style={{ backgroundImage: `url(${coverArtUrl})` }}></div>
-      <div className="album-info">
-      <div ref={titleRef} className="album-title" style={{ fontSize: `clamp(12px, 2.5vw, ${MAX_TITLE_SIZE}px)` }}>{title}</div>
-        <p ref={artistRef} className="album-artist" style={{ fontSize: `clamp(12px, 2.2vw, ${MAX_ARTIST_SIZE}px)` }}>{artist}</p>
-        <p className="album-release-date">{releaseDate}</p>
-        <p className={`album-rating ${getRatingClassName(averageRating)}`}>{formattedRating}</p>
+      <div 
+      className="album-card" 
+      onClick={goToAlbumPage} 
+      role={isClickable ? "button" : undefined} 
+      tabIndex={isClickable ? 0 : undefined} 
+      onKeyDown={isClickable ? (e) => { if (e.key === 'Enter') goToAlbumPage(); } : undefined}
+    >
+      <div className="album-card-cover-art" style={{ backgroundImage: `url(${coverArtUrl})` }}></div>
+      <div className="album-card-info">
+      <div ref={titleRef} className="album-card-title" style={{ fontSize: `clamp(12px, 2.5vw, ${MAX_TITLE_SIZE}px)` }}>{title}</div>
+        <p ref={artistRef} className="album-card-artist" style={{ fontSize: `clamp(12px, 2.2vw, ${MAX_ARTIST_SIZE}px)` }}>{artistLink}</p>
+        <p className="album-card-release-date">{releaseDate}</p>
+        <p className={`album-card-rating ${getRatingClassName(averageRating)}`}>{formattedRating}</p>
     </div>
   </div>
   );

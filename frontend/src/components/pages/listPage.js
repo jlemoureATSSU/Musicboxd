@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AlbumCard from '../albumCardInList'; 
-import getUserInfo from "../../utilities/decodeJwt"; // Import getUserInfo
+import AlbumCard from '../albumCard'; 
+import getUserInfo from "../../utilities/decodeJwt"; 
 
 
 const ListPage = () => {
     const { listId } = useParams();
     const [listData, setListData] = useState(null);
     const [albumDetails, setAlbumDetails] = useState([]);
-    const [currentUser, setCurrentUser] = useState(null); // State to hold the current user
+    const [currentUser, setCurrentUser] = useState(null); 
     const navigate = useNavigate();
 
 
@@ -24,8 +24,8 @@ const ListPage = () => {
             }
         };
 
-        const userInfo = getUserInfo(); // Get user info
-        setCurrentUser(userInfo); // Set current user
+        const userInfo = getUserInfo(); 
+        setCurrentUser(userInfo); 
 
         fetchListData();
     }, [listId]);
@@ -57,31 +57,43 @@ const ListPage = () => {
         <div className="create-list-page">
             <div className="list-input-card">
                 <h1 className="list-title-input">{listData.listName}</h1>
-                <p className="list-date-input">List created by {listData.userName} {new Date(listData.dateCreated).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    year: 'numeric'
-                })}</p>
+                <p className="list-date-input">
+                    List created by {listData.userName}{" "}
+                    {new Date(listData.dateCreated).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                    })}
+                </p>
                 <p className="list-description-input">{listData.listDescription}</p>
                 {currentUser && currentUser.username === listData.userName && (
-                    <button onClick={() => navigate(`/createListPage/${listData._id}`)} className="edit-btn">Edit List</button>
-                    )}
+                    <button
+                        onClick={() => navigate(`/createListPage/${listData._id}`)}
+                        className="edit-btn"
+                    >
+                        Edit List
+                    </button>
+                )}
             </div>
             <div className="album-list-card">
                 <div className="album-list">
-                    {albumDetails.map((album, index) => (
+                    {albumDetails.map((album) => (
                         <AlbumCard
+                            key={album.id}
                             coverArtUrl={album.coverArtUrl}
                             title={album.name}
                             artist={album.artists}
+                            artistIds={album.artistIds}
                             releaseDate={new Date(album.release_date).getFullYear()}
-                            spotifyId={album.id} 
+                            spotifyId={album.id}
+                            isClickable={true}
                         />
                     ))}
                 </div>
             </div>
         </div>
     );
+    
 };
 
 export default ListPage;
