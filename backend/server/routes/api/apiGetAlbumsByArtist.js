@@ -6,70 +6,53 @@ const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
   const { artistSpotifyId } = req.params;
-  const albumsCacheKey = `artist-albums-${artistSpotifyId}`;
+  const albumsCacheKey = `artist-albums-ids-${artistSpotifyId}`; // Updated key for clarity
   const artistCacheKey = `artist-name-${artistSpotifyId}`;
 
-  let cachedAlbums = myCache.get(albumsCacheKey);
+  let cachedAlbumIds = myCache.get(albumsCacheKey);
   let cachedArtist = myCache.get(artistCacheKey);
 
-  if (cachedArtist && cachedAlbums) {
-    console.log(`Artist and album details from cache for ID: ${artistSpotifyId}`);
+  if (cachedArtist && cachedAlbumIds) {
+    console.log(`Artist ${cachedArtist.name} and their album IDs fetched from cache for ID: ${artistSpotifyId}`);
     return res.json({
       artist: cachedArtist,
-      albums: cachedAlbums
+      albumIds: cachedAlbumIds // Only sending IDs
     });
   }
 
   try {
     const accessToken = await getSpotifyAccessToken();
+
+    // Fetch and cache artist name if not already cached
     if (!cachedArtist) {
       const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
+        headers: { 'Authorization': `Bearer ${accessToken}` }
       });
 
-      cachedArtist = {
-        name: artistResponse.data.name,
-        genres: artistResponse.data.genres,
-        image: artistResponse.data.images[0]?.url
-      };
-
+      cachedArtist = { name: artistResponse.data.name };
       myCache.set(artistCacheKey, cachedArtist);
     }
 
-    if (!cachedAlbums) {
+    // Fetch and cache album IDs if not already cached
+    if (!cachedAlbumIds) {
       const albumsResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}/albums`, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        },
-        params: {
-          include_groups: 'album',
-          limit: 50
-        }
+        headers: { 'Authorization': `Bearer ${accessToken}` },
+        params: { include_groups: 'album', limit: 50 }
       });
 
-      cachedAlbums = albumsResponse.data.items.map(album => ({
-        id: album.id,
-        name: album.name,
-        release_date: album.release_date,
-        coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
-        artists: album.artists.map(artist => artist.name).join(', ')
-      }));
-      myCache.set(albumsCacheKey, cachedAlbums);
+      cachedAlbumIds = albumsResponse.data.items.map(album => album.id);
+      myCache.set(albumsCacheKey, cachedAlbumIds);
     }
-
-    console.log(`Fetched and cached data for artist ID: ${artistSpotifyId}`);
 
     res.json({
       artist: cachedArtist,
-      albums: cachedAlbums
+      albumIds: cachedAlbumIds // Only sending IDs
     });
-
   } catch (error) {
     console.error("Error fetching data from Spotify:", error);
     res.status(500).send("Internal server error");
   }
 });
+
 
 module.exports = router;

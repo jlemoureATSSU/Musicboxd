@@ -43,14 +43,11 @@ const HomePage = () => {
           const fetchAlbumDetails = async (spotifyId) => {
             try {
               const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
-              const ratingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${spotifyId}`);
               
               setAlbumDetails(prevDetails => ({
                 ...prevDetails,
                 [spotifyId]: {
                   ...detailsResponse.data,
-                  averageRating: ratingResponse.data.averageRating,
-                  numberOfRatings: ratingResponse.data.numberOfRatings
                 }
               }));
               
