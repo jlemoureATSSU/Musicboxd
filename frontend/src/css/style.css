@@ -37,6 +37,7 @@
 }
 
 .homepage-container-title {
+  margin-top: 10px;
   font-size: 18px;
   text-align: left;
   margin-left: 30px;
@@ -49,7 +50,6 @@
   padding-left: 25px;
   overflow-x: auto;
   justify-content: flex-start; 
-  margin-bottom: 10px;
 }
 
 .highest-rated-albums-container{
@@ -59,6 +59,8 @@
   padding-left: 25px;
   overflow-x: auto;
   justify-content: flex-start; 
+  margin-bottom: -7px;
+
 }
 
 .recent-lists-container::-webkit-scrollbar-track {
@@ -75,7 +77,7 @@
 
 
 .recent-lists-container::-webkit-scrollbar {
-  height: 8px;
+  height: 7px;
 }
 
 
@@ -96,7 +98,7 @@
 
 
 .highest-rated-albums-container::-webkit-scrollbar {
-  height: 8px;
+  height: 7px;
 }
 
 

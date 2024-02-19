@@ -3,7 +3,7 @@
   color: white;
   border-radius: 8px;
   overflow: hidden;
-  height: 370px;
+  height: 355px;
   width: 200px;
   min-width: 200px;
   margin-bottom: 20px;
@@ -44,26 +44,31 @@
 }
 
 .album-card-title {
-  overflow: hidden;
-  padding-top: 4px;
+  padding-top: 3px;
   height: 40px;
   line-height: 18px;
-  margin-top: 0px;
-  margin-bottom: 1px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: ellipsis;
+  overflow:hidden;
+  text-overflow: ellipsis;
 }
 
 .album-card-artist,
 .album-card-artist-link,
 .album-card-artist a {
-  padding-top: 1px;
-  font-size: clamp(20px, 2.5vw, 20px);
-  margin-bottom: 50px;
-  color: #858585; 
+  color: #858585;
+  height: 40px;
+  padding-top: 3px;
+  line-height: 18px;
+  margin-top: 0px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
   text-decoration: none;
+  margin-bottom: 45px;
 }
 
 .album-card-artist-link:hover {

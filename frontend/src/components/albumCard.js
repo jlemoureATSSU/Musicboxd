@@ -7,8 +7,8 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
   const titleRef = useRef(null);
   const artistRef = useRef(null);
   const navigate = useNavigate();
-  const MAX_TITLE_SIZE = 25;
-  const MAX_ARTIST_SIZE = 20; 
+  const MAX_TITLE_SIZE = 30;
+  const MAX_ARTIST_SIZE = 18; 
 
   useEffect(() => {
     const fetchAlbumRating = async () => {
@@ -38,9 +38,11 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
     const MIN_ARTIST_SIZE = 12; 
     let currentFontSize = MAX_ARTIST_SIZE;
 
-    while (artistRef.current.scrollHeight > artistRef.current.offsetHeight && currentFontSize > MIN_ARTIST_SIZE) {
+    if (artistRef.current.scrollHeight > artistRef.current.offsetHeight && currentFontSize > MIN_ARTIST_SIZE) {
       currentFontSize--;
       artistRef.current.style.fontSize = `${currentFontSize}px`;
+      console.log(`Adjusting artist font size to: ${currentFontSize}px`);
+
     }
   };
 
@@ -105,7 +107,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
       <div className="album-card-cover-art" style={{ backgroundImage: `url(${coverArtUrl})` }}></div>
       <div className="album-card-info">
       <div ref={titleRef} className="album-card-title" style={{ fontSize: `clamp(12px, 2.5vw, ${MAX_TITLE_SIZE}px)` }}>{title}</div>
-        <p ref={artistRef} className="album-card-artist" style={{ fontSize: `clamp(12px, 2.2vw, ${MAX_ARTIST_SIZE}px)` }}>{artistLink}</p>
+        <p ref={artistRef} className="album-card-artist" style={{ fontSize: `clamp(12px, 2.5vw, ${MAX_ARTIST_SIZE}px)` }}>{artistLink}</p>
         <p className="album-card-release-date">{releaseDate}</p>
         <p className={`album-card-rating ${getRatingClassName(averageRating)}`}>{formattedRating}</p>
     </div>

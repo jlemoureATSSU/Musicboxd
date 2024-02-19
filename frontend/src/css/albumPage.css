@@ -18,8 +18,8 @@
     width: 345px;
 }
 .album-title {
-    font-size: 2rem;
-    margin: 0;
+    height: 70px;
+    line-height: 25px;
     margin-bottom: 10px;
 }
 
