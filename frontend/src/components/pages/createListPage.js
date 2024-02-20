@@ -6,7 +6,6 @@ import AlbumCard from '../albumCard';
 import getUserInfo from "../../utilities/decodeJwt"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-
 const url = "http://localhost:8081/list/save";
 
 const CreateListPage = () => {
@@ -61,15 +60,12 @@ const CreateListPage = () => {
   
     fetchListDetails();
   }, [listId]);
-  
 
   const addAlbumToList = (albumDetails) => {
     if (albums.some((a) => a.id === albumDetails.id)) {
       alert("This album is already added to the list.");
       return;
     }
-    
-
     setAlbums(prevAlbums => [
       ...prevAlbums,
       albumDetails 
@@ -77,8 +73,6 @@ const CreateListPage = () => {
 
     setIsModalOpen(false);
   };
-
-  
 
   const handleSaveList = async () => {
     const listData = {
@@ -101,7 +95,6 @@ const CreateListPage = () => {
       console.error('Error saving the list:', error);
     }
   };
-  
 
   const handleDiscardList = () => {
     setListTitle('');
@@ -109,70 +102,53 @@ const CreateListPage = () => {
     setAlbums([]);
   };
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
-  return result;
-};
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
 
-const onDragEnd = (result) => {
-  if (!result.destination) {
-    return;
-  }
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return;
+    }
 
-  const items = reorder(
-    albums,
-    result.source.index,
-    result.destination.index
-  );
+    const items = reorder(
+      albums,
+      result.source.index,
+      result.destination.index
+    );
 
-  setAlbums(items);
-};
+    setAlbums(items);
+  };
+
+  const removeAlbum = (albumId) => {
+    setAlbums(albums.filter(album => album.id !== albumId));
+  };
+
 
   return (
     <div className="create-list-page">
       <div className="list-input-card">
-        <input 
-          type="text" 
-          placeholder="List Title" 
-          value={listTitle}
-          onChange={handleTitleChange}
-          className="list-title-input"
-        />
-        <textarea 
-          placeholder="List Description" 
-          value={listDescription}
-          onChange={handleDescriptionChange}
-          className="list-description-input"
-        />
+        <input type="text" placeholder="List Title" value={listTitle} onChange={handleTitleChange} className="list-title-input"/>
+        <textarea placeholder="List Description" value={listDescription} onChange={handleDescriptionChange}className="list-description-input"/>
         <div className="list-actions">
           <button onClick={handleDiscardList} className="discard-btn">Discard</button>
           <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add Album</div>
           <button onClick={handleSaveList} className="save-btn">Save List</button>
-
         </div>
         </div>
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable" direction="horizontal">
                 {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                    className="album-list-card"
-                  >
+                  <div ref={provided.innerRef} {...provided.droppableProps} className="album-list-card">
                     <div className="album-list">
-                      {albums.map((album, index) => (
+                    {albums.map((album, index) => (
                         <Draggable key={album.id} draggableId={album.id} index={index}>
                           {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              style={{
-                                ...provided.draggableProps.style,
-                              }}
-                            >
+                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{...provided.draggableProps.style,}}className="album-wrapper">
+                              <button onClick={() => removeAlbum(album.id)} className="remove-album-btn">remove album</button>
                               <AlbumCard
                                 coverArtUrl={album.coverArtUrl}
                                 title={album.name}

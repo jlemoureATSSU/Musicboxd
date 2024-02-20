@@ -6,7 +6,7 @@ const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
   const { artistSpotifyId } = req.params;
-  const albumsCacheKey = `artist-albums-ids-${artistSpotifyId}`; // Updated key for clarity
+  const albumsCacheKey = `artist-albums-ids-${artistSpotifyId}`;
   const artistCacheKey = `artist-name-${artistSpotifyId}`;
 
   let cachedAlbumIds = myCache.get(albumsCacheKey);

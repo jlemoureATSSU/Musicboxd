@@ -8,7 +8,7 @@
   margin-left: 25px;
   width: 100%;
   max-width: 600px;
-  height: 230px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   
@@ -28,8 +28,6 @@
 .album-list {
   display: flex;
   flex-direction: row;
-  margin-bottom: -7px;
-
 }
 
 .album-list-card::-webkit-scrollbar-track {
@@ -182,4 +180,18 @@
 .add-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+.remove-album-btn{
+  background: transparent;
+  color: rgb(205, 205, 205);
+  font-size: 11px;
+  border: none;
+  cursor: pointer;
+  margin-left: 50px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+}
+.remove-album-btn:hover {
+  color: white;
+  text-decoration: underline;
 }
