@@ -3,28 +3,28 @@
     color: #fff;
     left: 0;
     top: 0;
-    width: 200px;
+    width: 180px;
     height: 100vh;
     max-height: 100vh;
     text-align: center;
     background-color: #222;
-    padding-top: px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   }
 
   .sidebar a {
     display: block;
     color: #fff;
-    padding: 16px;
+    padding-top: 8px;
+    padding-bottom: 16px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 15px;
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
   }
 
   .sidebar a:hover {
     transform: translateY(-2px);
     color: white;
-    font-size: 17px;
+    font-size: 16px;
   }
 
   .sidebar .home-link {

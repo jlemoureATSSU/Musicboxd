@@ -7,7 +7,7 @@
   width: 200px;
   min-width: 200px;
   margin-bottom: 10px;
-  margin-right: 20px;
+  margin-right: 22px;
   display: flex;
   flex-direction: column;
   box-shadow: 0 4px 8px rgba(0,0,0,0.35);
@@ -57,7 +57,7 @@
 .album-card-artist,
 .album-card-artist-link,
 .album-card-artist a {
-  color: #858585;
+  color: #999;
   height: 40px;
   padding-top: 3px;
   line-height: 18px;
@@ -72,7 +72,7 @@
 }
 
 .album-card-artist-link:hover {
-  color: #b6b6b6;
+  color: #aaa;
   text-decoration: underline; 
 }
 

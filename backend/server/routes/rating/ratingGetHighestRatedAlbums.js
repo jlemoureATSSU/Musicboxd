@@ -4,14 +4,12 @@ const AvgRating = require('../../models/avgRatingModel');
 
 router.get('/getHighestRatedAlbums', async (req, res) => {
     let limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.offset, 10);
     limit = isNaN(limit) || limit < 1 ? 8 : limit;
+    offset = isNaN(offset) ? 0 : offset;
 
     try {
-        const query = AvgRating.find({}).sort({ averageRating: -1 });
- 
-        if (limit !== 0) {
-            query.limit(limit);
-        }
+        const query = AvgRating.find({}).sort({ averageRating: -1 }).skip(offset).limit(limit);
         const highestRatedAlbums = await query.exec();
 
         if (!highestRatedAlbums.length) {

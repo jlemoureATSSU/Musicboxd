@@ -8,11 +8,13 @@
 .albums-container {
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     max-height: calc(100vh - 133px); 
     overflow-y: auto; 
     padding-left: 25px;
     justify-content: flex-start;
     padding-top: 10px;
+    padding-bottom: 20px;
     margin-right: 5px;
 }
 
@@ -37,5 +39,28 @@
   
   .albums-container::-webkit-scrollbar-thumb:hover {
     background-color: #2b2b2b;
+  }
+
+  .see-more-btn-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  
+  }
+
+  .see-more-btn{
+    height: 30px;
+    width: 120px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #222;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .see-more-btn:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   }
   
