@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import AlbumCard from '../albumCard';
-import Modal from 'react-bootstrap/Modal';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import getUserInfo from "../../utilities/decodeJwt";
 
 

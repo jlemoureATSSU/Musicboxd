@@ -1,14 +1,40 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
+
+
 .album-page {
-    display: flex;;
-    margin-left: 25px;
-    gap:20px;
+    display: flex;
+    flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
+    gap: 10px; /*10 px gap between items in the container*/
+    margin-left: 25px; /*25px margin so the div is not right up against the sidebar*/
+    max-height: calc(100vh - 70px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
+    overflow-y: auto; /*div has its own scrollbar when items wrap and dont fit vertically*/  
+    padding-bottom: 20px; /*20px padding at the bottom of the div so the last item isnt right up against the bottom of the div*/ 
+}
+/*styling of scrollbar*/
+.album-page::-webkit-scrollbar-track {
+    margin-top: 20px;
+    margin-bottom: 20px; 
+  }
+.album-page::-webkit-scrollbar-thumb {
+    background-color: #363636; 
+    border-radius: 10px;
+    border: 4px solid transparent; 
+    background-clip: padding-box; 
+} 
+.album-page::-webkit-scrollbar {
+    height: 8px;
+}   
+.album-page::-webkit-scrollbar-thumb:hover {
+    background-color: #2b2b2b;
 }
 
+
 .album-details-wrapper {
+    width: 345px;
     margin-top: 5px;
-    max-width: 60%;
+    align-content: left;
+
 }
 
 .album-details {
@@ -56,10 +82,10 @@
 
 .album-info-wrapper {
     display: flex;
+    width: 200px;
     margin-top: 5px;
     flex-direction: column; 
     align-items: flex-start;
-    max-width: 40%;
     gap: 10px;
 }
 
@@ -68,7 +94,7 @@
     display: flex;
     flex-direction: column; 
     align-items: flex-start;
-    max-width: 40%;
+    width: 200px;
     gap: 10px;
 }
 
