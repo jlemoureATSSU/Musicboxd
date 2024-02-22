@@ -25,23 +25,26 @@ const ArtistPage = () => {
     }, [artistSpotifyId]);
 
     const fetchAlbumDetails = async (albumIds) => {
-        albumIds.forEach(async (albumId) => {
-            if (fetchInProgress.current.has(albumId)) {
-                return; // Skip if fetch is in progress
-            }
-
-            fetchInProgress.current.add(albumId);
-
-            try {
-                const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${albumId}`);
-                setAlbums(prevAlbums => [...prevAlbums, detailsResponse.data]);
-            } catch (error) {
-                console.error("Error fetching album details for ID:", albumId, error);
-            } finally {
-                fetchInProgress.current.delete(albumId);
-            }
-        });
+        if (albumIds.length === 0) return; // Early return if there are no IDs to fetch
+    
+        try {
+            // Make a single POST request with all album IDs
+            const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+                albumIds: albumIds
+            });
+            // Sort albums by release date before updating the albums state
+            const sortedAlbums = detailsResponse.data.sort((a, b) => {
+                // Assuming release_date is in YYYY-MM-DD format; adjust if necessary
+                return new Date(b.release_date) - new Date(a.release_date);
+            });
+            // Update the albums state with the sorted details
+            setAlbums(sortedAlbums);
+        } catch (error) {
+            console.error("Error fetching album details:", error);
+        }
     };
+    
+    
 
     const getSpotifyAlbumUrl = (spotifyId) => {
         return `https://open.spotify.com/artist/${spotifyId}`;

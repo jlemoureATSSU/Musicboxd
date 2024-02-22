@@ -1,14 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
-
-
 .album-page {
     display: flex;
     flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
-    gap: 10px; /*10 px gap between items in the container*/
-    margin-left: 25px; /*25px margin so the div is not right up against the sidebar*/
+    gap: 10px; /*10px gap between items in the container*/
+    margin-left: 25px; /*25px left margin so the div is not right up against the sidebar*/
     max-height: calc(100vh - 70px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
-    overflow-y: auto; /*div has its own scrollbar when items wrap and dont fit vertically*/  
+    overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
     padding-bottom: 20px; /*20px padding at the bottom of the div so the last item isnt right up against the bottom of the div*/ 
 }
 /*styling of scrollbar*/
@@ -96,6 +94,7 @@
     align-items: flex-start;
     width: 200px;
     gap: 10px;
+    margin-right: 5px;
 }
 
 .add-album-btn {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
@@ -8,96 +8,84 @@ const HomePage = () => {
     const [recentLists, setRecentLists] = useState([]);
     const [highestRatedAlbums, setHighestRatedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState({});
-    const fetchInProgress = useRef(new Set());
 
     useEffect(() => {
-
-        const fetchHighestRatedAlbums = async (limit = 8) => {
-          try {
-              const response = await axios.get('http://localhost:8081/rating/getHighestRatedAlbums');
-              setHighestRatedAlbums(response.data);
-          } catch (error) {
-              console.error('Error fetching highest rated albums:', error);
-          }
-        };
-        const fetchRecentLists = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8081/list/getRecentLists`);
-                setRecentLists(response.data);
-            } catch (error) {
-                console.error('Error fetching recent lists:', error);
-            }
-        };
-
-        fetchRecentLists();
-        fetchHighestRatedAlbums();
+      const fetchInitialData = async () => {
+        try {
+          // Fetch highest rated albums and recent lists
+          const [highestRatedResponse, recentListsResponse] = await Promise.all([
+            axios.get('http://localhost:8081/rating/getHighestRatedAlbums'),
+            axios.get(`http://localhost:8081/list/getRecentLists`)
+          ]);
+          
+          setHighestRatedAlbums(highestRatedResponse.data);
+          setRecentLists(recentListsResponse.data);
+    
+          // Collect all unique album IDs from highestRatedAlbums
+          const highestRatedAlbumIds = highestRatedResponse.data.map(album => album.albumId);
+    
+          // Collect all unique album IDs from recentLists
+          const listAlbumIds = recentListsResponse.data.flatMap(list => 
+            list.albums.slice(0, 3).map(album => album.id) // Only take first 3 albums per list
+          );    
+          // Combine and deduplicate album IDs
+          const uniqueAlbumIds = Array.from(new Set([...highestRatedAlbumIds, ...listAlbumIds]));
+    
+          // Fetch details for all unique albums
+          const albumDetailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+            albumIds: uniqueAlbumIds
+          });
+    
+          // Update state with album details
+          setAlbumDetails(albumDetailsResponse.data.reduce((acc, detail) => {
+            acc[detail.id] = detail;
+            return acc;
+          }, {}));
+        } catch (error) {
+          console.error("Error fetching initial data:", error);
+        }
+      };
+    
+      fetchInitialData();
     }, []);
-
-    useEffect(() => {
-        highestRatedAlbums.forEach(({ albumId }) => {
-          if (albumDetails[albumId] || fetchInProgress.current.has(albumId)) {
-            return;
-          }
     
-          fetchInProgress.current.add(albumId);
-    
-          const fetchAlbumDetails = async (spotifyId) => {
-            try {
-              const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
-              
-              setAlbumDetails(prevDetails => ({
-                ...prevDetails,
-                [spotifyId]: {
-                  ...detailsResponse.data,
-                }
-              }));
-              
-              fetchInProgress.current.delete(spotifyId);
-            } catch (error) {
-              console.error("Error fetching details or ratings for album spotifyId:", spotifyId, error);
-              fetchInProgress.current.delete(spotifyId);
-            }
-          };
-    
-          fetchAlbumDetails(albumId);
-        });
-      }, [highestRatedAlbums]);
 
     return (
         <div>
             <div className='homepage-container-title'>Recently Created Lists</div>
             <div className="recent-lists-container">
-                 {recentLists.map(list => (
-                    <ListCard
-                        key={list._id}
-                        userName={list.userName}
-                        title={list.listName}
-                        listId={list._id}
-                        albums={list.albums} 
-                        dateCreated={list.dateCreated}
+                {recentLists.map(list => (
+                  <ListCard
+                      key={list._id}
+                      userName={list.userName}
+                      title={list.listName}
+                      listId={list._id}
+                      albums={list.albums}
+                      dateCreated={list.dateCreated}
+                      albumDetails={albumDetails} // Pass the album details here
                     />
                 ))}
             </div>
-            <div className='homepage-container-title'>Highest Rated Albums <Link to="/albums" className='see-more'state={{ sortingMode: 'highestRated' }}>see more</Link></div>
+            <div className='homepage-container-title'>Highest Rated Albums <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
             <div className="highest-rated-albums-container">
-            {highestRatedAlbums.map(({ albumId }) => { 
-                const album = albumDetails[albumId];
-                if (!album) return null; 
-                return (
-                <AlbumCard
-                    key={albumId} 
-                    coverArtUrl={album.coverArtUrl}
-                    title={album.name}
-                    artist={album.artists} 
-                    artistIds={album.artistIds}
-                    releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
-                    spotifyId={albumId} 
-                    averageRating={album.averageRating}
-                    numberOfRatings={album.numberOfRatings}
-                    isClickable={true}
-                />
-                );
-            })}
+                {highestRatedAlbums.map(({ albumId }) => { 
+                    const album = albumDetails[albumId];
+                    if (!album) return null; 
+                    return (
+                        <AlbumCard
+                            key={albumId} 
+                            coverArtUrl={album.coverArtUrl}
+                            title={album.name}
+                            artist={album.artists} 
+                            artistIds={album.artistIds}
+                            releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
+                            spotifyId={albumId} 
+                            averageRating={album.averageRating}
+                            numberOfRatings={album.numberOfRatings}
+                            isClickable={true}
+                        />
+                    );
+                })}
             </div>
         </div>
     );

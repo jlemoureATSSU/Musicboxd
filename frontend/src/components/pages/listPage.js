@@ -18,33 +18,28 @@ const ListPage = () => {
             try {
                 const response = await axios.get(`http://localhost:8081/list/getListById/${listId}`);
                 setListData(response.data);
-                fetchAlbumsDetails(response.data.albums);
+                fetchAlbumsDetails(response.data.albums.map(album => album.id));
             } catch (error) {
                 console.error('Error fetching list data:', error);
             }
         };
 
-        const userInfo = getUserInfo(); 
-        setCurrentUser(userInfo); 
+        const userInfo = getUserInfo();
+        setCurrentUser(userInfo);
 
         fetchListData();
     }, [listId]);
 
-    const fetchAlbumsDetails = async (albums) => {
-        const details = await Promise.all(albums.map(album =>
-            fetchAlbumDetailsFromSpotify(album.id)
-        ));
-        setAlbumDetails(details);
-    };
-    console.log("Album details:", albumDetails);
+    const fetchAlbumsDetails = async (albumIds) => {
+        if (albumIds.length === 0) return;
 
-    const fetchAlbumDetailsFromSpotify = async (spotifyId) => {
         try {
-            const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
-            return response.data; 
+            const response = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+                albumIds: albumIds
+            });
+            setAlbumDetails(response.data);
         } catch (error) {
             console.error("Error fetching album details from backend:", error);
-            return null;
         }
     };
     

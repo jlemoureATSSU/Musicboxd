@@ -18,11 +18,13 @@ const Albums = () => {
         let url = mode === 'highestRated' 
                   ? `http://localhost:8081/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`
                   : `http://localhost:8081/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
-
+    
         try {
             const response = await axios.get(url);
             if (response.data.length > 0) {
                 setAlbums(prevAlbums => [...prevAlbums, ...response.data]);
+                // After setting the albums, fetch their details in bulk
+                fetchAlbumDetails(response.data.map(album => album.albumId));
                 if (response.data.length < limit) {
                     setHasMore(false);
                 }
@@ -34,41 +36,24 @@ const Albums = () => {
             setHasMore(false);
         }
     };
-    
 
+    const fetchAlbumDetails = async (albumIds) => {
+        try {
+            const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+                albumIds: albumIds
+            });
+            setAlbumDetails(detailsResponse.data.reduce((acc, album) => ({
+                ...acc,
+                [album.id]: album
+            }), {}));
+        } catch (error) {
+            console.error("Error fetching album details in bulk:", error);
+        }
+    };
+    
     useEffect(() => {
         fetchAlbums(page, sortingMode);
     }, [page, sortingMode]);
-
-    useEffect(() => {
-        albums.forEach(({ albumId }) => {
-          if (albumDetails[albumId] || fetchInProgress.current.has(albumId)) {
-            return;
-          }
-    
-          fetchInProgress.current.add(albumId);
-    
-          const fetchAlbumDetails = async (spotifyId) => {
-            try {
-              const detailsResponse = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
-              
-              setAlbumDetails(prevDetails => ({
-                ...prevDetails,
-                [spotifyId]: {
-                  ...detailsResponse.data,
-                }
-              }));
-              
-              fetchInProgress.current.delete(spotifyId);
-            } catch (error) {
-              console.error("Error fetching details for album spotifyId:", spotifyId, error);
-              fetchInProgress.current.delete(spotifyId);
-            }
-          };
-    
-          fetchAlbumDetails(albumId);
-        });
-      }, [albums]);
 
     const handleSeeMore = () => {
         setPage(prevPage => prevPage + 1);

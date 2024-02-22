@@ -2,30 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const ListCard = ({ userName, title, listId, albums, dateCreated }) => {
+const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }) => {
   const navigate = useNavigate();
-  const [coverArts, setCoverArts] = useState([]);
 
-  useEffect(() => {
-    const fetchCoverArts = async () => {
-      const requests = albums.slice(0, 3).map(album => 
-        axios.get(`http://localhost:8081/api/getAlbumDetails/${album.id}`)
-      );
-  
-      try {
-        const responses = await Promise.all(requests);
-        const coverArts = responses.map(res => res.data.coverArtUrl).filter(url => url);
-        setCoverArts(coverArts);
-      } catch (error) {
-        console.error("Error fetching album details", error);
-      }
-    };
-  
-    if (albums && albums.length > 0) {
-      fetchCoverArts();
-    }
-  }, [albums]);
-  
+  // Use the passed albumDetails to extract cover art URLs for the first 3 albums
+  const coverArts = albums.slice(0, 3).map(album => 
+    albumDetails[album.id]?.coverArtUrl // Safely access coverArtUrl
+  ).filter(url => url); // Ensure only valid URLs are kept
 
   const handleClick = () => {
     navigate(`/listPage/${listId}`);
@@ -39,7 +22,7 @@ const ListCard = ({ userName, title, listId, albums, dateCreated }) => {
 
   return (
     <div className="list-card" onClick={handleClick}>
-      <div className="list-card-title"> {title} 
+      <div className="list-card-title">{title}
         <span className="list-card-username">{userName}</span>
       </div>
       <div className="list-card-content">
@@ -47,13 +30,12 @@ const ListCard = ({ userName, title, listId, albums, dateCreated }) => {
           {coverArts.map((coverArtUrl, index) => (
             <img key={index} src={coverArtUrl} alt={`Album cover ${index + 1}`} />
           ))}
-          {albums && albums.length > 3 && <div>+ {albums.length - 3}</div>}
+          {albums.length > 3 && <div>+ {albums.length - 3}</div>}
         </div>
         <div className="list-card-date">{formattedDate}</div>
       </div>
     </div>
   );
-  
 };
 
 export default ListCard;

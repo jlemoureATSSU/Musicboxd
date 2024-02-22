@@ -23,6 +23,7 @@ const searchArtists = require('./routes/api/apiSearchArtists')
 const searchAlbums = require('./routes/api/apiSearchAlbums')
 const getAlbumsByArtist = require('./routes/api/apiGetAlbumsByArtist')
 const getNewestAlbums = require('./routes/api/apiGetNewestAlbums')
+const getMultipleAlbumDetails = require('./routes/api/apiGetMultipleAlbumDetails')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -51,6 +52,7 @@ app.use('/api', searchArtists)
 app.use('/api', searchAlbums)
 app.use('/api', getAlbumsByArtist)
 app.use('/api', getNewestAlbums)
+app.use('/api', getMultipleAlbumDetails)
 
 
 

@@ -241,6 +241,7 @@ const AlbumPage = () => {
             {submitMessage}
         </div>
         </div>  
+        
         <div className="album-actions-wrapper">
         <button onClick={fetchUserLists} className="add-album-btn">Add Album to a List</button>
           <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">

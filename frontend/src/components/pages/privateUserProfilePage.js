@@ -10,6 +10,7 @@ const PrivateUserProfile = () => {
   const [show, setShow] = useState(false);
   const [user, setUser] = useState({});
   const [userLists, setUserLists] = useState([]);
+  const [albumDetails, setAlbumDetails] = useState({});
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
@@ -25,12 +26,37 @@ const PrivateUserProfile = () => {
   const fetchUserLists = async (username) => {
     try {
       const response = await axios.get(`http://localhost:8081/list/getAllListsByUser/${username}`);
-      console.log(response.data);
       setUserLists(response.data);
+
+      // Collect album IDs from the first three albums of each list
+      const albumIds = response.data.flatMap(list => 
+        list.albums.slice(0, 3).map(album => album.id)
+      );
+
+      // Ensure unique IDs for the bulk fetch
+      fetchAlbumDetails([...new Set(albumIds)]);
     } catch (error) {
       console.error('Error fetching user lists:', error);
     }
   };
+
+
+const fetchAlbumDetails = async (albumIds) => {
+    try {
+        const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+            albumIds: albumIds
+        });
+        const details = detailsResponse.data.reduce((acc, detail) => ({
+            ...acc,
+            [detail.id]: detail
+        }), {});
+        setAlbumDetails(details);
+    } catch (error) {
+        console.error("Error fetching album details in bulk:", error);
+    }
+};
+
+
   
 
   // handle logout button
@@ -46,15 +72,17 @@ const PrivateUserProfile = () => {
     <div className="page">
         <h1>{user.username}</h1>
         <h1>Your Lists</h1>
-          {userLists.map(list => (
-            <ListCard
-              userName={list.userName}
-              title={list.listName}
-              listId={list._id}
-              albums={list.albums} 
-              dateCreated={list.dateCreated}
-            />
-          ))}
+        {userLists.map(list => (
+          <ListCard
+            key={list._id}
+            userName={list.userName}
+            title={list.listName}
+            listId={list._id}
+            albums={list.albums} 
+            dateCreated={list.dateCreated}
+            albumDetails={albumDetails} // Pass the album details here
+          />
+        ))}
         <div className="col-md-12 text-center">
         <>
               <Button className="me-2" onClick={handleShow}>

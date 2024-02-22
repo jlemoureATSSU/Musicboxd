@@ -58,6 +58,7 @@
   display: flex;
   flex-wrap: nowrap;
   padding-top: 10px;
+  padding-bottom: 8px;
   padding-left: 25px;
   overflow-x: auto;
   justify-content: flex-start; 
@@ -70,8 +71,7 @@
   padding-left: 25px;
   overflow-x: auto;
   justify-content: flex-start; 
-  margin-bottom: -7px;
-
+  padding-bottom: 8px;
 }
 
 .recent-lists-container::-webkit-scrollbar-track {
