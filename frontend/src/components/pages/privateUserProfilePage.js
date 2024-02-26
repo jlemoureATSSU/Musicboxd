@@ -14,6 +14,8 @@ const PrivateUserProfile = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
   useEffect(() => {
     const userInfo = getUserInfo();
@@ -25,7 +27,7 @@ const PrivateUserProfile = () => {
 
   const fetchUserLists = async (username) => {
     try {
-      const response = await axios.get(`http://localhost:8081/list/getAllListsByUser/${username}`);
+      const response = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
       setUserLists(response.data);
 
       // Collect album IDs from the first three albums of each list
@@ -43,7 +45,7 @@ const PrivateUserProfile = () => {
 
 const fetchAlbumDetails = async (albumIds) => {
     try {
-        const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+        const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
             albumIds: albumIds
         });
         const details = detailsResponse.data.reduce((acc, detail) => ({

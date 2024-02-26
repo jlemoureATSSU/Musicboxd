@@ -8,11 +8,13 @@ const ArtistPage = () => {
     const [albums, setAlbums] = useState([]);
     const { artistSpotifyId } = useParams();
     const fetchInProgress = useRef(new Set()); // Tracks which album details are being fetched
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     useEffect(() => {
         const fetchArtistAndAlbumIds = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/api/getAlbumsByArtist/${artistSpotifyId}`);
+                const response = await axios.get(`${backendUrl}/api/getAlbumsByArtist/${artistSpotifyId}`);
                 setArtistDetails(response.data.artist);
                 // Fetch album details with the received IDs
                 fetchAlbumDetails(response.data.albumIds);
@@ -29,7 +31,7 @@ const ArtistPage = () => {
     
         try {
             // Make a single POST request with all album IDs
-            const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+            const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
                 albumIds: albumIds
             });
             // Sort albums by release date before updating the albums state

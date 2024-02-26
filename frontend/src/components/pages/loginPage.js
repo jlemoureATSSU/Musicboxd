@@ -5,10 +5,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import getUserInfo from "../../utilities/decodeJwt";
 
-const url = "http://localhost:8081/user/login";
 
 const Login = () => {
   const [data, setData] = useState({ usename: "", password: "" });
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -26,7 +26,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: res } = await axios.post(url, data);
+      const { data: res } = await axios.post(`${backendUrl}/user/login`, data);
       localStorage.setItem("accessToken", res.accessToken);
       navigate("/");
       window.location.reload();

@@ -9,8 +9,8 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     const searchAlbums = debounce(async (search) => {
       if (search) {
           try {
-              const backendBaseUrl = 'http://localhost:8081';
-              const response = await axios.get(`${backendBaseUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`);
+            const backendUrl = process.env.REACT_APP_BACKEND_URL;
+            const response = await axios.get(`${backendUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`);
   
               const albums = response.data.albums.map(album => ({
                   id: album.id,

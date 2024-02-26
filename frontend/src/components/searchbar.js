@@ -16,10 +16,10 @@ const SearchBar = () => {
         return;
       }
     
-      const backendBaseUrl = 'http://localhost:8081'; 
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
       const searchUrl = searchMode === 'artist' 
-        ? `${backendBaseUrl}/api/searchArtists?search=${encodeURIComponent(search)}` 
-        : `${backendBaseUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`;
+        ? `${backendUrl}/api/searchArtists?search=${encodeURIComponent(search)}` 
+        : `${backendUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`;
     
         try {
           const response = await axios.get(searchUrl);

@@ -10,14 +10,15 @@ const Albums = () => {
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [sortingMode, setSortingMode] = useState('highestRated');
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
     const fetchAlbums = async (nextPage, mode) => {
         const limit = 10;
         const offset = nextPage * limit;
         let url = mode === 'highestRated' 
-                  ? `http://localhost:8081/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`
-                  : `http://localhost:8081/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
+                  ? `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`
+                  : `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
     
         try {
             const response = await axios.get(url);
@@ -44,7 +45,7 @@ const Albums = () => {
 
 const fetchAlbumDetails = async (albumIds) => {
     try {
-        const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+        const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
             albumIds: albumIds
         });
         const newDetails = detailsResponse.data;

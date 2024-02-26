@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
 const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotifyId, isClickable }) => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [averageRating, setAverageRating] = useState(null);
   const titleRef = useRef(null);
   const artistRef = useRef(null);
@@ -13,7 +14,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
   useEffect(() => {
     const fetchAlbumRating = async () => {
       try {
-        const response = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${spotifyId}`);
+        const response = await axios.get(`${backendUrl}/rating/getAvgByAlbum/${spotifyId}`);
         setAverageRating(response.data.averageRating);
       } catch (error) {
         console.error('Error fetching album rating:', error);

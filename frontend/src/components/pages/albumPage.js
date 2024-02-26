@@ -8,6 +8,7 @@ import getUserInfo from "../../utilities/decodeJwt";
 
 
 const AlbumPage = () => {
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
     const [albumDetails, setAlbumDetails] = useState(null);
     const artistId = albumDetails && albumDetails.artistIds.length > 0 ? albumDetails.artistIds[0] : null;
     const [userLists, setUserLists] = useState([]);
@@ -26,7 +27,7 @@ const AlbumPage = () => {
         console.log("Spotify ID:", spotifyId);
         const fetchAlbumDetailsFromSpotify = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/api/getAlbumDetails/${spotifyId}`);
+                const response = await axios.get(`${backendUrl}/api/getAlbumDetails/${spotifyId}`);
                 console.log(response.data);
                 setAlbumDetails(response.data);
             } catch (error) {
@@ -43,13 +44,13 @@ const AlbumPage = () => {
         const fetchAlbumDetailsAndRatingFromMongo = async () => {
 
             try {
-                const listCountResponse = await axios.get(`http://localhost:8081/list/albumInListsCount/${spotifyId}`);
+                const listCountResponse = await axios.get(`${backendUrl}/list/albumInListsCount/${spotifyId}`);
                 setAlbumListCount(listCountResponse.data.count);
             } catch (error) {
                 console.error("Error fetching album list count", error);
             }
             try {
-                const ratingResponse = await axios.get(`http://localhost:8081/rating/getByUserAndAlbum/${user.username}/${spotifyId}`);
+                const ratingResponse = await axios.get(`${backendUrl}/rating/getByUserAndAlbum/${user.username}/${spotifyId}`);
                 if (ratingResponse.data && ratingResponse.data.ratingNum !== undefined) {
                   setRating(ratingResponse.data.ratingNum.toString());
                 } else {
@@ -63,7 +64,7 @@ const AlbumPage = () => {
                 }
               }
             try {
-                const avgRatingResponse = await axios.get(`http://localhost:8081/rating/getAvgByAlbum/${spotifyId}`);
+                const avgRatingResponse = await axios.get(`${backendUrl}/rating/getAvgByAlbum/${spotifyId}`);
                 if (avgRatingResponse.data && avgRatingResponse.data.averageRating && avgRatingResponse.data.numberOfRatings !== undefined) {
                     setAverageRating(avgRatingResponse.data.averageRating.toFixed(1)); 
                     setNumberOfRatings(avgRatingResponse.data.numberOfRatings);
@@ -102,7 +103,7 @@ const AlbumPage = () => {
 
     const fetchUserLists = async () => {
         try {
-            const response = await axios.get(`http://localhost:8081/list/getAllListsByUser/${user.username}`);
+            const response = await axios.get(`${backendUrl}/list/getAllListsByUser/${user.username}`);
             setUserLists(response.data);
             setShowModal(true); 
         } catch (error) {
@@ -113,7 +114,7 @@ const AlbumPage = () => {
     const addAlbumToList = async (listId) => {
         const albumId = spotifyId; 
         try {
-          await axios.post(`http://localhost:8081/list/addAlbumToList/${listId}`, { albumId });
+          await axios.post(`${backendUrl}/list/addAlbumToList/${listId}`, { albumId });
           setShowModal(false);
           setAlbumListCount(albumListCount + 1);
         } catch (error) {
@@ -142,7 +143,7 @@ const AlbumPage = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8081/rating/save', {
+            const response = await axios.post(`${backendUrl}/rating/save`, {
                 userName: user.username,
                 ratingNum: parseFloat(rating),
                 albumId: spotifyId, 

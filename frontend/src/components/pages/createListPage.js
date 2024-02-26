@@ -6,9 +6,9 @@ import AlbumCard from '../albumCard';
 import getUserInfo from "../../utilities/decodeJwt"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-const url = "http://localhost:8081/list/save";
 
 const CreateListPage = () => {
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [user, setUser] = useState({})
   const [listTitle, setListTitle] = useState('');
   const [listDescription, setListDescription] = useState('');
@@ -23,7 +23,7 @@ const CreateListPage = () => {
     const fetchListDetails = async () => {
       if (listId) { 
         try {
-          const listResponse = await axios.get(`http://localhost:8081/list/getListById/${listId}`);
+          const listResponse = await axios.get(`${backendUrl}/list/getListById/${listId}`);
           const { listName, listDescription, albums } = listResponse.data;
           
           setListTitle(listName);
@@ -31,7 +31,7 @@ const CreateListPage = () => {
           
           const albumDetailsResponses = await Promise.all(
             albums.map((album) =>
-              axios.get(`http://localhost:8081/api/getAlbumDetails/${album.id}`)
+              axios.get(`${backendUrl}/api/getAlbumDetails/${album.id}`)
             )
           );
           const detailedAlbums = albumDetailsResponses.map(response => {
@@ -87,7 +87,7 @@ const CreateListPage = () => {
     }
   
     try {
-      const response = await axios.post(url, listData);
+      const response = await axios.post(`${backendUrl}/list/save`, listData);
       console.log('List saved:', response.data);
       const savedListId = response.data._id;
       navigate(`/listPage/${savedListId}`);

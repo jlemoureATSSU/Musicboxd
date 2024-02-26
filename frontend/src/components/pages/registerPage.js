@@ -4,7 +4,7 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-const url = "http://localhost:8081/user/signup";
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 const Register = () => {
   const [data, setData] = useState({ username: "", email: "", password: "" });
@@ -18,7 +18,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: res } = await axios.post(url, data);
+      const { data: res } = await axios.post(`${backendUrl}/user/signup`, data);
       const {accessToken} = res;
       navigate("/login");
     } catch (error) {

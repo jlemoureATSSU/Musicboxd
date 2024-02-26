@@ -11,12 +11,13 @@ const ListPage = () => {
     const [albumDetails, setAlbumDetails] = useState([]);
     const [currentUser, setCurrentUser] = useState(null); 
     const navigate = useNavigate();
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
     useEffect(() => {
         const fetchListData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8081/list/getListById/${listId}`);
+                const response = await axios.get(`${backendUrl}/list/getListById/${listId}`);
                 setListData(response.data);
                 fetchAlbumsDetails(response.data.albums.map(album => album.id));
             } catch (error) {
@@ -34,7 +35,7 @@ const ListPage = () => {
         if (albumIds.length === 0) return;
 
         try {
-            const response = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+            const response = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
                 albumIds: albumIds
             });
             setAlbumDetails(response.data);

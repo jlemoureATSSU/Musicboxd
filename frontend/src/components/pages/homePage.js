@@ -8,14 +8,16 @@ const HomePage = () => {
     const [recentLists, setRecentLists] = useState([]);
     const [highestRatedAlbums, setHighestRatedAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState({});
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
 
     useEffect(() => {
       const fetchInitialData = async () => {
         try {
           // Fetch highest rated albums and recent lists
           const [highestRatedResponse, recentListsResponse] = await Promise.all([
-            axios.get('http://localhost:8081/rating/getHighestRatedAlbums'),
-            axios.get(`http://localhost:8081/list/getRecentLists`)
+            axios.get(`${backendUrl}/rating/getHighestRatedAlbums`),
+            axios.get(`${backendUrl}/list/getRecentLists`)
           ]);
           
           setHighestRatedAlbums(highestRatedResponse.data);
@@ -32,7 +34,7 @@ const HomePage = () => {
           const uniqueAlbumIds = Array.from(new Set([...highestRatedAlbumIds, ...listAlbumIds]));
     
           // Fetch details for all unique albums
-          const albumDetailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+          const albumDetailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
             albumIds: uniqueAlbumIds
           });
     
