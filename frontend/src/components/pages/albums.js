@@ -22,12 +22,11 @@ const Albums = () => {
         try {
             const response = await axios.get(url);
             if (response.data.length > 0) {
-                setAlbums(prevAlbums => [...prevAlbums, ...response.data]);
-                // After setting the albums, fetch their details in bulk
-                fetchAlbumDetails(response.data.map(album => album.albumId));
-                if (response.data.length < limit) {
-                    setHasMore(false);
-                }
+                const newAlbums = response.data;
+                setAlbums(prevAlbums => [...prevAlbums, ...newAlbums]);
+                const newAlbumIds = newAlbums.map(album => album.albumId);
+                fetchAlbumDetails(newAlbumIds); // Fetch new album details only
+                setHasMore(newAlbums.length === limit);
             } else {
                 setHasMore(false);
             }
@@ -36,24 +35,33 @@ const Albums = () => {
             setHasMore(false);
         }
     };
+    
 
-    const fetchAlbumDetails = async (albumIds) => {
-        try {
-            const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
-                albumIds: albumIds
-            });
-            setAlbumDetails(detailsResponse.data.reduce((acc, album) => ({
-                ...acc,
-                [album.id]: album
-            }), {}));
-        } catch (error) {
-            console.error("Error fetching album details in bulk:", error);
-        }
-    };
     
     useEffect(() => {
         fetchAlbums(page, sortingMode);
     }, [page, sortingMode]);
+
+const fetchAlbumDetails = async (albumIds) => {
+    try {
+        const detailsResponse = await axios.post(`http://localhost:8081/api/getMultipleAlbumDetails`, {
+            albumIds: albumIds
+        });
+        const newDetails = detailsResponse.data;
+        setAlbumDetails(prevDetails => {
+            const updatedDetails = { ...prevDetails };
+            newDetails.forEach(album => {
+                updatedDetails[album.id] = album;
+            });
+            return updatedDetails;
+        });
+    } catch (error) {
+        console.error("Error fetching album details in bulk:", error);
+    }
+};
+
+    
+
 
     const handleSeeMore = () => {
         setPage(prevPage => prevPage + 1);

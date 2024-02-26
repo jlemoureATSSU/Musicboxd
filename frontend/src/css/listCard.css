@@ -64,6 +64,7 @@
   height: 55px; 
   border-radius: 1px;
   object-fit: cover;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .list-card-album-previews div {

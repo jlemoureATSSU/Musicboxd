@@ -68,7 +68,7 @@ const AlbumPage = () => {
                     setAverageRating(avgRatingResponse.data.averageRating.toFixed(1)); 
                     setNumberOfRatings(avgRatingResponse.data.numberOfRatings);
                 } else {
-                    setAverageRating('No rating yet');
+                    setAverageRating('NR');
                 }
             } catch (error) {
                 console.error("Error fetching average rating for album", error);

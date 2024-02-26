@@ -23,11 +23,11 @@ router.post('/save', async (req, res) => {
         let avgRating = await AvgRating.findOne({ albumId });
 
         if (avgRating) {
-            if (oldRatingNum > 0) { 
-                avgRating.totalRatings = avgRating.totalRatings - oldRatingNum + ratingNum;
-            } else { 
-                avgRating.totalRatings += ratingNum;
+            if (rating.isNew) {
                 avgRating.numberOfRatings += 1;
+                avgRating.totalRatings += ratingNum;
+            } else {
+                avgRating.totalRatings = avgRating.totalRatings - oldRatingNum + ratingNum;
             }
         } else {
             avgRating = new AvgRating({

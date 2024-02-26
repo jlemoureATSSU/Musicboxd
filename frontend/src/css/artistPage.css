@@ -3,6 +3,7 @@
     display: flex;
     align-items: center;
     gap: 30px;
+    padding-top: 5px;
   }
 
 .albums-container {
