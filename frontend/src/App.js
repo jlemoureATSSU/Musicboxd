@@ -18,7 +18,7 @@ import PrivateUserProfile from "./components/pages/privateUserProfilePage";
 import AlbumPage from "./components/pages/albumPage";
 import ArtistPage from "./components/pages/artistPage";
 import CreateListPage from "./components/pages/createListPage";
-import SearchBar from "./components/searchBar";
+import SearchBar from "./components/searchbar";
 import getUserInfo from "./utilities/decodeJwt";
 import ListPage from "./components/pages/listPage";
 import Albums from "./components/pages/albums";
