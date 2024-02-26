@@ -1,40 +1,50 @@
 .sidebar {
-    position: fixed;
-    color: #fff;
-    left: 0;
-    top: 0;
-    width: 180px;
-    height: 100vh;
-    max-height: 100vh;
-    text-align: center;
-    background-color: #222;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  }
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding-left: 10px;
+  border-bottom-right-radius: 5px;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 60px; /* Adjust if necessary */
+  background-color: #222;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
 
-  .sidebar a {
-    display: block;
-    color: #fff;
-    padding-top: 8px;
-    padding-bottom: 16px;
-    text-decoration: none;
-    font-size: 15px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
-  }
+.sidebar-links {
+  display: flex;
+  flex-direction: row;
+  gap: 2px; /* Space between links */
+}
 
-  .sidebar a:hover {
-    transform: translateY(-2px);
-    color: white;
-    font-size: 16px;
-  }
+.sidebar-links a {
+  color: #fff;
+  padding: 5px;
+  margin-right: 5px; /* Space between links */
+  text-decoration: none;
+  font-size: 20px;
+  background-color: #333; /* Distinct background for links */
+  border-radius: 5px; /* Optional: rounds corners of link backgrounds */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
 
-  .sidebar .home-link {
-    font-size: 30px;  
-    text-decoration: underline;
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
-  }
-  
-  .sidebar .home-link:hover {
-    font-size: 30px;
-    transform: translateY(0px);
+}
 
-  }
+.sidebar-links a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.sidebar .home-link {
+  color: #fff;
+  text-decoration: underline;
+  font-size: 33px; /* Adjusted for navbar */
+  margin-right: auto; /* Ensures it stays to the left */
+}
+
+.sidebar .home-link:hover {
+  text-decoration: underline;
+}

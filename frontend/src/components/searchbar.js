@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { debounce } from 'lodash';
 
+
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);
@@ -89,23 +90,21 @@ const SearchBar = () => {
         navigate(`/albumPage/${album.id}`);
       };
 
-    const handleKeyDown = (e) => {
+      const handleKeyDown = (e) => {
         if (e.key === 'ArrowDown' && highlightedIndex < results.length - 1) {
           setHighlightedIndex(prevIndex => prevIndex + 1);
         } else if (e.key === 'ArrowUp' && highlightedIndex > 0) {
           setHighlightedIndex(prevIndex => prevIndex - 1);
         } else if (e.key === 'Enter' && highlightedIndex >= 0) {
-          handleArtistSelect(results[highlightedIndex].id);
-        } else if (e.key === 'Enter' && highlightedIndex >= 0) {
           const result = results[highlightedIndex];
           if (result.type === 'album') {
             handleAlbumSelect(result);
           } else {
-            handleArtistSelect(result.id);
+            handleArtistSelect(result);
           }
         }
-        
       };
+      
       
 
       return (

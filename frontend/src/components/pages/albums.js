@@ -14,7 +14,7 @@ const Albums = () => {
 
 
     const fetchAlbums = async (nextPage, mode) => {
-        const limit = 10;
+        const limit = 12;
         const offset = nextPage * limit;
         let url = mode === 'highestRated' 
                   ? `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`

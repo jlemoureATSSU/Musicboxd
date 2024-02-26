@@ -2,7 +2,6 @@
 
 .app {
   font-family: 'JetBrains Mono', monospace;
-  padding-left: 180px;
   padding-top: 70px;
   background-image: linear-gradient(to bottom, #727272, #505050 35%);
   color: #fff;
@@ -36,8 +35,13 @@
   font-size: 14px;
 }
 
-.homepage-container-title {
-  margin-top: 15px;
+.recent-lists-container-title {
+  font-size: 18px;
+  text-align: left;
+  margin-left: 30px;
+}
+.highest-rated-albums-container-title {
+  margin-top:10px;
   font-size: 18px;
   text-align: left;
   margin-left: 30px;
@@ -105,11 +109,14 @@
 .highest-rated-albums-container::-webkit-scrollbar-thumb {
   background-color: #363636; 
   border-radius: 10px;
+  
 }
 
 
 .highest-rated-albums-container::-webkit-scrollbar {
   height: 7px;
+  padding-bottom: 5px;
+
 }
 
 

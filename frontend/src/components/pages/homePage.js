@@ -54,7 +54,7 @@ const HomePage = () => {
 
     return (
         <div>
-            <div className='homepage-container-title'>Recently Created Lists</div>
+            <div className='recent-lists-container-title'>Recently Created Lists</div>
             <div className="recent-lists-container">
                 {recentLists.map(list => (
                   <ListCard
@@ -68,7 +68,7 @@ const HomePage = () => {
                     />
                 ))}
             </div>
-            <div className='homepage-container-title'>Highest Rated Albums <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
+            <div className='highest-rated-albums-container-title'>Highest Rated Albums <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
             <div className="highest-rated-albums-container">
                 {highestRatedAlbums.map(({ albumId }) => { 
                     const album = albumDetails[albumId];

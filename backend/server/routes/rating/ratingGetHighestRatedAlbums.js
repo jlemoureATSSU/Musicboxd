@@ -5,7 +5,7 @@ const AvgRating = require('../../models/avgRatingModel');
 router.get('/getHighestRatedAlbums', async (req, res) => {
     let limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.offset, 10);
-    limit = isNaN(limit) || limit < 1 ? 8 : limit;
+    limit = isNaN(limit) || limit < 1 ? 10 : limit;
     offset = isNaN(offset) ? 0 : offset;
 
     try {
