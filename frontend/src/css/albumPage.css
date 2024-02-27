@@ -29,7 +29,7 @@
 
 
 .album-details-wrapper {
-    width: 345px;
+    width: 410px;
     margin-top: 5px;
     align-content: left;
 
@@ -38,12 +38,17 @@
 .album-details {
     background-color: #333;
     border-radius: 10px;
-    padding: 20px;
-    width: 345px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 410px;
 }
 .album-title {
-    height: 70px;
-    line-height: 25px;
+    text-align: center;
+    font-size: 35px;
+    height: auto;
+    line-height: 33px;
     margin-bottom: 10px;
 }
 
@@ -55,6 +60,8 @@
     margin: 0;
     margin-bottom: 10px; 
     text-decoration: none;
+    text-align: center;
+    height: auto;
 }
 
 .album-artist-link:hover,
@@ -67,12 +74,13 @@
     font-size: 1.2rem;
     margin: 0;
     margin-bottom: 10px;
+    text-align: center;
 }
 .album-cover-art {
-    width: 300px;
-    height: 300px;
+    width: 370px;
+    height: 370px;
     border-radius: 4px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     background-size: cover;
     background-position: center;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
@@ -81,9 +89,9 @@
 .album-info-wrapper {
     display: flex;
     width: 200px;
-    margin-top: 5px;
+    margin-top: 65px;
     flex-direction: column; 
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
 }
 
@@ -91,7 +99,7 @@
     margin-top: 5px;
     display: flex;
     flex-direction: column; 
-    align-items: flex-start;
+    align-items: center;
     width: 200px;
     gap: 10px;
     margin-right: 5px;
@@ -168,17 +176,20 @@
     background-color: #222;
     border: none;
     color: white;
-    font-size: 15px;
-    width: 200px;
+    font-size: 17px;
+    width: 140px;
     height: 50px;
     border-radius: 8px;
+    padding-bottom: 4px;
     cursor: pointer;
     box-shadow: 0 8px 16px rgba(0,0,0,0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    text-align: center;
 }
 
 .spotify-green {
     color: #1DB954;
+    font-size: 28px;
   }
   
 
@@ -191,9 +202,10 @@
     background-color: #333;
     color: white;
     border-radius: 8px;
-    padding: 10px;
+    padding-left: 10px;
+    padding-top: 7px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.35);
-    height: 60px;
+    height: 50px;
     width: 200px;
     font-size: 12px;
     margin: 0;

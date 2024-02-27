@@ -127,7 +127,7 @@ const SearchBar = () => {
                 setResults([]);
               }}
             >
-              Albums
+              Album
             </button>
             <button
               className={`search-mode-button ${searchMode === 'artist' ? 'active' : ''}`}
@@ -137,7 +137,7 @@ const SearchBar = () => {
                 setResults([]);
               }}
             >
-              Artists
+              Artist
             </button>
           </div>
           <div className='search-results'>

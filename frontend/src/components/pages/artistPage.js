@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import CardDisplay from '../cardDisplay';
+import { FaSpotify } from 'react-icons/fa';
 
 const ArtistPage = () => {
     const [artistDetails, setArtistDetails] = useState(null);
@@ -55,7 +56,8 @@ const ArtistPage = () => {
     return (
         <div>
             <h1 className="artist-header">{artistDetails?.name || 'Artist'}
-                <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn">Open in <span className="spotify-green">Spotify</span></button>
+                <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn">Open in <span className="spotify-green"><FaSpotify /></span></button>
+                {albums.length} Albums
             </h1>
             <CardDisplay albums={albums} artistName={artistDetails?.name} />
         </div>

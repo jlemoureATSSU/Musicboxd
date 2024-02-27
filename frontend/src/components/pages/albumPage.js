@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is import
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import getUserInfo from "../../utilities/decodeJwt";
+import {FaSpotify} from 'react-icons/fa';
 
 
 const AlbumPage = () => {
@@ -118,12 +119,13 @@ const AlbumPage = () => {
           setShowModal(false);
           setAlbumListCount(albumListCount + 1);
           setTimeout(() => {
-            displayMessage('Album added!');
+            displayMessage('Album added to List!');
           }, 0);
         } catch (error) {
-          console.error('Error adding album to list:', error);
+          console.error('Error adding album to List:', error);
+          setShowModal(false);
           setTimeout(() => {
-            displayMessage('Album already in list');
+            displayMessage('Album already in List!');
           }, 0);
         }
       };
@@ -228,20 +230,19 @@ const AlbumPage = () => {
         <div className="album-details-wrapper">
             <div className="album-details">
                 <h1 className="album-title">{title}</h1>
+                <div className="album-artist">{artistLink}</div>
                 <img src={albumDetails.coverArtUrl} alt={`${title} cover art`} className="album-cover-art" />
                 <div className="album-info">
-                <div className="album-artist">{artistLink}</div>
-                    <div className="album-release-date"> {formattedReleaseDate} </div>
+                    <div className="album-release-date"> Released {formattedReleaseDate} </div>
                 </div>
             </div>
         </div>
 
         <div className="album-info-wrapper">
-            <button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn">Open in <span className="spotify-green">Spotify</span></button>
-            <div className="rating-box">
+        <div className="rating-box">
                 <div className="submit-rating-title">Average Rating:</div>
                 <div className={`rating-input ${getRatingClassName(averageRating)}`}>{averageRating}</div>
-                <div className='rating-title'>From {numberOfRatings} Musicboxd user rating(s)</div>
+                <div className='rating-title'>From {numberOfRatings} <u><b>Musicboxd</b></u> user rating(s)</div>
             </div>
 
         <div className='list-count'>This album appears in {albumListCount} user-created List(s)</div>
@@ -251,7 +252,25 @@ const AlbumPage = () => {
         </div>  
         
         <div className="album-actions-wrapper">
-        <button onClick={fetchUserLists} className="add-album-btn">Add Album to a List</button>
+        <button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn"> Open in <span className="spotify-green"><FaSpotify /></span></button>
+        <div className="submit-rating-box">
+            <div className="submit-rating-title">Your Rating:</div>
+            <input
+                type="text"
+                className={`submit-rating-input ${getRatingClassName(rating)}`}
+                value={rating}
+                onChange={handleRatingChange}
+                onKeyPress={handleRatingSubmit}
+                placeholder="-"
+            />
+            <button
+                className="submit-rating-btn"
+                onClick={handleRatingSubmit}
+            >
+                Submit Rating
+            </button>
+        </div>
+        <button onClick={fetchUserLists} className="add-album-btn">Add Album to a <b>List</b></button>
           <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
             <Modal.Header><Modal.Title>Add {title} by {artist} to one of your lists...</Modal.Title></Modal.Header>
             <Modal.Body>
@@ -272,23 +291,7 @@ const AlbumPage = () => {
                 </Button>
             </Modal.Footer>
         </Modal>
-        <div className="submit-rating-box">
-            <div className="submit-rating-title">Your Rating:</div>
-            <input
-                type="text"
-                className={`submit-rating-input ${getRatingClassName(rating)}`}
-                value={rating}
-                onChange={handleRatingChange}
-                onKeyPress={handleRatingSubmit}
-                placeholder="-"
-            />
-            <button
-                className="submit-rating-btn"
-                onClick={handleRatingSubmit}
-            >
-                Submit Rating
-            </button>
-        </div>
+
         </div>      
     </div>
   );

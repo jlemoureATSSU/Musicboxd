@@ -8,7 +8,7 @@
   top: 0;
   left: 0;
   width: 320px;
-  height: 60px; /* Adjust if necessary */
+  height: 60px;
   background-color: #333;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   z-index: 100;
@@ -17,17 +17,17 @@
 .sidebar-links {
   display: flex;
   flex-direction: row;
-  gap: 2px; /* Space between links */
+  gap: 2px;
 }
 
 .sidebar-links a {
   color: #fff;
   padding: 5px;
-  margin-right: 7px; /* Space between links */
+  margin-right: 7px;
   text-decoration: none;
   font-size: 20px;
-  background-color: #555; /* Distinct background for links */
-  border-radius: 5px; /* Optional: rounds corners of link backgrounds */
+  background-color: #555;
+  border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease; 
 
@@ -42,10 +42,7 @@
 .sidebar .home-link {
   color: #fff;
   text-decoration: underline;
-  font-size: 33px; /* Adjusted for navbar */
-  margin-right: auto; /* Ensures it stays to the left */
+  font-size: 33px;
+  margin-right: auto; 
 }
 
-.sidebar .home-link:hover {
-  text-decoration: underline;
-}

@@ -28,6 +28,7 @@
 .album-list {
   display: flex;
   flex-direction: row;
+  gap: 15px;
 }
 
 .album-list-card::-webkit-scrollbar-track {
