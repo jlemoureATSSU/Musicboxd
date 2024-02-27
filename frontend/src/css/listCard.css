@@ -19,7 +19,7 @@
 }
 
 .list-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
@@ -77,7 +77,7 @@
 .list-card-date {
   color: white; 
   background-color: #222;
-  border-radius: 8px;
+  border-radius: 10px;
   height: 60px;
   font-size: 14px;
   margin-left: 6px; 

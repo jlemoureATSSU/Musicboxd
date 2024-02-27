@@ -4,7 +4,7 @@
     display: flex;
     flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
     gap: 10px; /*10px gap between items in the container*/
-    margin-left: 25px; /*25px left margin so the div is not right up against the sidebar*/
+    margin-left: 15px; /*25px left margin so the div is not right up against the sidebar*/
     max-height: calc(100vh - 70px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
     overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
     padding-bottom: 20px; /*20px padding at the bottom of the div so the last item isnt right up against the bottom of the div*/ 

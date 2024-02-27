@@ -9,7 +9,7 @@
 }
 
 .page{
-  margin-left: 25px;
+  margin-left: 20px;
   
 }
 
@@ -63,7 +63,7 @@
   flex-wrap: nowrap;
   padding-top: 10px;
   padding-bottom: 8px;
-  padding-left: 25px;
+  padding-left:15px;
   overflow-x: auto;
   justify-content: flex-start; 
 }
@@ -72,21 +72,21 @@
   display: flex;
   flex-wrap: nowrap;
   padding-top: 10px;
-  padding-left: 25px;
+  padding-left: 15px;
   overflow-x: auto;
   justify-content: flex-start; 
   padding-bottom: 8px;
 }
 
 .recent-lists-container::-webkit-scrollbar-track {
-  margin-left: 25px;
-  margin-right: 25px;
-  background-color: transparent;
+  margin-left: 15px;
+  margin-right: 15px;
+  background-color: #444;
 }
 
 
 .recent-lists-container::-webkit-scrollbar-thumb {
-  background-color: #363636; 
+  background-color: #333; 
   border-radius: 10px;
 }
 
@@ -97,17 +97,18 @@
 
 
 .recent-lists-container::-webkit-scrollbar-thumb:hover {
-  background-color: #2b2b2b;
+  background-color: #222;
 }
 .highest-rated-albums-container::-webkit-scrollbar-track {
-  margin-left: 25px;
-  margin-right: 25px;
-  background-color: transparent;
+  margin-left: 15px;
+  margin-right: 15px;
+  background-color: #444;
+  
 }
 
 
 .highest-rated-albums-container::-webkit-scrollbar-thumb {
-  background-color: #363636; 
+  background-color: #333; 
   border-radius: 10px;
   
 }
@@ -121,21 +122,19 @@
 
 
 .highest-rated-albums-container::-webkit-scrollbar-thumb:hover {
-  background-color: #2b2b2b;
+  background-color: #222;
 }
 .sort-button {
   position: relative;
-  margin-left: 25px;
-  margin-top: 5px;
-  margin-bottom: 10px;
-
-  background-color: rgb(90, 90, 90);
+  margin-left: 15px;
+  margin-bottom: 7px;
+  background-color: #555;
   color: white;
   border: 2px solid #4f4f4f;
-  padding: 5px 10px;
+  padding: 3px 6px;
   cursor: pointer;
-  border-radius: 15px;
-  font-size: 1em;
+  border-radius: 12px;
+  font-size: 14px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
   transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
@@ -146,4 +145,43 @@
 
 .sort-button.active, .sort:hover {
   border-color: rgb(227, 253, 226);
+  background-color: #333;
+
 }  
+
+.all-albums-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  max-height: calc(100vh - 107px); 
+  overflow-y: auto; 
+  padding-left: 15px;
+  justify-content: flex-start;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  margin-right: 5px;
+}
+
+.all-albums-container::-webkit-scrollbar-track {
+  margin-top: 20px;
+  margin-bottom: 20px; 
+
+}
+
+
+.all-albums-container::-webkit-scrollbar-thumb {
+  background-color: #363636; 
+  border-radius: 10px;
+  border: 4px solid transparent; 
+  background-clip: padding-box; 
+}
+
+
+.all-albums-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+
+.all-albums-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2b2b2b;
+}

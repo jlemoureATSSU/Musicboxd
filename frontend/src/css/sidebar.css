@@ -4,13 +4,13 @@
   align-items: center;
   justify-content: start;
   padding-left: 10px;
-  border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 7px;
   top: 0;
   left: 0;
   width: 320px;
   height: 60px; /* Adjust if necessary */
-  background-color: #222;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  background-color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   z-index: 100;
 }
 
@@ -26,9 +26,10 @@
   margin-right: 7px; /* Space between links */
   text-decoration: none;
   font-size: 20px;
-  background-color: #333; /* Distinct background for links */
+  background-color: #555; /* Distinct background for links */
   border-radius: 5px; /* Optional: rounds corners of link backgrounds */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.2s ease; 
 
 }
 

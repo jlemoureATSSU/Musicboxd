@@ -88,7 +88,7 @@ const AlbumPage = () => {
                         setShowMessage(false);
                         messageDiv.classList.remove('fade-out');
                     }, 500);
-                }, 2500);
+                }, 3000);
 
                 return () => {
                     clearTimeout(timer);
@@ -112,15 +112,22 @@ const AlbumPage = () => {
     };
 
     const addAlbumToList = async (listId) => {
-        const albumId = spotifyId; 
+        const albumId = spotifyId;
         try {
           await axios.post(`${backendUrl}/list/addAlbumToList/${listId}`, { albumId });
           setShowModal(false);
           setAlbumListCount(albumListCount + 1);
+          setTimeout(() => {
+            displayMessage('Album added!');
+          }, 0);
         } catch (error) {
           console.error('Error adding album to list:', error);
+          setTimeout(() => {
+            displayMessage('Album already in list');
+          }, 0);
         }
       };
+    
 
       const handleRatingChange = (e) => {
         const value = e.target.value;
@@ -149,9 +156,9 @@ const AlbumPage = () => {
                 albumId: spotifyId, 
             });
 
-            setSubmitMessage('Rating submitted successfully!');
+            setSubmitMessage('Rating saved!');
             setTimeout(() => {
-                displayMessage('Rating submitted successfully!');
+                displayMessage('Rating saved!');
             }, 0);
         } catch (error) {
             setSubmitMessage('');

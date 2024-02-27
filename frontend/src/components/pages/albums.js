@@ -93,7 +93,7 @@ const fetchAlbumDetails = async (albumIds) => {
                     Newest
                 </button>
             </div>
-            <div className="albums-container">
+            <div className="all-albums-container">
                 {albums.map(({ albumId }) => {
                     const album = albumDetails[albumId];
                     if (!album) return null;

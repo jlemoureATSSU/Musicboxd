@@ -8,7 +8,7 @@ const SearchBar = () => {
     const [results, setResults] = useState([]);
     const navigate = useNavigate();
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
-    const [searchMode, setSearchMode] = useState('artist');
+    const [searchMode, setSearchMode] = useState('album');
 
     const search = debounce(async (search) => {
       if (!search) {
@@ -68,6 +68,7 @@ const SearchBar = () => {
     useEffect(() => {
         const handleClickOutside = (event) => {
           if (!event.target.closest('.search-bar') && !event.target.closest('.search-results')) {
+            setSearchTerm('');
             setResults([]);
           }
         };
@@ -80,11 +81,13 @@ const SearchBar = () => {
       }, []);
 
       const handleArtistSelect = (artist) => {
+        setSearchTerm('');
         setResults([]);
         navigate(`/artistPage/${artist.id}`); 
     };
 
     const handleAlbumSelect = (album) => {
+      setSearchTerm('');
       setResults([]);
         navigate(`/albumPage/${album.id}`);
       };
@@ -116,16 +119,6 @@ const SearchBar = () => {
             onKeyDown={handleKeyDown}
             />
           <div className="search-controls">
-          <button
-              className={`search-mode-button ${searchMode === 'artist' ? 'active' : ''}`}
-              onClick={() => {
-                setSearchMode('artist');
-                setSearchTerm('');
-                setResults([]);
-              }}
-            >
-              Artists
-            </button>
             <button
               className={`search-mode-button ${searchMode === 'album' ? 'active' : ''}`}
               onClick={() => {
@@ -135,6 +128,16 @@ const SearchBar = () => {
               }}
             >
               Albums
+            </button>
+            <button
+              className={`search-mode-button ${searchMode === 'artist' ? 'active' : ''}`}
+              onClick={() => {
+                setSearchMode('artist');
+                setSearchTerm('');
+                setResults([]);
+              }}
+            >
+              Artists
             </button>
           </div>
           <div className='search-results'>
