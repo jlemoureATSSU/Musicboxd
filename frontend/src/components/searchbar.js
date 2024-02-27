@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { debounce } from 'lodash';
 
-
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState([]);

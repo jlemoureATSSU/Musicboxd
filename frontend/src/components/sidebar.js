@@ -4,6 +4,7 @@ import { UserContext } from '../App';
 import { FaPlus, FaUser } from 'react-icons/fa';
 import { PiVinylRecordBold } from 'react-icons/pi';
 import { IoIosCreate } from 'react-icons/io';
+import { CiLogin } from 'react-icons/ci';
 
 const Sidebar = () => {
   const user = useContext(UserContext);
@@ -13,8 +14,8 @@ const Sidebar = () => {
       <div className="sidebar-links">
         {!user ? (
           <>
-            <Link to="/login" title="Login"><FaPlus /></Link>
-            <Link to="/signup" title="Signup">Sign Up</Link>
+            <Link to="/albums" title="Albums"><PiVinylRecordBold /></Link>
+            <Link to="/login" title="Login"><CiLogin /></Link>
           </>
         ) : (
           <>
