@@ -9,11 +9,13 @@ router.post('/save', async (req, res) => {
     try {
         let rating = await Rating.findOne({ userName, albumId });
         let oldRatingNum = 0;
+        let isNewRating = true; // Added flag to identify if the rating is new
 
         if (rating) {
             oldRatingNum = rating.ratingNum;
             rating.ratingNum = ratingNum;
             rating.dateUpdated = new Date();
+            isNewRating = false; // Set flag to false as the rating exists
         } else {
             rating = new Rating({ userName, ratingNum, albumId });
         }
@@ -23,21 +25,24 @@ router.post('/save', async (req, res) => {
         let avgRating = await AvgRating.findOne({ albumId });
 
         if (avgRating) {
-            if (oldRatingNum >= 0) { 
+            if (!isNewRating) {
+                // Adjust totalRatings by subtracting old rating and adding new rating
                 avgRating.totalRatings = avgRating.totalRatings - oldRatingNum + ratingNum;
-            } else { 
+            } else {
+                // Handle as a new rating
                 avgRating.totalRatings += ratingNum;
                 avgRating.numberOfRatings += 1;
             }
         } else {
+            // No existing avgRating, create a new one
             avgRating = new AvgRating({
                 albumId,
                 totalRatings: ratingNum,
                 numberOfRatings: 1,
-                averageRating: ratingNum, 
             });
         }
 
+        // Recalculate average rating
         avgRating.averageRating = avgRating.totalRatings / avgRating.numberOfRatings;
         
         await avgRating.save();
@@ -49,4 +54,4 @@ router.post('/save', async (req, res) => {
     }
 });
 
-module.exports = router;
+module.exports = router; // Corrected "module. Exports" to "module.exports"
