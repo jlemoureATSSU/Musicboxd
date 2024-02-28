@@ -9,6 +9,11 @@
     overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
     padding-bottom: 20px; /*20px padding at the bottom of the div so the last item isnt right up against the bottom of the div*/ 
 }
+@media (max-width: 835px) {
+    .album-page {
+        margin-top: 40px;
+    }
+  }
 /*styling of scrollbar*/
 .album-page::-webkit-scrollbar-track {
     margin-top: 20px;
@@ -178,6 +183,7 @@
     color: white;
     font-size: 17px;
     width: 140px;
+    min-width: 140px;
     height: 50px;
     border-radius: 8px;
     padding-bottom: 4px;

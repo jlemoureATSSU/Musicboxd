@@ -38,7 +38,7 @@ const Login = () => {
   };
 
   return (
-    <div className="main">
+    <div className="page">
       <div className="main login-container">
         <h2>Log In to your account</h2>
         <Form onSubmit={handleSubmit}>

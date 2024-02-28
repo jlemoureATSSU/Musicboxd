@@ -49,7 +49,6 @@ const App = () => {
           <Route path="/createListPage/:listId" element={<CreateListPage />} />
           <Route path="/albumPage/:spotifyId" element={<AlbumPage />} />
           <Route path="/artistPage/:artistSpotifyId" element={<ArtistPage />} />
-          <Route path="/searchBar" element={<SearchBar />} />
           <Route path="/listPage/:listId" element={<ListPage />} />
           <Route path="/albums" element={<Albums />} />
 

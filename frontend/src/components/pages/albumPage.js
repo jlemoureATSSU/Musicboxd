@@ -233,7 +233,7 @@ const AlbumPage = () => {
                 <div className="album-artist">{artistLink}</div>
                 <img src={albumDetails.coverArtUrl} alt={`${title} cover art`} className="album-cover-art" />
                 <div className="album-info">
-                    <div className="album-release-date"> Released {formattedReleaseDate} </div>
+                    <div className="album-release-date"> Released: {formattedReleaseDate} </div>
                 </div>
             </div>
         </div>

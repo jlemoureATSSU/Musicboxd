@@ -1,11 +1,13 @@
 .artist-header {
     margin-left: 25px;
     display: flex;
+    flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
     align-items: center;
     gap: 30px;
     padding-top: 5px;
     font-size: 40px;
   }
+
 
 .albums-container {
     display: flex;
@@ -20,6 +22,16 @@
     margin-right: 5px;
     gap: 15px;
 }
+
+@media (max-width: 835px) {
+  .artist-header {
+      margin-top: 40px;
+  }
+  .albums-container {
+      max-height: calc(100vh - 173px); 
+  }
+}
+
 
 .albums-container::-webkit-scrollbar-track {
   margin-top: 20px;
