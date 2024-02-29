@@ -1,53 +1,80 @@
 .create-list-page {
   display: flex;
-  flex-direction: column;
-  padding-top: 10px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  max-height: calc(100vh - 55px); 
+  overflow-y: auto; 
 }
+
+.create-list-page::-webkit-scrollbar-track {
+  margin-top: 20px;
+  margin-bottom: 20px; 
+} 
+.create-list-page::-webkit-scrollbar-thumb {
+    background-color: #222; 
+    border-radius: 10px;
+    border: 4px solid transparent; 
+    background-clip: padding-box; 
+  }
+  .create-list-page::-webkit-scrollbar {
+    height: 8px;
+  }
+  .create-list-page::-webkit-scrollbar-thumb:hover {
+    background-color: #111;
+  }
 
 @media (max-width: 845px) {
   .create-list-page {
       margin-top: 40px;
+      max-height: calc(100vh - 100px); 
+
   }
 }
 
 .list-input-card {
   background-color: rgba(255, 255, 255, 0.0);
-  margin-left: 25px;
-  width: 100%;
-  max-width: 600px;
+  margin-left: 10px;
   height: 220px;
   display: flex;
+  width: auto;
   flex-direction: column;
   
 }
 
 .album-list-card {
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: row;
+  width: 100%;
+  height: 410px;
+  background-color: #444;
+  border-radius: 18px;
+  padding-top: 15px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-left: 13px;
+  padding-right: 13px;
   overflow-x: auto;
-  overflow-y: hidden;
-  padding-left: 25px;
-  justify-content: flex-start;
-  padding-top: 10px;
-  padding-bottom: 8px;
+  justify-content: flex-start; 
+  padding-bottom: 5px;
+  gap: 13px;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 }
 
-.album-list {
-  display: flex;
-  flex-direction: row;
-  gap: 15px;
-}
+
 
 .album-list-card::-webkit-scrollbar-track {
-  margin-left: 20px;
-  margin-right: 20px; 
+  margin-left: 14px;
+  margin-right: 14px; 
   background-color: transparent;
 
 }
   
   
 .album-list-card::-webkit-scrollbar-thumb {
-  background-color: #363636;
+  background-color: #222;
   border-radius: 10px;
   background-clip: padding-box;
 }
@@ -60,7 +87,9 @@
   
   
 .album-list-card::-webkit-scrollbar-thumb:hover {
-  background-color: #2b2b2b;
+  background-color: #111;
+  height: 8px; 
+
 }
 
 .list-title-input
@@ -117,8 +146,17 @@
 }
 
 .list-actions {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
+  max-width: 310px;
+  justify-content: flex-start;
+  margin-left: 20px;
+  background-color: #444;
+  border-top-left-radius: 18px; 
+  border-top-right-radius: 18px; 
+  margin-top: 10px;
+  gap: 10px;
+  padding:10px;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 }
 
 .discard-btn,
@@ -126,39 +164,29 @@
 .save-btn,
 .add-btn {
   border: none;
-  padding: 10px 20px;
+  font-size: 15px;
+  height: 35px;
+  padding: 7px;
   color: white;
   border-radius: 4px;
   cursor: pointer;
-}
-
-.discard-btn {
-  height: 45px;
-  margin-top: 12px;
-  background: #d9534f;
   box-shadow: 0 4px 8px rgba(0,0,0,0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
 }
-
-.discard-btn:hover {
+.discard-btn:hover,
+.edit-btn:hover,
+.save-btn:hover,
+.add-btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+.discard-btn {
+  background: #d9534f;
 }
 
 .save-btn {
-  height: 45px;
-  min-width: 130px;
-  margin-top: 12px;
-  margin-left: 20px;
-  margin-right: 200px;
   background: #5cb85c;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
-}
-
-.save-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
 .edit-btn {
@@ -166,29 +194,12 @@
   width: 150px;
   margin-bottom: 10px;
   background: rgb(198, 198, 78);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
-}
-
-.edit-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 
 .add-btn {
-  height: 45px;
-  min-width: 130px;
-  margin-top: 12px;
-  margin-left: 20px;
-  background: #2370c2;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  background: #2370c2; 
 }
 
-.add-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-}
 
 .remove-album-btn{
   background: transparent;

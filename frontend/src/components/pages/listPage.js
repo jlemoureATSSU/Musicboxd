@@ -64,7 +64,7 @@ const ListPage = () => {
                 <p className="list-description-input">{listData.listDescription}</p>
                 {currentUser && currentUser.username === listData.userName && (
                     <button
-                        onClick={() => navigate(`/createListPage/${listData._id}`)}
+                        onClick={() => navigate(`/createList/${listData._id}`)}
                         className="edit-btn"
                     >
                         Edit List
@@ -72,7 +72,6 @@ const ListPage = () => {
                 )}
             </div>
             <div className="album-list-card">
-                <div className="album-list">
                     {albumDetails.map((album) => (
                         <AlbumCard
                             key={album.id}
@@ -85,7 +84,6 @@ const ListPage = () => {
                             isClickable={true}
                         />
                     ))}
-                </div>
             </div>
         </div>
     );

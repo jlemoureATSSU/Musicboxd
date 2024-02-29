@@ -64,7 +64,7 @@ const HomePage = () => {
                       listId={list._id}
                       albums={list.albums}
                       dateCreated={list.dateCreated}
-                      albumDetails={albumDetails} // Pass the album details here
+                      albumDetails={albumDetails}
                     />
                 ))}
             </div>

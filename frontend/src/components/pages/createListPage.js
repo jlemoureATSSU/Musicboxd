@@ -143,7 +143,6 @@ const CreateListPage = () => {
               <Droppable droppableId="droppable" direction="horizontal">
                 {(provided, snapshot) => (
                   <div ref={provided.innerRef} {...provided.droppableProps} className="album-list-card">
-                    <div className="album-list">
                     {albums.map((album, index) => (
                         <Draggable key={album.id} draggableId={album.id} index={index}>
                           {(provided, snapshot) => (
@@ -162,7 +161,6 @@ const CreateListPage = () => {
                         </Draggable>
                       ))}
                       {provided.placeholder}
-                    </div>
                   </div>
                 )}
               </Droppable>
