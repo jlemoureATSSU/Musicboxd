@@ -11,7 +11,7 @@ const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }
   ).filter(url => url); // Ensure only valid URLs are kept
 
   const handleClick = () => {
-    navigate(`/listPage/${listId}`);
+    navigate(`/list/${listId}`);
   };
 
   const formattedDate = new Date(dateCreated).toLocaleDateString('en-US', {

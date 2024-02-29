@@ -9,7 +9,7 @@
     overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
     padding-bottom: 20px; /*20px padding at the bottom of the div so the last item isnt right up against the bottom of the div*/ 
 }
-@media (max-width: 835px) {
+@media (max-width: 845px) {
     .album-page {
         margin-top: 40px;
     }

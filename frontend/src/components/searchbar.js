@@ -83,13 +83,13 @@ const SearchBar = () => {
       const handleArtistSelect = (artist) => {
         setSearchTerm('');
         setResults([]);
-        navigate(`/artistPage/${artist.id}`); 
+        navigate(`/artist/${artist.id}`); 
     };
 
     const handleAlbumSelect = (album) => {
       setSearchTerm('');
       setResults([]);
-        navigate(`/albumPage/${album.id}`);
+        navigate(`/album/${album.id}`);
       };
 
       const handleKeyDown = (e) => {

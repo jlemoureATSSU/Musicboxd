@@ -44,12 +44,12 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
-          <Route path="/createListPage" element={<CreateListPage />}/>
-          <Route path="/createListPage/:listId" element={<CreateListPage />} />
-          <Route path="/albumPage/:spotifyId" element={<AlbumPage />} />
-          <Route path="/artistPage/:artistSpotifyId" element={<ArtistPage />} />
-          <Route path="/listPage/:listId" element={<ListPage />} />
+          <Route path="/profile" element={<PrivateUserProfile />} />
+          <Route path="/createList" element={<CreateListPage />}/>
+          <Route path="/createList/:listId" element={<CreateListPage />} />
+          <Route path="/album/:spotifyId" element={<AlbumPage />} />
+          <Route path="/artist/:artistSpotifyId" element={<ArtistPage />} />
+          <Route path="/list/:listId" element={<ListPage />} />
           <Route path="/albums" element={<Albums />} />
 
         </Routes>

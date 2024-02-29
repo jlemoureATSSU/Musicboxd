@@ -1,9 +1,10 @@
 .create-list-page {
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
 }
 
-@media (max-width: 835px) {
+@media (max-width: 845px) {
   .create-list-page {
       margin-top: 40px;
   }

@@ -213,7 +213,7 @@ const AlbumPage = () => {
     }
 
     const artistLink = artistId ? (
-        <Link to={`/artistPage/${artistId}`} className="album-artist-link">
+        <Link to={`/artist/${artistId}`} className="album-artist-link">
           {albumDetails.artists}
         </Link>
       ) : 'Unknown Artist';

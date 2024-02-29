@@ -53,7 +53,7 @@ const HomePage = () => {
     
 
     return (
-        <div>
+        <div className='home-page'>
             <div className='recent-lists-container-title'>Recently Created Lists</div>
             <div className="recent-lists-container">
                 {recentLists.map(list => (

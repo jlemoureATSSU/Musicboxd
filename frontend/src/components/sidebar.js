@@ -19,9 +19,9 @@ const Sidebar = () => {
           </>
         ) : (
           <>
-            <Link to="/createListPage" title="Create a List"><IoIosCreate /></Link>
+            <Link to="/createList" title="Create a List"><IoIosCreate /></Link>
             <Link to="/albums" title="Albums"><PiVinylRecordBold /></Link>
-            <Link to="/privateUserProfile" title="Profile"><FaUser /></Link>
+            <Link to="/profile" title="Profile"><FaUser /></Link>
           </>
         )}
       </div>

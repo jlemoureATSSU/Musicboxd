@@ -90,7 +90,7 @@ const CreateListPage = () => {
       const response = await axios.post(`${backendUrl}/list/save`, listData);
       console.log('List saved:', response.data);
       const savedListId = response.data._id;
-      navigate(`/listPage/${savedListId}`);
+      navigate(`/list/${savedListId}`);
     } catch (error) {
       console.error('Error saving the list:', error);
     }

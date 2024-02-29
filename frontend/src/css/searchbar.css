@@ -2,22 +2,22 @@
     position: fixed;
     display: flex;
     top: 9px;
-    margin-left: 330px;
+    margin-left: 340px;
     padding-right: 5px;
     padding-left: 1px;
     background-color: #333;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    box-shadow: inset 0 8px 16px rgba(0,0,0,0.4);
     border-radius: 18px;
     width: 500px;
     align-items: center;
     z-index: 100;
     height: 38px;
   }
-  @media (max-width: 835px) {
+  @media (max-width: 845px) {
     .search-bar {
       position: fixed;
       margin-top: 7px;
-      margin-left: 5px;
+      margin-left: 10px;
       top: 55px;
       width: 400px;
     }
@@ -63,6 +63,8 @@
     font-size: 16px;
     background-color: #333;
     color: white;
+    box-shadow: inset 0 8px 16px rgba(0,0,0,0.4);
+
   }
 
   .search-bar input:focus {

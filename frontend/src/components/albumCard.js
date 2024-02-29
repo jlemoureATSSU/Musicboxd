@@ -61,7 +61,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
 
   const goToAlbumPage = () => {
     if (isClickable) {
-      navigate(`/albumPage/${spotifyId}`);
+      navigate(`/album/${spotifyId}`);
     }
   };
 
@@ -85,7 +85,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
 
   const artistLink = artistIds.length > 0 ? (
     <Link 
-      to={`/artistPage/${artistIds[0]}`}
+      to={`/artist/${artistIds[0]}`}
       className="album-card-artist-link"
       onClick={(e) => e.stopPropagation()}
     >
