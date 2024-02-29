@@ -113,6 +113,11 @@ const AlbumPage = () => {
     };
 
     const addAlbumToList = async (listId) => {
+        if (!user || !user.username) {
+            displayMessage('Create an account and Log In to add albums to Lists');
+            return;
+          }
+
         const albumId = spotifyId;
         try {
           await axios.post(`${backendUrl}/list/addAlbumToList/${listId}`, { albumId });
@@ -165,7 +170,7 @@ const AlbumPage = () => {
         } catch (error) {
             setSubmitMessage('');
             setTimeout(() => {
-                displayMessage('Error submitting rating. Please try again.');
+                displayMessage('Please Log in to submit Ratings');
             }, 0);
         }
     };
@@ -226,13 +231,14 @@ const AlbumPage = () => {
     
 
     return (
-        <div className= "album-page">
+        <div>
+        <div className="album-header">{title}<button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn"> Open in <span className="spotify-green"><FaSpotify /></span></button></div>
+        <div className= "album-page-container">
         <div className="album-details-wrapper">
             <div className="album-details">
-                <h1 className="album-title">{title}</h1>
-                <div className="album-artist">{artistLink}</div>
                 <img src={albumDetails.coverArtUrl} alt={`${title} cover art`} className="album-cover-art" />
                 <div className="album-info">
+                <div className="album-artist">{artistLink}</div>
                     <div className="album-release-date"> Released: {formattedReleaseDate} </div>
                 </div>
             </div>
@@ -252,7 +258,6 @@ const AlbumPage = () => {
         </div>  
         
         <div className="album-actions-wrapper">
-        <button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn"> Open in <span className="spotify-green"><FaSpotify /></span></button>
         <div className="submit-rating-box">
             <div className="submit-rating-title">Your Rating:</div>
             <input
@@ -270,9 +275,9 @@ const AlbumPage = () => {
                 Submit Rating
             </button>
         </div>
-        <button onClick={fetchUserLists} className="add-album-btn">Add Album to a <b>List</b></button>
+        <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Create an account and Log In to add albums to Lists')} className="add-album-btn">Add Album to a <b>List</b></button>
           <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
-            <Modal.Header><Modal.Title>Add {title} by {artist} to one of your lists...</Modal.Title></Modal.Header>
+            <Modal.Header><Modal.Title>add <b>{title}</b> by <b>{artist}</b> to one of your lists...</Modal.Title></Modal.Header>
             <Modal.Body>
                 {userLists.map(list => (
                     <Button 
@@ -293,6 +298,7 @@ const AlbumPage = () => {
         </Modal>
 
         </div>      
+    </div>
     </div>
   );
 };

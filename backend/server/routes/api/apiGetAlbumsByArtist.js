@@ -13,7 +13,7 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
   let cachedArtist = myCache.get(artistCacheKey);
 
   if (cachedArtist && cachedAlbumIds) {
-    console.log(`Artist ${cachedArtist.name} and their album IDs fetched from cache for ID: ${artistSpotifyId}`);
+    console.log(`Artist ${cachedArtist.name} and their album IDs fetched from cache`);
     return res.json({
       artist: cachedArtist,
       albumIds: cachedAlbumIds // Only sending IDs

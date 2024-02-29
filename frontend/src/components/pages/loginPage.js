@@ -38,35 +38,39 @@ const Login = () => {
   };
 
   return (
-    <div className="page">
-      <div className="main login-container">
-        <h2>Log In to your account</h2>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Control
-              type="username"
-              name="username"
-              onChange={handleChange}
-              placeholder="Enter username"
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Control
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChange}
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" className="login-button">
-            Log In
-          </Button>
-          <Form.Text className="text-muted">
-            No account? <Link to="/signup">Create One!</Link>
-          </Form.Text>
-          {error && <div className="error-message">{error}</div>}
-        </Form>
-      </div>
+    <div className="signup-page">
+      <div className="signup-header">Log In</div>
+      <form onSubmit={handleSubmit} className="login-form">
+      <div className="login-container-required">
+        <div className="form-group">
+          <input
+            type="text"
+            name="username"
+            onChange={handleChange}
+            placeholder="Username"
+            className="form-control"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            name="password"
+            onChange={handleChange}
+            placeholder="Password"
+            className="form-control"
+            required
+          />
+        </div>
+        </div>
+        <button type="submit" className="login-button">
+          Log In
+        </button>
+        <div className="text-muted">
+          No account? <Link to="/signup" className="signup-link">Create One!</Link>
+        </div>
+        {error && <div className="error-message">{error}</div>}
+      </form>
     </div>
   );
 };

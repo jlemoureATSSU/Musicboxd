@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
   if (!user)
     return res
       .status(401)
-      .send({ message: "email or password does not exists, try again" });
+      .send({ message: "Username does not exist, try again" });
 
   //check if the password is correct or not
   const checkPasswordValidity = await bcrypt.compare(
@@ -31,7 +31,7 @@ router.post('/login', async (req, res) => {
   if (!checkPasswordValidity)
     return res
       .status(401)
-      .send({ message: "email or password does not exists, try again" });
+      .send({ message: "Password is incorrect, try again" });
 
   //create json web token if authenticated and send it back to client in header where it is stored in localStorage ( might not be best practice )
   const accessToken = generateAccessToken(user._id, user.email, user.username, user.password)

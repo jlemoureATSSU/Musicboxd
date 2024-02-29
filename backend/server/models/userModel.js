@@ -8,13 +8,29 @@ const newUserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
+      required: false,
       label: "email",
     },
     password: {
       required: true,
       type: String,
-      min : 8
+      min : 3
+    },
+    firstName: {
+      type: String,
+      required: true,
+      label: "firstName",
+
+    },
+    lastName: {
+      type: String,
+      required: true,
+      label: "lastName",
+    },
+    phoneNumber: {
+      type: String,
+      required: false,
+      label: "phoneNumber",
     },
     date: {
       type: Date,
