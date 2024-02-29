@@ -10,6 +10,7 @@ import './css/listCard.css';
 import './css/albumPage.css';
 import './css/artistPage.css';
 import './css/showMessage.css';
+import './css/profile.css';
 import './css/toolTip.css';
 import Sidebar from "./components/sidebar";
 import HomePage from "./components/pages/homePage";

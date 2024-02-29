@@ -78,7 +78,7 @@ const fetchAlbumDetails = async (albumIds) => {
     };
 
     return (
-        <div>
+        <div className='albums-page'>
             <div className="sorting-buttons">
                 <button 
                     className={`sort-button ${sortingMode === 'highestRated' ? 'active' : ''}`} 

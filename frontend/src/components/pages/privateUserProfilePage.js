@@ -71,9 +71,10 @@ const fetchAlbumDetails = async (albumIds) => {
   if (!user) return (<div><h4>Log in to view this page.</h4></div>);
 
   return (
-    <div className="page">
-        <h1>{user.username}</h1>
-        <h1>Your Lists</h1>
+    <div className="profile-page">
+      <div className="your-lists">
+        <div className="your-lists-container-title">{user.username}'s Lists ({userLists.length})</div>
+        <div className="your-lists-container">
         {userLists.map(list => (
           <ListCard
             key={list._id}
@@ -85,6 +86,8 @@ const fetchAlbumDetails = async (albumIds) => {
             albumDetails={albumDetails} // Pass the album details here
           />
         ))}
+      </div>
+      </div>
         <div className="col-md-12 text-center">
         <>
               <Button className="me-2" onClick={handleShow}>
