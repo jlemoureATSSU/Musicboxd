@@ -23,8 +23,7 @@
     gap: 10px; /*10px gap between items in the container*/
     overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
     background-color: #444;
-    height: calc(100vh - 130px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
-
+    height: calc(100vh - 135px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
     border-radius: 18px;
     padding-left: 13px;
     padding-right: 13px;
