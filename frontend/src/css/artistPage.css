@@ -1,7 +1,7 @@
 .artist-header {
     margin-left: 27px;
     margin-right: 27px;
-    background-color: #444;
+    background-color: #333;
     margin-top: 10px;
     display: inline-flex;
     flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
@@ -22,7 +22,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    background-color: #444;
+    background-color: #333;
     border-radius: 18px;
     max-height: calc(100vh - 130px); 
     overflow-y: auto; 
@@ -59,7 +59,7 @@
   
   
 .albums-container::-webkit-scrollbar-thumb {
-    background-color: #222; 
+    background-color: #181818; 
     border-radius: 10px;
 
   }
@@ -85,7 +85,7 @@
     width: 120px;
     margin-bottom: 5px;
     border-radius: 5px;
-    background-color: #222;
+    background-color: #181818;
     color: white;
     border: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
@@ -97,7 +97,7 @@
   }
   
   .spotify-link-btn2{
-    background-color: #222;
+    background-color: #151515;
     border: none;
     color: white;
     font-size: 17px;
@@ -114,7 +114,6 @@
 
 
 .spotify-link-btn2:hover {
-    background-color: #202020;
     transform: translateY(-1px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }

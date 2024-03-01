@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #444;
+  background-color: #333;
   margin-right: 20px;
   margin-left: 20px;
   border-radius: 50px;
@@ -19,7 +19,7 @@
   margin-bottom: 20px; 
 } 
 .signup-page::-webkit-scrollbar-thumb {
-    background-color: #222; 
+    background-color: #181818; 
     border-radius: 10px;
     border: 4px solid transparent; 
     background-clip: padding-box; 
@@ -34,7 +34,7 @@
   .signup-header {
     font-size: 2em;
     margin-top: 20px;
-    background-color: #222;
+    background-color: #181818;
     padding-top: 5px;
     padding-left: 10px;
     padding-right: 10px;
@@ -52,7 +52,7 @@
   }
 .login-container-required,
 .login-container-optional {
-  background: #222;
+  background: #181818;
   padding: 15px;
   margin-bottom: 15px;
   border-radius: 15px;
@@ -87,7 +87,7 @@
   margin: auto;
   max-width: 200px;
   padding: 10px;
-  background-color: #222;
+  background-color: #181818;
   color: #fff;
   border: none;
   border-radius: 5px;

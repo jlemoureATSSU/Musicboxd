@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
 .album-header{
-    background-color: #444;
+    background-color: #333;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     font-size: 35px;
@@ -22,7 +22,7 @@
     flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
     gap: 10px; /*10px gap between items in the container*/
     overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
-    background-color: #444;
+    background-color: #333;
     height: calc(100vh - 135px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
     border-radius: 18px;
     padding-left: 13px;
@@ -48,7 +48,7 @@
     margin-bottom: 20px; 
   }
 .album-page-container::-webkit-scrollbar-thumb {
-    background-color: #222; 
+    background-color: #181818; 
     border-radius: 10px;
 } 
 .album-page-container::-webkit-scrollbar {
@@ -67,7 +67,7 @@
 }
 
 .album-details {
-    background-color: #222;
+    background-color: #181818;
     border-radius: 10px;
     padding-top: 15px;
     padding-bottom: 5px;
@@ -131,7 +131,7 @@
 }
 
 .add-album-btn {
-    background-color: #222;
+    background-color: #181818;
     border: none;
     color: white;
     font-size: 15px;
@@ -148,7 +148,7 @@
 }
 .album-modal .modal-content {
     margin-top: 100px;
-    background-color: #222;
+    background-color: #181818;
     color: white;
     border-radius: 8px;
 }
@@ -181,7 +181,7 @@
     width: 100%;
     text-align: left;
     padding: 12px 16px;
-    background-color: #333;
+    background-color: #232323;
     color: white;
     border: none;
     border-radius: 4px;
@@ -198,7 +198,7 @@
 }
 
 .spotify-link-btn{
-    background-color: #222;
+    background-color: #151515;
     border: none;
     color: white;
     font-size: 17px;
@@ -222,12 +222,11 @@
   
 
 .spotify-link-btn:hover {
-    background-color: #202020;
     transform: translateY(-1px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
 .list-count {
-    background-color: #222;
+    background-color: #181818;
     color: white;
     border-radius: 8px;
     padding-left: 10px;
@@ -240,7 +239,7 @@
 }
 .avg-rating-box {
     width: 300px;
-    background-color: #222;
+    background-color: #181818;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
@@ -249,7 +248,7 @@
 }
 .submit-rating-box {
     width: 200px;
-    background-color: #222;
+    background-color: #181818;
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -270,7 +269,7 @@
     text-align: center;
     margin-bottom: 10px;
     width: 100%;
-    background-color: #333;
+    background-color: #222;
     color: white;
     border: #555 1px solid;
     border-radius: 4px;
@@ -279,7 +278,7 @@
 
 .rating-box {
     width: 200px;
-    background-color: #222;
+    background-color: #181818;
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
@@ -301,7 +300,7 @@
     text-align: center;
     margin-bottom: 10px;
     width: 100%;
-    background-color: #333;
+    background-color: #222;
     color: white;
     border: none;
     border-radius: 4px;
@@ -320,7 +319,7 @@
 .submit-rating-btn {
     width: 100%;
     padding: 10px;
-    background-color: #444;
+    background-color: #333;
     color: white;
     border: none;
     border-radius: 4px;

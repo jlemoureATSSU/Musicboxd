@@ -1,5 +1,5 @@
 .list-card {
-  background: #222;
+  background: #181818;
   border-radius: 8px;
   padding-left: 10px;
   padding-right: 10px;
@@ -47,7 +47,7 @@
 
 .list-card-album-previews {
   display: flex; 
-  background-color: #333; 
+  background-color: #252525; 
   padding: 7px;
   width: 240px;
   border-radius: 8px;
@@ -76,7 +76,7 @@
 
 .list-card-date {
   color: white; 
-  background-color: #333;
+  background-color: #252525;
   border-radius: 10px;
   height: 60px;
   font-size: 14px;

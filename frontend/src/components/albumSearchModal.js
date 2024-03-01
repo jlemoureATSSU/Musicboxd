@@ -73,7 +73,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
   };
 
   const modalStyle = {
-    background: '#2c2c2c',
+    background: '#222',
     padding: '20px',
     borderRadius: '8px',
     width: '90%',
@@ -105,7 +105,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
   };
 
   const searchResultsStyle = {
-    background: '#3c3c3c',
+    background: '#333',
     borderRadius: '4px',
     overflow: 'hidden',
   };
@@ -121,7 +121,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     <div style={overlayStyle}>
       <div style={modalStyle}>
         <div style={modalHeaderStyle}>
-          <h2>Add an album to your list</h2>
+          <h2>Add an album to your <b>List</b></h2>
           <button onClick={onClose} style={closeButtonStyle}>&times;</button>
         </div>
         <input
