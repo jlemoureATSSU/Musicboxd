@@ -16,6 +16,10 @@
     margin-top: 10px;
     margin-left: 27px;
     margin-right: 27px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+
 }
 .album-page-container {
     display: flex;
@@ -204,10 +208,10 @@
     font-size: 17px;
     margin-left: 10px;
     margin-top: 2px;
-    width: 145x;
-    min-width: 145px;
+    width: 45x;
+    min-width: 45px;
     height: 50px;
-    border-radius: 8px;
+    border-radius: 12px;
     padding-bottom: 4px;
     cursor: pointer;
     box-shadow: 0 3px 6px rgba(0,0,0,0.3);

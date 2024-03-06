@@ -22,22 +22,41 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
-.list-card-title {
-  color: white;
+.list-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 4px;
-  margin-left: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-bottom: 5px; 
+  width: 310px;
+}
+
+.list-card-title{
+  color: white;
   font-size: 15px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  margin-bottom: 5px; 
+  flex-grow: 1;
+  min-width: 0; 
+}
 
+.list-card-username, .list-card-username a {
+  color: #999;
+  justify-content: flex-end;
+  font-size: 1em;
+  margin-left: 10px;
+  text-decoration: none;
 }
-.list-card-username {
-  color: #aaa; 
-  font-size: 1em; 
-  margin-left: 15px; 
+
+/* Optionally, add hover effects */
+.list-card-username a:hover {
+  color: #aaa;
+  text-decoration: underline;
 }
+
 
 .list-card-content {
   display: flex;

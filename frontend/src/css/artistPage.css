@@ -11,10 +11,18 @@
     padding-bottom: 5px;
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 35px;
+    font-size: 30px;
     box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    
+  }
+
+  .album-count{
+    font-size: 18px;
+    color: #c0c0c0;
   }
 
 
@@ -101,10 +109,10 @@
     border: none;
     color: white;
     font-size: 17px;
-    width: 145x;
-    min-width: 145px;
+    width: 45x;
+    min-width: 45px;
     height: 45px;
-    border-radius: 8px;
+    border-radius: 12px;
     padding-bottom: 4px;
     cursor: pointer;
     box-shadow: 0 3px 6px rgba(0,0,0,0.3);

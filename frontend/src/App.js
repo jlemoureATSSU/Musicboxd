@@ -16,7 +16,7 @@ import Sidebar from "./components/sidebar";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
-import PrivateUserProfile from "./components/pages/privateUserProfilePage";
+import Profile from "./components/pages/profilePage";
 import AlbumPage from "./components/pages/albumPage";
 import ArtistPage from "./components/pages/artistPage";
 import CreateListPage from "./components/pages/createListPage";
@@ -45,7 +45,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/profile" element={<PrivateUserProfile />} />
+          <Route path="/user/:username" element={<Profile />} />
           <Route path="/createList" element={<CreateListPage />}/>
           <Route path="/createList/:listId" element={<CreateListPage />} />
           <Route path="/album/:spotifyId" element={<AlbumPage />} />

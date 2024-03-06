@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }) => {
   const navigate = useNavigate();
 
-  // Use the passed albumDetails to extract cover art URLs for the first 3 albums
   const coverArts = albums.slice(0, 3).map(album => 
-    albumDetails[album.id]?.coverArtUrl // Safely access coverArtUrl
-  ).filter(url => url); // Ensure only valid URLs are kept
+    albumDetails[album.id]?.coverArtUrl
+  ).filter(url => url);
 
-  const handleClick = () => {
-    navigate(`/list/${listId}`);
+  const handleClick = (e) => {
+    if (e.target.tagName === 'A') {
+      e.stopPropagation();
+    } else {
+      navigate(`/list/${listId}`);
+    }
   };
 
   const formattedDate = new Date(dateCreated).toLocaleDateString('en-US', {
@@ -22,8 +25,11 @@ const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }
 
   return (
     <div className="list-card" onClick={handleClick}>
-      <div className="list-card-title">{title}
-        <span className="list-card-username">{userName}</span>
+      <div className="list-card-header">
+        <div className="list-card-title">{title}</div>
+      <span className="list-card-username">
+          <Link to={`/user/${userName}`}>{userName}</Link>
+        </span>      
       </div>
       <div className="list-card-content">
         <div className="list-card-album-previews">

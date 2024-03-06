@@ -8,6 +8,8 @@ import { CiLogin } from 'react-icons/ci';
 
 const Sidebar = () => {
   const user = useContext(UserContext);
+  const profileLink = user ? `/user/${user.username}` : '/login';
+
   return (
     <div className="sidebar">
       <Link to="/" className='home-link' title="Home">Musicboxd</Link>
@@ -21,7 +23,7 @@ const Sidebar = () => {
           <>
             <Link to="/createList" title="Create a List"><IoIosCreate /></Link>
             <Link to="/albums" title="Albums"><PiVinylRecordBold /></Link>
-            <Link to="/profile" title="Profile"><FaUser /></Link>
+            <Link to={profileLink} title="Profile"><FaUser /></Link>
           </>
         )}
       </div>
