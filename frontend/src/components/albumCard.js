@@ -25,40 +25,6 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
     fetchAlbumRating();
   }, [spotifyId]);
 
-  const adjustTitleFontSize = () => {
-    const MIN_TITLE_SIZE = 12; 
-    let currentFontSize = MAX_TITLE_SIZE;
-
-    while (titleRef.current.scrollHeight > titleRef.current.offsetHeight && currentFontSize > MIN_TITLE_SIZE) {
-      currentFontSize--;
-      titleRef.current.style.fontSize = `${currentFontSize}px`;
-    }
-  };
-
-  const adjustArtistFontSize = () => {
-    const MIN_ARTIST_SIZE = 12; 
-    let currentFontSize = MAX_ARTIST_SIZE;
-
-    if (artistRef.current.scrollHeight > artistRef.current.offsetHeight && currentFontSize > MIN_ARTIST_SIZE) {
-      currentFontSize--;
-      artistRef.current.style.fontSize = `${currentFontSize}px`;
-      console.log(`Adjusting artist font size to: ${currentFontSize}px`);
-
-    }
-  };
-
-  useEffect(() => {
-    if (titleRef.current) {
-      adjustTitleFontSize();
-    }
-  }, [title]); 
-
-  useEffect(() => {
-    if (artistRef.current) {
-      adjustArtistFontSize();
-    }
-  }, [artist]); 
-
   const goToAlbumPage = () => {
     if (isClickable) {
       navigate(`/album/${spotifyId}`);
@@ -107,8 +73,8 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
     >
       <div className="album-card-cover-art" style={{ backgroundImage: `url(${coverArtUrl})` }}></div>
       <div className="album-card-info">
-      <div ref={titleRef} className="album-card-title" style={{ fontSize: `clamp(12px, 2.5vw, ${MAX_TITLE_SIZE}px)` }}>{title}</div>
-        <p ref={artistRef} className="album-card-artist" style={{ fontSize: `clamp(12px, 2.5vw, ${MAX_ARTIST_SIZE}px)` }}>{artistLink}</p>
+      <div ref={titleRef} className="album-card-title">{title}</div>
+        <p ref={artistRef} className="album-card-artist">{artistLink}</p>
         <p className="album-card-release-date">{releaseDate}</p>
         <p className={`album-card-rating ${getRatingClassName(averageRating)}`}>{formattedRating}</p>
     </div>

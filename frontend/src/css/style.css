@@ -89,6 +89,7 @@
 
 .see-more{
   font-size: 15px;
+  margin-left: 12px;
   color: #a0a0a0;
   text-decoration: none;
 }
@@ -225,11 +226,11 @@
   align-content: flex-start;
   background-color: #353535;
   border-radius: 18px;
-  max-height: calc(100vh - 115px); 
+  max-height: calc(100vh - 122px); 
   overflow-y: auto; 
   padding-left: 13px;
   padding-right: 13px;
-  justify-content: flex-start;
+  justify-content: center;
   padding-bottom: 5px;
   margin-right: 10px;
   margin-left: 10px;
@@ -269,7 +270,6 @@
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 12px;
-  max-height: calc(100vh - 55px); 
   overflow-y: auto; 
 }
 
@@ -293,7 +293,9 @@
   @media (max-width: 845px) {
     .albums-page {
       margin-top: 40px;
-      max-height: calc(100vh - 100px); 
-  
+        }
+
+    .all-albums-container {
+      max-height: calc(100vh - 167px); 
     }
   }

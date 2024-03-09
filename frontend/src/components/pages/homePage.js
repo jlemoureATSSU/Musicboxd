@@ -54,7 +54,7 @@ const HomePage = () => {
 
     return (
         <div className='home-page'>
-            <div className='recent-lists-container-title'>Recently Created Lists</div>
+            <div className='recent-lists-container-title'>Recently Created Lists<Link to="/lists" className='see-more'>see more</Link></div>
             <div className="recent-lists-container">
                 {recentLists.map(list => (
                   <ListCard

@@ -12,6 +12,7 @@ import './css/artistPage.css';
 import './css/showMessage.css';
 import './css/profile.css';
 import './css/toolTip.css';
+import './css/lists.css';
 import Sidebar from "./components/sidebar";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
@@ -24,6 +25,7 @@ import SearchBar from "./components/searchbar";
 import getUserInfo from "./utilities/decodeJwt";
 import ListPage from "./components/pages/listPage";
 import Albums from "./components/pages/albums";
+import Lists from "./components/pages/lists";
 
 export const UserContext = createContext();
 
@@ -52,6 +54,7 @@ const App = () => {
           <Route path="/artist/:artistSpotifyId" element={<ArtistPage />} />
           <Route path="/list/:listId" element={<ListPage />} />
           <Route path="/albums" element={<Albums />} />
+          <Route path="/lists" element={<Lists />} />
 
         </Routes>
       </UserContext.Provider>
