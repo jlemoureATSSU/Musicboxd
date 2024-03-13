@@ -104,7 +104,7 @@ const fetchAlbumDetails = async (albumIds) => {
                             title={album.name}
                             artist={album.artists}
                             artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
+                            releaseDate={new Date(album.release_date).toLocaleDateString("en-US", {month: "short",day: "numeric", year: "numeric", })}                            
                             spotifyId={albumId}
                             averageRating={album.averageRating}
                             numberOfRatings={album.numberOfRatings}

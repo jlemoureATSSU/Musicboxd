@@ -44,7 +44,7 @@
 
   }
 
-  @media (max-width: 845px) {
+  @media (max-width: 680px) {
     .signup-page {
       margin-top: 60px;
     }

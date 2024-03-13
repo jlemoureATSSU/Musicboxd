@@ -12,7 +12,11 @@ const CardDisplay = ({ albums, artistName }) => {
                     title={album.name}
                     artist={artistName || 'Various Artists'}
                     artistIds={album.artistIds}
-                    releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric' })}
+                    releaseDate={new Date(album.release_date).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                    })}
                     isClickable={true}
                 />
             ))}

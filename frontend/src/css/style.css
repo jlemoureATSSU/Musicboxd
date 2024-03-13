@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
-
 .app {
   font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -.3px;
   padding-top: 55px;
   color: #f0f0f0;
   background-color: #252525;
@@ -57,7 +57,7 @@
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 }
 
-@media (max-width: 845px) {
+@media (max-width: 680px) {
   .app {
     padding-top: 60px;
   }
@@ -290,7 +290,7 @@
     background-color: #111;
   }
 
-  @media (max-width: 845px) {
+  @media (max-width: 680px) {
     .albums-page {
       margin-top: 40px;
         }

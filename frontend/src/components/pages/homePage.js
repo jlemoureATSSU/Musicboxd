@@ -73,6 +73,7 @@ const HomePage = () => {
                 {highestRatedAlbums.map(({ albumId }) => { 
                     const album = albumDetails[albumId];
                     if (!album) return null; 
+                    const releaseDate = new Date(album.release_date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: '2-digit'});
                     return (
                         <AlbumCard
                             key={albumId} 
@@ -80,7 +81,7 @@ const HomePage = () => {
                             title={album.name}
                             artist={album.artists} 
                             artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).toLocaleDateString('en-US', { year: 'numeric'})}
+                            releaseDate={releaseDate}
                             spotifyId={albumId} 
                             averageRating={album.averageRating}
                             numberOfRatings={album.numberOfRatings}

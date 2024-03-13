@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import ListCard from '../listCard'; // Ensure you have a ListCard component
+import ListCard from '../listCard';
 
 const Lists = () => {
     const [lists, setLists] = useState([]);
@@ -10,7 +10,7 @@ const Lists = () => {
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const fetchListsAndAlbumDetails = async (nextPage) => {
-        const limit = 5; // Adjust based on how many lists you want per page
+        const limit = 5;
         const offset = nextPage * limit;
         let url = `${backendUrl}/list/getRecentLists?limit=${limit}&offset=${offset}`;
 
@@ -18,9 +18,8 @@ const Lists = () => {
             const response = await axios.get(url);
             if (response.data.length > 0) {
                 setLists(prevLists => [...prevLists, ...response.data]);
-                // Collect all unique album IDs from the newly fetched lists
                 const newAlbumIds = response.data.flatMap(list => 
-                    list.albums.slice(0, 3).map(album => album.id) // Assuming each list contains an albums array
+                    list.albums.slice(0, 3).map(album => album.id)
                 );
                 fetchAlbumDetails(newAlbumIds);
                 setHasMore(response.data.length === limit);
@@ -34,7 +33,6 @@ const Lists = () => {
     };
 
     const fetchAlbumDetails = async (albumIds) => {
-        // Deduplicate album IDs
         const uniqueAlbumIds = Array.from(new Set(albumIds));
         try {
             const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {

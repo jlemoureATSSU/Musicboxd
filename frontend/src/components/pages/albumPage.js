@@ -23,9 +23,15 @@ const AlbumPage = () => {
     const [numberOfRatings, setNumberOfRatings] = useState(0);
     const { spotifyId } = useParams();
     const user = getUserInfo();
+    const [comment, setComment] = useState('');
+    const [commentSubmitMessage, setCommentSubmitMessage] = useState('');
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         console.log("Spotify ID:", spotifyId);
+        setRating('');
+        setAverageRating('');
+        setNumberOfRatings(0);
         const fetchAlbumDetailsFromSpotify = async () => {
             try {
                 const response = await axios.get(`${backendUrl}/api/getAlbumDetails/${spotifyId}`);
@@ -75,6 +81,13 @@ const AlbumPage = () => {
             } catch (error) {
                 console.error("Error fetching average rating for album", error);
             }
+            try {
+                const commentsResponse = await axios.get(`${backendUrl}/comment/getAllByAlbum/${spotifyId}`);
+                setComments(commentsResponse.data); 
+            } catch (error) {
+                console.error("Error fetching comments for album", error);
+            }
+
 
             };
 
@@ -227,6 +240,31 @@ const AlbumPage = () => {
     const getSpotifyAlbumUrl = (spotifyId) => {
         return `https://open.spotify.com/album/${spotifyId}`;
       };
+
+//comments
+    const submitComment = async () => {
+        if (!comment.trim()) {
+        setCommentSubmitMessage('Comment cannot be empty.');
+        return;
+        }
+    
+        try {
+        const response = await axios.post(`${backendUrl}/comment/submit`, {
+            userName: user.username,
+            albumId: spotifyId,
+            content: comment,
+        });
+        
+        setComments([...comments, response.data]);
+        setComment('');
+    
+        } catch (error) {
+        console.error('Error submitting comment:', error);
+        setCommentSubmitMessage('Failed to submit comment. Please try again.');
+        }
+    };
+  
+      
       
     
 
@@ -297,7 +335,42 @@ const AlbumPage = () => {
             </Modal.Footer>
         </Modal>
 
-        </div>      
+        </div>
+        <div className="comments-section">
+            <div className='comments-header'>Comments</div>
+            <div className="comments-container">
+                {comments.map(comment => (
+                    <div key={comment._id} className="comment">
+                        <div className="comment-header">
+                            <span className="comment-user">{comment.userName}</span>
+                            <span className="comment-date">
+                            {new Date(comment.dateCreated).toLocaleDateString()} {new Date(comment.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                        </div>
+                        <p className="comment-content">{comment.content}</p>
+                    </div>
+                ))}
+            </div>
+            <div className="comment-submission-section">
+            <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Write a comment..."
+                className="comment-textarea"
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    submitComment();
+                    }
+                }}
+                ></textarea>
+                <button
+                    onClick={submitComment}
+                    className="submit-comment-btn"
+                    >Submit 
+                </button>
+            </div>
+        </div>
     </div>
     </div>
   );

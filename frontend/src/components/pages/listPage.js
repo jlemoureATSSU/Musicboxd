@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard'; 
 import getUserInfo from "../../utilities/decodeJwt"; 
@@ -54,7 +54,7 @@ const ListPage = () => {
             <div className="list-input-card">
                 <h1 className="list-title-input">{listData.listName}</h1>
                 <p className="list-date-input">
-                    List created by {listData.userName}{" "}
+                    List created by<Link className='list-card-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
                     {new Date(listData.dateCreated).toLocaleDateString("en-US", {
                         month: "short",
                         day: "numeric",
@@ -79,7 +79,7 @@ const ListPage = () => {
                             title={album.name}
                             artist={album.artists}
                             artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).getFullYear()}
+                            releaseDate={new Date(album.release_date).toLocaleDateString("en-US", {month: "short",day: "numeric", year: "numeric", })}                            
                             spotifyId={album.id}
                             isClickable={true}
                         />

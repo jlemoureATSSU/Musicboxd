@@ -88,7 +88,7 @@
     background-color: #111;
   }
 
-  @media (max-width: 845px) {
+  @media (max-width: 680px) {
     .lists-page {
       margin-top: 40px;  
     }

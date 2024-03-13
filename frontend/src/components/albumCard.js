@@ -8,8 +8,6 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
   const titleRef = useRef(null);
   const artistRef = useRef(null);
   const navigate = useNavigate();
-  const MAX_TITLE_SIZE = 30;
-  const MAX_ARTIST_SIZE = 18; 
 
   useEffect(() => {
     const fetchAlbumRating = async () => {
@@ -33,7 +31,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
 
   const formattedRating = typeof averageRating === 'number' 
   ? (averageRating === 10 ? averageRating.toFixed(0) : averageRating.toFixed(1))
-  : 'N/A';
+  : 'NR';
 
   const getRatingClassName = (ratingValue) => {
     const numRating = parseFloat(ratingValue);

@@ -14,21 +14,19 @@
     align-items: center;
     box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
     margin-top: 10px;
-    margin-left: 27px;
-    margin-right: 27px;
-    white-space: nowrap;
+    margin-left: 22px;
+    margin-right: 22px;
     text-overflow: ellipsis;
-    
-
 }
+
 .album-page-container {
     display: flex;
-    flex-wrap: wrap; /*items in this container wrap under each other when they cant fit horizontally*/
-    gap: 10px; /*10px gap between items in the container*/
-    overflow-y: auto; /*div itself is scrollable when items wrap and dont fit vertically*/  
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow-y: auto; 
     background-color: #333;
-    height: calc(100vh - 135px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
-    border-radius: 18px;
+    height: calc(100vh - 125px);
+    border-radius: 13px;
     padding-left: 13px;
     padding-right: 13px;
     padding-top: 10px;
@@ -36,14 +34,14 @@
     margin-left: 10px;
     margin-right: 10px;
     box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+    justify-content: center;
 }
-@media (max-width: 845px) {
+@media (max-width: 680px) {
     .album-header {
         margin-top: 50px;
     }
     .album-page-container {
-        height: calc(100vh - 175px); /*This makes the div end at the bottom of the screen, no matter the screensize. 70px offset for the searchbar header*/
-
+        height: calc(100vh - 175px);
     }
   }
 /*styling of scrollbar*/
@@ -131,7 +129,6 @@
     align-items: center;
     width: 200px;
     gap: 10px;
-    margin-right: 5px;
 }
 
 .add-album-btn {
@@ -305,21 +302,20 @@
     text-align: center;
     margin-bottom: 10px;
     width: 100%;
-    background-color: #222;
+    background-color: #181818;
     color: white;
     border: none;
     border-radius: 4px;
-    box-shadow: inset   0 4px 8px rgba(0,0,0,0.3);
 
 }
 .rating-red {
-    color: rgba(255, 0, 0, 0.844);
+    color: rgba(190, 31, 31, 0.844);
 }
 .rating-orange {
-    color: rgb(255, 204, 0);
+    color: rgb(185, 178, 32);
 }
 .rating-green {
-    color: rgb(12, 197, 12);
+    color: #1DB954;
 }
 .submit-rating-btn {
     width: 100%;
@@ -329,7 +325,6 @@
     border: none;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-
     transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
 
@@ -339,6 +334,115 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
+.comments-section {
+    background: #181818;
+    margin-top: 5px;
+    border-radius: 10px;
+    padding: 10px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    width: 410px;
+    max-height: 482px;
+    position: relative;
+    padding-bottom: 80px;
+  }
+
+  .comments-container {
+    max-height: 384px;
+    overflow-y: auto;
+    background-color: #181818;
+}
+
+.comments-container::-webkit-scrollbar-track {
+    margin-top: 20px;
+    margin-bottom: 20px; 
+  }
+.comments-container::-webkit-scrollbar-thumb {
+    background-color: #000; 
+    border-radius: 10px;
+} 
+.comments-container::-webkit-scrollbar {
+    width: 5px;
+}   
+
+  .comments-header {
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-align: center;
+
+  } 
+  
+  .comment {
+    border-bottom: 1px solid #444; 
+    margin-bottom: 10px;
+    margin-right: 5px;
+  }
+
+  .comment:last-child {
+    border-bottom: none; 
+  } 
+  
+  .comment-header {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .comment-user {
+    font-weight: bold;
+    color: #1DB954;
+    font-size: 14px;
+  }
+  
+  .comment-date {
+    font-size: 11px;
+    color: #aaa;
+  }
+  
+  .comment-content {
+    font-size: 13px;
+    overflow-wrap: break-word; 
+
+  }
+  
+  .comment-submission-section {
+    display: flex; 
+    gap: 10px;
+    height: 45px; 
+    position: absolute;
+    bottom: 10px;
+    left: 10px; 
+    right: 10px; 
+  }
+  
+  .comment-textarea {
+    flex-grow: 1;
+    border-radius: 4px;
+    border: 1px solid #444;
+    padding: 10px;
+    font-size: 13px; 
+    color: #ddd;
+    background-color: #222; 
+    resize: none; 
+  }
+  
+  .submit-comment-btn {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  }
+  
+  .submit-comment-btn:hover {
+    transform: translateY(-2px);
+    background-color: #555; 
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  }
+  
 
 
 

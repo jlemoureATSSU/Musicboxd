@@ -23,7 +23,7 @@
 .profile-page::-webkit-scrollbar-thumb:hover {
     background-color: #111;
 }
-@media (max-width: 845px) {
+@media (max-width: 680px) {
     .profile-page {
       margin-top: 40px;
     }
