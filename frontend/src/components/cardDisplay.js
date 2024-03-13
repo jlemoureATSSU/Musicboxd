@@ -3,7 +3,7 @@ import AlbumCard from './albumCard';
 
 const CardDisplay = ({ albums, artistName }) => {
     return (
-        <div className="albums-container">
+        <div className="artist-albums-container">
             {albums.map((album) => (
                 <AlbumCard
                     key={album.id}

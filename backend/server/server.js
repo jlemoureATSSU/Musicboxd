@@ -22,6 +22,7 @@ const getAlbumDetails = require('./routes/api/apiGetAlbumDetails')
 const searchArtists = require('./routes/api/apiSearchArtists')
 const searchAlbums = require('./routes/api/apiSearchAlbums')
 const getAlbumsByArtist = require('./routes/api/apiGetAlbumsByArtist')
+const getRelatedArtists = require('./routes/api/apiGetAlbumsByArtist')
 const getNewestAlbums = require('./routes/api/apiGetNewestAlbums')
 const getMultipleAlbumDetails = require('./routes/api/apiGetMultipleAlbumDetails')
 const commentSubmit = require('./routes/comment/commentSubmit')
@@ -57,6 +58,7 @@ app.use('/api', searchAlbums)
 app.use('/api', getAlbumsByArtist)
 app.use('/api', getNewestAlbums)
 app.use('/api', getMultipleAlbumDetails)
+app.use('/api', getRelatedArtists)
 
 
 

@@ -54,5 +54,29 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
   }
 });
 
+router.get('/getRelatedArtists/:artistSpotifyId', async (req, res) => {
+  const { artistSpotifyId } = req.params;
+
+  try {
+    const accessToken = await getSpotifyAccessToken();
+    const relatedArtistsResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}/related-artists`, {
+      headers: { 'Authorization': `Bearer ${accessToken}` }
+    });
+
+    const relatedArtists = relatedArtistsResponse.data.artists.slice(0, 5).map(artist => {
+      return {
+        id: artist.id,
+        name: artist.name,
+        image: artist.images[0].url
+      };
+    });
+
+    res.json(relatedArtists);
+  } catch (error) {
+    console.error("Error fetching related artists from Spotify:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 
 module.exports = router;

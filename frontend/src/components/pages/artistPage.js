@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import CardDisplay from '../cardDisplay';
 import { FaSpotify } from 'react-icons/fa';
 
@@ -8,7 +8,9 @@ const ArtistPage = () => {
     const [artistDetails, setArtistDetails] = useState(null);
     const [albums, setAlbums] = useState([]);
     const { artistSpotifyId } = useParams();
+    const [relatedArtists, setRelatedArtists] = useState([]);
     const fetchInProgress = useRef(new Set());
+    const navigate = useNavigate();
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
@@ -23,7 +25,17 @@ const ArtistPage = () => {
             }
         };
 
+        const fetchRelatedArtists = async () => {
+            try {
+              const response = await axios.get(`${backendUrl}/api/getRelatedArtists/${artistSpotifyId}`);
+              setRelatedArtists(response.data);
+            } catch (error) {
+              console.error("Error fetching related artists", error);
+            }
+          };
+          
         fetchArtistAndAlbumIds();
+        fetchRelatedArtists();
     }, [artistSpotifyId]);
 
     const fetchAlbumDetails = async (albumIds) => {
@@ -51,11 +63,24 @@ const ArtistPage = () => {
     return (
         <div>
             <h1 className="artist-header">
-            <div className='artist-name'>{artistDetails?.name || 'Artist'}</div>
-            <span className="album-count">({albums.length} Albums)</span>
-            <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn2"><span className="spotify-green"><FaSpotify /></span></button>
+                <div className='artist-name'>{artistDetails?.name || 'Artist'}</div>
+                <span className="album-count">({albums.length} Albums)</span>
+                <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn2"><span className="spotify-green"><FaSpotify /></span></button>
             </h1>
+            <div className="artist-page-container">
             <CardDisplay albums={albums} artistName={artistDetails?.name} />
+                <div className='related-artists-container'>
+                <div>Similar Artists</div>
+                    <div className='related-artists'>
+                    {relatedArtists.map((artist) => (
+                        <div key={artist.id} className='related-artist-card' onClick={() => navigate(`/artist/${artist.id}`)}>
+                            <img src={artist.image} alt={artist.name} className='related-artist-image' />
+                            <div className='related-artist-name'>{artist.name}</div>
+                        </div>
+                    ))}
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };
