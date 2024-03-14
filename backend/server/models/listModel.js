@@ -13,7 +13,7 @@ const newListSchema = new mongoose.Schema(
     },
     listDescription: {
       type: String,
-      required: true,
+      required: false,
       label: "listDescription",
     },
     albums: [{

@@ -18,6 +18,8 @@ const CreateListPage = () => {
   const { listId } = useParams();
   const handleTitleChange = (e) => setListTitle(e.target.value);
   const handleDescriptionChange = (e) => setListDescription(e.target.value);
+  const [playlistUrl, setPlaylistUrl] = useState('');
+
   
   useEffect(() => {
     const fetchListDetails = async () => {
@@ -127,17 +129,39 @@ const CreateListPage = () => {
     setAlbums(albums.filter(album => album.id !== albumId));
   };
 
+  const fetchAlbumsFromPlaylist = async () => {
+    try {
+      const response = await axios.get(`${backendUrl}/api/getAlbumsFromPlaylist?url=${encodeURIComponent(playlistUrl)}`);
+      const uniqueAlbums = response.data;
+      setAlbums(uniqueAlbums);
+    } catch (error) {
+      console.error('Error fetching albums from playlist:', error);
+    }
+  };
+  
+
 
   return (
     <div className="create-list-page">
       <div className="list-input-card">
+        <div className="list-inputs">
         <input type="text" placeholder="List Title" value={listTitle} onChange={handleTitleChange} className="list-title-input"/>
         <textarea placeholder="List Description" value={listDescription} onChange={handleDescriptionChange}className="list-description-input"/>
-        <div className="list-actions">
-          <button onClick={handleDiscardList} className="discard-btn">Discard</button>
-          <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add Album</div>
-          <button onClick={handleSaveList} className="save-btn">Save List</button>
         </div>
+        <div className="playlist-input">
+        <textarea
+          className="playlist-url-input"
+          placeholder="Drag Spotify Playlist, or paste URL here to add albums that appear in that playlist to this List"
+          value={playlistUrl}
+          onChange={(e) => setPlaylistUrl(e.target.value)}
+        />
+      <button onClick={fetchAlbumsFromPlaylist} className="add-playlist-btn">Add to List</button>
+      </div>
+        </div>
+                <div className="list-actions">
+          <button onClick={handleDiscardList} className="discard-btn">Discard</button>
+          <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
+          <button onClick={handleSaveList} className="save-btn">Save List</button>
         </div>
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable" direction="horizontal">
@@ -149,13 +173,13 @@ const CreateListPage = () => {
                             <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{...provided.draggableProps.style,}}className="album-wrapper">
                               <button onClick={() => removeAlbum(album.id)} className="remove-album-btn">remove album</button>
                               <AlbumCard
-                                coverArtUrl={album.coverArtUrl}
-                                title={album.name}
-                                artist={album.artist}
-                                releaseDate={album.releaseDate}
-                                spotifyId={album.id}
-                                isClickable={false} 
-                              />
+                                  coverArtUrl={album.coverArtUrl}
+                                  title={album.name}
+                                  artist={album.artist}
+                                  releaseDate={album.releaseDate}
+                                  spotifyId={album.id}
+                                  isClickable={false} 
+                                />
                             </div>
                           )}
                         </Draggable>

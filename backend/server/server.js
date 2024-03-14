@@ -27,6 +27,7 @@ const getNewestAlbums = require('./routes/api/apiGetNewestAlbums')
 const getMultipleAlbumDetails = require('./routes/api/apiGetMultipleAlbumDetails')
 const commentSubmit = require('./routes/comment/commentSubmit')
 const commentGetAllByAlbum = require('./routes/comment/commentGetAllByAlbum')
+const getAlbumsFromPlaylist = require('./routes/api/apiGetAlbumsFromPlaylist')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -59,6 +60,7 @@ app.use('/api', getAlbumsByArtist)
 app.use('/api', getNewestAlbums)
 app.use('/api', getMultipleAlbumDetails)
 app.use('/api', getRelatedArtists)
+app.use('/api', getAlbumsFromPlaylist)
 
 
 

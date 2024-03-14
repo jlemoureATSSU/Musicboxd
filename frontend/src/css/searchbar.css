@@ -80,13 +80,14 @@
     color: rgb(150, 150, 150);
   }
 
-  .album-artist {
-    font-size: 12px;
+  .search-album-artist {
+    font-size: 14px;
     color: rgb(150, 150, 150);
   }
   
   .album-year {
     color: #a6a6a6;
+    font-size: 12px;
   }
 
   .search-controls {

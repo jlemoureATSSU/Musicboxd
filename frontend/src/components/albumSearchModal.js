@@ -74,18 +74,19 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
 
   const modalStyle = {
     background: '#222',
-    padding: '20px',
+    padding: '15px',
     borderRadius: '8px',
     width: '90%',
     maxWidth: '500px',
     zIndex: 1001,
+    marginBottom: '100px',
   };
 
   const modalHeaderStyle = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '20px',
+    marginBottom: '15px',
   };
 
   const closeButtonStyle = {
@@ -99,7 +100,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
   const searchInputStyle = {
     width: '100%',
     padding: '10px',
-    marginBottom: '20px',
+    marginBottom: '10px',
     borderRadius: '4px',
     border: 'none',
   };
@@ -121,7 +122,7 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
     <div style={overlayStyle}>
       <div style={modalStyle}>
         <div style={modalHeaderStyle}>
-          <h2>Add an album to your <b>List</b></h2>
+          <h2>Search for an album to add to your <b>List</b></h2>
           <button onClick={onClose} style={closeButtonStyle}>&times;</button>
         </div>
         <input

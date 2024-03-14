@@ -36,12 +36,88 @@
 .list-input-card {
   background-color: rgba(255, 255, 255, 0.0);
   margin-left: 10px;
-  height: 220px;
   display: flex;
   width: auto;
-  flex-direction: column;
-  
+  flex-direction: row;
+  width : 100%;  
 }
+
+.list-inputs{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  background-color: #333;
+  border-radius: 18px;
+}
+
+.playlist-input{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.playlist-url-input {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 15px;
+  margin-bottom: 7px;
+  text-align: center;
+  background-color: #333;
+  color: white;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  padding: 10px;
+  border: none;
+  resize: none;
+}
+
+.playlist-url-input::-webkit-scrollbar-track {
+  margin-top: 20px;
+  margin-bottom: 20px; 
+  border-radius: 10px;
+} 
+.playlist-url-input::-webkit-scrollbar-thumb {
+    background-color: #181818; 
+    border-radius: 10px;
+
+  }
+  .playlist-url-input::-webkit-scrollbar {
+    width: 6px;
+  }
+  .playlist-url-input::-webkit-scrollbar-thumb:hover {
+    background-color: #111;
+  }
+
+
+.playlist-url-input:focus{
+  outline: none;
+  border-bottom: 1px solid #656565;
+
+}
+
+.add-playlist-btn {
+  background: #181818;
+  color: white;
+  font-size: 15px;
+  width: 150px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  cursor: pointer;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+} 
+
+.add-playlist-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
 
 .album-list-card {
   display: flex;
@@ -59,6 +135,7 @@
   justify-content: flex-start; 
   padding-bottom: 5px;
   gap: 13px;
+  
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 }
 
@@ -93,29 +170,28 @@
 
 .list-title-input
 {
-  background: #252525;
+  background: #333;
   color: white;
   border: none;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  width: 100%;
+  border-top-left-radius: 10px;
   padding: 10px;
   font-size: 1.2em;
-  border-bottom: 1px solid #656565;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 
 }
 
 .list-description-input {
-  background: #252525;
+  background: #333;
   color: white;
-  font-size: 14px;
+  font-size: 16px;
   width: 100%;
   padding: 10px;
   border: none;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   border-bottom: 1px solid #252525;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 
 }
 
@@ -138,23 +214,19 @@
   border-bottom: 1px solid #656565;
 }
 
-
-.add-album-plus:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
-}
-
 .list-actions {
   display: inline-flex;
-  max-width: 310px;
   justify-content: flex-start;
-  margin-left: 20px;
+  margin-left: 25px;
   background-color: #333;
-  border-top-left-radius: 18px; 
-  border-top-right-radius: 18px; 
+  border-top-left-radius: 15px; 
+  border-top-right-radius: 15px; 
   margin-top: 10px;
   gap: 10px;
-  padding:10px;
+  padding-left: 13px;
+  padding-right: 13px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 }
 
@@ -177,15 +249,15 @@
 .edit-btn:hover,
 .save-btn:hover,
 .add-btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 .discard-btn {
-  background: #d9534f;
+  background: #8d3737;
 }
 
 .save-btn {
-  background: #5cb85c;
+  background: #337b35;
 }
 
 .edit-btn {
@@ -196,7 +268,7 @@
 }
 
 .add-btn {
-  background: #2370c2; 
+  background: #33557f; 
 }
 
 

@@ -151,7 +151,7 @@ const SearchBar = () => {
                 {result.type === 'album' && (
                   <>
                     <span className="result-type">Album</span> 
-                    {result.name} <span className="album-artist">{result.artist}</span> <span className="album-year">({result.year})</span>
+                    {result.name} <span className="search-album-artist">{result.artist}</span> <span className="album-year">({result.year})</span>
                   </>
                 )}
                 {result.type === 'artist' && (
