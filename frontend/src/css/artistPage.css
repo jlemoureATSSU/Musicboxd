@@ -93,6 +93,7 @@
     font-size: 13px;
     border-top-right-radius: 15px;
     border-bottom-right-radius: 15px;
+    height: calc(100vh - 130px); 
     max-height: calc(100vh - 130px); 
     overflow-y: auto; 
     padding-left: 10px;
@@ -155,7 +156,7 @@
     cursor: pointer;
     background-color: #181818;
     padding: 8px;
-    border-radius: 15px;
+    border-radius: 25px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 

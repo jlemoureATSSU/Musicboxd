@@ -79,8 +79,9 @@ const ListPage = () => {
                             title={album.name}
                             artist={album.artists}
                             artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).toLocaleDateString("en-US", {month: "short",day: "numeric", year: "numeric", })}                            
+                            releaseDate={new Date(album.release_date).getFullYear()}                           
                             spotifyId={album.id}
+                            type={album.type}
                             isClickable={true}
                         />
                     ))}

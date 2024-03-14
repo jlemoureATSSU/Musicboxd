@@ -16,14 +16,13 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
     console.log(`Artist ${cachedArtist.name} and their album IDs fetched from cache`);
     return res.json({
       artist: cachedArtist,
-      albumIds: cachedAlbumIds // Only sending IDs
+      albumIds: cachedAlbumIds 
     });
   }
 
   try {
     const accessToken = await getSpotifyAccessToken();
 
-    // Fetch and cache artist name if not already cached
     if (!cachedArtist) {
       const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}`, {
         headers: { 'Authorization': `Bearer ${accessToken}` }
@@ -33,7 +32,6 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
       myCache.set(artistCacheKey, cachedArtist);
     }
 
-    // Fetch and cache album IDs if not already cached
     if (!cachedAlbumIds) {
       const albumsResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}/albums`, {
         headers: { 'Authorization': `Bearer ${accessToken}` },
@@ -46,7 +44,7 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
 
     res.json({
       artist: cachedArtist,
-      albumIds: cachedAlbumIds // Only sending IDs
+      albumIds: cachedAlbumIds
     });
   } catch (error) {
     console.error("Error fetching data from Spotify:", error);
@@ -63,7 +61,7 @@ router.get('/getRelatedArtists/:artistSpotifyId', async (req, res) => {
       headers: { 'Authorization': `Bearer ${accessToken}` }
     });
 
-    const relatedArtists = relatedArtistsResponse.data.artists.slice(0, 5).map(artist => {
+    const relatedArtists = relatedArtistsResponse.data.artists.slice(0, 6).map(artist => {
       return {
         id: artist.id,
         name: artist.name,

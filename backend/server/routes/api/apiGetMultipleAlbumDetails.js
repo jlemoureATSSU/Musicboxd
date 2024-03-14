@@ -5,37 +5,34 @@ const myCache = require('../../utilities/cache');
 const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.post('/getMultipleAlbumDetails', async (req, res) => {
-  const { albumIds } = req.body; // Expecting an array of Spotify album IDs
+  const { albumIds } = req.body; 
   const albumDetails = [];
   const uncachedAlbumIds = [];
   let cachedAlbumCount = 0; 
 
-  // Check cache for each album ID and collect uncached IDs
   albumIds.forEach(spotifyId => {
     const cacheKey = `album-${spotifyId}`;
     const cachedData = myCache.get(cacheKey);
     if (cachedData) {
       albumDetails.push(cachedData);
-      cachedAlbumCount++; // Increment cached album counter
+      cachedAlbumCount++; 
     } else {
       uncachedAlbumIds.push(spotifyId);
     }
   });
 
-  // Log the number of albums fetched from cache
   console.log(`${cachedAlbumCount} albums fetched from cache`);
 
   if (uncachedAlbumIds.length > 0) {
     try {
       const accessToken = await getSpotifyAccessToken();
-      const batches = []; // To hold promises of batch requests
-      const totalUncachedAlbums = uncachedAlbumIds.length; // Total number of albums being fetched
-      let apiCallCount = 0; // Initialize API call counter
+      const batches = []; 
+      const totalUncachedAlbums = uncachedAlbumIds.length;
+      let apiCallCount = 0; 
 
       while (uncachedAlbumIds.length) {
-        // Spotify's batch limit is 20 albums per request
         const batch = uncachedAlbumIds.splice(0, 20);
-        apiCallCount++; // Increment API call count for each batch request
+        apiCallCount++; 
         const batchPromise = axios.get(`https://api.spotify.com/v1/albums?ids=${batch.join(',')}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` },
         }).then(response => {
@@ -47,18 +44,17 @@ router.post('/getMultipleAlbumDetails', async (req, res) => {
               artistIds: album.artists.map(artist => artist.id),
               release_date: album.release_date,
               coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
+              type: album.album_type === 'album' ? 'Album' : 'Single/EP',
             };
-            myCache.set(`album-${album.id}`, albumData); // Cache the new album details
-            albumDetails.push(albumData); // Add to final result
+            myCache.set(`album-${album.id}`, albumData); 
+            albumDetails.push(albumData); 
           });
         });
         batches.push(batchPromise);
       }
 
-      // Wait for all batch requests to complete
       await Promise.all(batches);
 
-      // After all batch requests complete, log the total API calls and albums fetched
       console.log(`${apiCallCount} API calls made to Spotify for ${totalUncachedAlbums} albums`);
       
     } catch (error) {
@@ -67,7 +63,6 @@ router.post('/getMultipleAlbumDetails', async (req, res) => {
     }
   }
 
-  // Return combined results (cached and newly fetched)
   res.json(albumDetails);
 });
 

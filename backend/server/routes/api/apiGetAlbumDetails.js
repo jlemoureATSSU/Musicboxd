@@ -30,6 +30,7 @@ router.get('/getAlbumDetails/:spotifyId', async (req, res) => {
       artistIds: album.artists.map(artist => artist.id),
       release_date: album.release_date,
       coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
+      type: album.album_type === 'album' ? 'Album' : 'Single/EP',
     };
 
     myCache.set(cacheKey, albumDetails);

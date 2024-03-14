@@ -1,15 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
 
 const Albums = () => {
+    const location = useLocation();
+    const sortingModeFromLink = location.state?.sortingMode;
     const [albums, setAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState({});
     const fetchInProgress = useRef(new Set());
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
-    const [sortingMode, setSortingMode] = useState('highestRated');
+    const [sortingMode, setSortingMode] = useState(sortingModeFromLink || 'highestRated');
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
@@ -98,16 +100,18 @@ const fetchAlbumDetails = async (albumIds) => {
                     const album = albumDetails[albumId];
                     if (!album) return null;
                     return (
+                        
                         <AlbumCard
                             key={albumId}
                             coverArtUrl={album.coverArtUrl}
                             title={album.name}
                             artist={album.artists}
                             artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).toLocaleDateString("en-US", {month: "short",day: "numeric", year: "numeric", })}                            
+                            releaseDate={new Date(album.release_date).getFullYear()}                           
                             spotifyId={albumId}
                             averageRating={album.averageRating}
                             numberOfRatings={album.numberOfRatings}
+                            type={album.type}
                             isClickable={true}
                         />
                     );

@@ -42,7 +42,8 @@ const CreateListPage = () => {
               coverArtUrl: response.data.coverArtUrl,
               name: response.data.name,
               artist: response.data.artists, 
-              releaseDate: new Date(response.data.release_date).getFullYear() 
+              releaseDate: new Date(response.data.release_date).getFullYear(), 
+              type: response.data.type,
             };
           });
           setAlbums(detailedAlbums);
@@ -62,6 +63,32 @@ const CreateListPage = () => {
   
     fetchListDetails();
   }, [listId]);
+
+  
+  const fetchAlbumsFromPlaylist = async () => {
+    try {
+      const idsResponse = await axios.get(`${backendUrl}/api/getAlbumsFromPlaylist?url=${encodeURIComponent(playlistUrl)}`);
+      const albumIds = idsResponse.data.albumIds;
+  
+      if (albumIds.length > 0) {
+        const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, { albumIds });
+        const detailedAlbums = detailsResponse.data;
+  
+        setAlbums(detailedAlbums.map(album => ({
+          id: album.id,
+          coverArtUrl: album.coverArtUrl,
+          name: album.name,
+          artist: album.artists, 
+          type: album.type,
+          releaseDate: new Date(album.release_date).getFullYear()
+        })));
+      }
+      setPlaylistUrl('');
+    } catch (error) {
+      console.error('Error fetching albums from playlist:', error);
+    }
+  };
+  
 
   const addAlbumToList = (albumDetails) => {
     if (albums.some((a) => a.id === albumDetails.id)) {
@@ -102,6 +129,7 @@ const CreateListPage = () => {
     setListTitle('');
     setListDescription('');
     setAlbums([]);
+    setPlaylistUrl('');
   };
 
   const reorder = (list, startIndex, endIndex) => {
@@ -129,18 +157,7 @@ const CreateListPage = () => {
     setAlbums(albums.filter(album => album.id !== albumId));
   };
 
-  const fetchAlbumsFromPlaylist = async () => {
-    try {
-      const response = await axios.get(`${backendUrl}/api/getAlbumsFromPlaylist?url=${encodeURIComponent(playlistUrl)}`);
-      const uniqueAlbums = response.data;
-      setAlbums(uniqueAlbums);
-    } catch (error) {
-      console.error('Error fetching albums from playlist:', error);
-    }
-  };
   
-
-
   return (
     <div className="create-list-page">
       <div className="list-input-card">
@@ -178,6 +195,7 @@ const CreateListPage = () => {
                                   artist={album.artist}
                                   releaseDate={album.releaseDate}
                                   spotifyId={album.id}
+                                  type={album.type}
                                   isClickable={false} 
                                 />
                             </div>

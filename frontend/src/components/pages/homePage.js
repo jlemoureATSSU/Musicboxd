@@ -7,6 +7,8 @@ import ListCard from '../listCard';
 const HomePage = () => {
     const [recentLists, setRecentLists] = useState([]);
     const [highestRatedAlbums, setHighestRatedAlbums] = useState([]);
+    const [newestReleases, setNewestReleases] = useState([]);
+
     const [albumDetails, setAlbumDetails] = useState({});
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -14,31 +16,28 @@ const HomePage = () => {
     useEffect(() => {
       const fetchInitialData = async () => {
         try {
-          // Fetch highest rated albums and recent lists
-          const [highestRatedResponse, recentListsResponse] = await Promise.all([
+          const [highestRatedResponse, newestReleasesResponse, recentListsResponse] = await Promise.all([
             axios.get(`${backendUrl}/rating/getHighestRatedAlbums`),
+            axios.get(`${backendUrl}/api/getNewestAlbums`),
             axios.get(`${backendUrl}/list/getRecentLists`)
           ]);
           
           setHighestRatedAlbums(highestRatedResponse.data);
+          setNewestReleases(newestReleasesResponse.data);
           setRecentLists(recentListsResponse.data);
     
-          // Collect all unique album IDs from highestRatedAlbums
           const highestRatedAlbumIds = highestRatedResponse.data.map(album => album.albumId);
+          const newestReleaseAlbumIds = newestReleasesResponse.data.map(album => album.albumId);
     
-          // Collect all unique album IDs from recentLists
           const listAlbumIds = recentListsResponse.data.flatMap(list => 
-            list.albums.slice(0, 3).map(album => album.id) // Only take first 3 albums per list
+            list.albums.slice(0, 3).map(album => album.id)
           );    
-          // Combine and deduplicate album IDs
-          const uniqueAlbumIds = Array.from(new Set([...highestRatedAlbumIds, ...listAlbumIds]));
+          const uniqueAlbumIds = Array.from(new Set([...highestRatedAlbumIds, ...newestReleaseAlbumIds, ...listAlbumIds]));
     
-          // Fetch details for all unique albums
           const albumDetailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
             albumIds: uniqueAlbumIds
           });
     
-          // Update state with album details
           setAlbumDetails(albumDetailsResponse.data.reduce((acc, detail) => {
             acc[detail.id] = detail;
             return acc;
@@ -54,6 +53,30 @@ const HomePage = () => {
 
     return (
         <div className='home-page'>
+            <div className='highest-rated-albums-container-title'>Highest Rated Albums <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
+            <div className="highest-rated-albums-container">
+                {highestRatedAlbums.map(({ albumId }) => { 
+                    const album = albumDetails[albumId];
+                    if (!album) return null; 
+                    const releaseDate = new Date(album.release_date).getFullYear();
+
+                    return (
+                        <AlbumCard
+                            key={albumId} 
+                            coverArtUrl={album.coverArtUrl}
+                            title={album.name}
+                            artist={album.artists} 
+                            artistIds={album.artistIds}
+                            releaseDate={releaseDate}
+                            spotifyId={albumId}
+                            averageRating={album.averageRating}
+                            numberOfRatings={album.numberOfRatings}
+                            type={album.type}
+                            isClickable={true}
+                        />
+                    );
+                })}
+            </div>
             <div className='recent-lists-container-title'>Recently Created Lists<Link to="/lists" className='see-more'>see more</Link></div>
             <div className="recent-lists-container">
                 {recentLists.map(list => (
@@ -68,12 +91,12 @@ const HomePage = () => {
                     />
                 ))}
             </div>
-            <div className='highest-rated-albums-container-title'>Highest Rated Albums <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
-            <div className="highest-rated-albums-container">
-                {highestRatedAlbums.map(({ albumId }) => { 
+            <div className='newest-releases-container-title'>Newest releases<Link to="/albums" className='see-more' state={{ sortingMode: 'newest' }}>see more</Link></div>
+            <div className="newest-releases-container">
+                {newestReleases.map(({ albumId }) => { 
                     const album = albumDetails[albumId];
                     if (!album) return null; 
-                    const releaseDate = new Date(album.release_date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: '2-digit'});
+                    const releaseDate = new Date(album.release_date).getFullYear();
                     return (
                         <AlbumCard
                             key={albumId} 
@@ -82,9 +105,10 @@ const HomePage = () => {
                             artist={album.artists} 
                             artistIds={album.artistIds}
                             releaseDate={releaseDate}
-                            spotifyId={albumId} 
+                            spotifyId={albumId}
                             averageRating={album.averageRating}
                             numberOfRatings={album.numberOfRatings}
+                            type={album.type}
                             isClickable={true}
                         />
                     );

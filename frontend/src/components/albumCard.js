@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 
-const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotifyId, isClickable }) => {
+const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotifyId, type, isClickable }) => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const [averageRating, setAverageRating] = useState(null);
   const titleRef = useRef(null);
@@ -42,6 +42,18 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
     if (numRating >= 7.5) return 'rating-green';
   };
 
+  const getTypeClassName = (type) => {
+    switch (type) {
+      case 'Album':
+        return 'album-card-type-album';
+      case 'Single/EP':
+        return 'album-card-type-sep';
+      default:
+        return '';
+    }
+  };
+  
+
   if (!Array.isArray(artistIds)) {
     console.error('Expected artistIds to be an array, but received:', artistIds);
     artistIds = []; 
@@ -73,6 +85,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
       <div className="album-card-info">
       <div ref={titleRef} className="album-card-title">{title}</div>
         <p ref={artistRef} className="album-card-artist">{artistLink}</p>
+        <p className={`album-card-type ${getTypeClassName(type)}`}>{type}</p>
         <p className="album-card-release-date">{releaseDate}</p>
         <p className={`album-card-rating ${getRatingClassName(averageRating)}`}>{formattedRating}</p>
     </div>
