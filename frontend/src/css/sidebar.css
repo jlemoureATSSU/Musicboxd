@@ -3,14 +3,14 @@
 .sidebar {
   position: fixed;
   display: flex;
-  align-items: center;
-  justify-content: start;
+  align-items: flex-end;
+  justify-content: space-between;
   padding-left: 10px;
   border-bottom-right-radius: 7px;
   border-bottom-left-radius: 7px;
   top: 0;
   left: 10px;
-  width: 320px;
+  width: 400px;
   height: 55px;
   background-color: #181818;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -25,20 +25,23 @@
 
 .sidebar-links a {
   color: #fff;
-  padding: 5px;
   margin-right: 7px;
   text-decoration: none;
-  font-size: 20px;
-  background-color: #353535;
+  text-align: center;
+  font-size: 11px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
   transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  margin-bottom: 5px;
 }
 
 .sidebar-links a:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   color: white;
+}
+
+.icon-size {
+  font-size: 20px;
+  vertical-align: middle;
 }
 
 .sidebar .home-link {
@@ -46,7 +49,7 @@
   letter-spacing: 0px;
   color: #fff;
   text-decoration: underline;
-  font-size: 33px;
-  margin-right: auto; 
+  font-size: 35px;
+  margin-right: 10px;
 }
 

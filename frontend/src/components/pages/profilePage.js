@@ -88,7 +88,6 @@ const UserProfile = () => {
           ))}
         </div>
       </div>
-      {/* Conditionally render logout button if viewing own profile */}
       {loggedInUser === username && (
         <div className="col-md-12 text-center">
           <>

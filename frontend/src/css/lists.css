@@ -49,7 +49,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    background-color: #353535;
+    background-color: #252525;
     border-radius: 18px;
     max-height: calc(100vh - 133px); 
     overflow-y: auto; 
@@ -88,7 +88,7 @@
     background-color: #111;
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 760px) {
     .lists-page {
       margin-top: 40px;  
     }

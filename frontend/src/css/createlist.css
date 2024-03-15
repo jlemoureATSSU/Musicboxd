@@ -25,7 +25,7 @@
     background-color: #111;
   }
 
-@media (max-width: 680px) {
+@media (max-width: 760px) {
   .create-list-page {
       margin-top: 40px;
       max-height: calc(100vh - 100px); 
@@ -46,14 +46,15 @@
   display: flex;
   flex-direction: column;
   width: 60%;
-  background-color: #333;
+  background-color: #252525;
   border-radius: 18px;
+  margin-bottom: 10px;
 }
 
 .playlist-input{
   display: flex;
   flex-direction: column;
-  width: 40%;
+  width: 100%;
   align-items: center;
   margin-right: 10px;
 }
@@ -65,7 +66,7 @@
   font-size: 15px;
   margin-bottom: 7px;
   text-align: center;
-  background-color: #333;
+  background-color: #252525;
   color: white;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -124,7 +125,7 @@
   flex-wrap: nowrap;
   flex-direction: row;
   width: 100%;
-  background-color: #333;
+  background-color: #252525;
   border-radius: 18px;
   padding-top: 15px;
   margin-left: 10px;
@@ -168,9 +169,8 @@
 
 }
 
-.list-title-input
-{
-  background: #333;
+.list-title-input {
+  background: #252525;
   color: white;
   border: none;
   width: 100%;
@@ -178,11 +178,12 @@
   padding: 10px;
   font-size: 1.2em;
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
-
 }
 
+
+
 .list-description-input {
-  background: #333;
+  background: #252525;
   color: white;
   font-size: 16px;
   width: 100%;
@@ -192,16 +193,13 @@
   border-bottom-right-radius: 10px;
   border-bottom: 1px solid #252525;
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
-
 }
+
 
 .list-title-input {
   font-size: 30px;
 }
 
-.list-date-input {
-  font-size: 20px;
-}
 
 .list-description-input {
   height: 100px;
@@ -218,10 +216,9 @@
   display: inline-flex;
   justify-content: flex-start;
   margin-left: 25px;
-  background-color: #333;
+  background-color: #252525;
   border-top-left-radius: 15px; 
   border-top-right-radius: 15px; 
-  margin-top: 10px;
   gap: 10px;
   padding-left: 13px;
   padding-right: 13px;
@@ -231,6 +228,7 @@
 }
 
 .discard-btn,
+.delete-btn,
 .edit-btn,
 .save-btn,
 .add-btn {
@@ -246,6 +244,7 @@
   
 }
 .discard-btn:hover,
+.delete-btn:hover,
 .edit-btn:hover,
 .save-btn:hover,
 .add-btn:hover {
@@ -253,22 +252,24 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
 .discard-btn {
-  background: #8d3737;
+  background: #642727;
+}
+
+.delete-btn {
+  background: #642727;
 }
 
 .save-btn {
-  background: #337b35;
+  background: #225224;
 }
 
 .edit-btn {
-  height: 45px;
-  width: 150px;
-  margin-bottom: 10px;
-  background: rgb(198, 198, 78);
+
+  background: #181818;
 }
 
 .add-btn {
-  background: #33557f; 
+  background: #181818; 
 }
 
 

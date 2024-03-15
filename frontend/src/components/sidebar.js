@@ -16,14 +16,15 @@ const Sidebar = () => {
       <div className="sidebar-links">
         {!user ? (
           <>
-            <Link to="/albums" title="Albums"><PiVinylRecordBold /></Link>
-            <Link to="/login" title="Login"><CiLogin /></Link>
+          <Link to="/albums" title="Albums"><PiVinylRecordBold className="icon-size"/>Albums</Link>
+          <Link to="/login" title="Login"><CiLogin className="icon-size"/>Login</Link>
+
           </>
         ) : (
           <>
-            <Link to="/createList" title="Create a List"><IoIosCreate /></Link>
-            <Link to="/albums" title="Albums"><PiVinylRecordBold /></Link>
-            <Link to={profileLink} title="Profile"><FaUser /></Link>
+          <Link to="/edit" title="Create a List"><IoIosCreate className="icon-size"/>Create&nbsp;List</Link>
+          <Link to="/albums" title="Albums"><PiVinylRecordBold className="icon-size"/>Albums</Link>
+          <Link to={profileLink} title="Profile"><FaUser className="icon-size"/>Profile</Link>
           </>
         )}
       </div>

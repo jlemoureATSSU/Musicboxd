@@ -4,13 +4,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  background-color: #333;
+  background-color: #252525;
   margin-right: 20px;
   margin-left: 20px;
-  border-radius: 50px;
   padding-bottom: 20px;
   max-width: 350px;
-  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
   margin: 0 auto;
   margin-top: 30px;
 }
@@ -44,7 +42,7 @@
 
   }
 
-  @media (max-width: 680px) {
+  @media (max-width: 760px) {
     .signup-page {
       margin-top: 60px;
     }

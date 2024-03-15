@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
 import Button from 'react-bootstrap/Button';
@@ -26,6 +26,8 @@ const AlbumPage = () => {
     const [comment, setComment] = useState('');
     const [commentSubmitMessage, setCommentSubmitMessage] = useState('');
     const [comments, setComments] = useState([]);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
         console.log("Spotify ID:", spotifyId);
@@ -342,7 +344,7 @@ const AlbumPage = () => {
                 {comments.map(comment => (
                     <div key={comment._id} className="comment">
                         <div className="comment-header">
-                            <span className="comment-user">{comment.userName}</span>
+                        <span className="comment-user" onClick={() => navigate(`/user/${comment.userName}`)}>{comment.userName}</span>
                             <span className="comment-date">
                             {new Date(comment.dateCreated).toLocaleDateString()} {new Date(comment.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                             </span>

@@ -6,12 +6,12 @@ import './css/sidebar.css';
 import './css/searchbar.css';
 import './css/login.css';
 import './css/createlist.css';
+import './css/listPage.css';
 import './css/listCard.css';
 import './css/albumPage.css';
 import './css/artistPage.css';
 import './css/showMessage.css';
 import './css/profile.css';
-import './css/toolTip.css';
 import './css/lists.css';
 import Sidebar from "./components/sidebar";
 import HomePage from "./components/pages/homePage";
@@ -48,8 +48,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/user/:username" element={<Profile />} />
-          <Route path="/createList" element={<CreateListPage />}/>
-          <Route path="/createList/:listId" element={<CreateListPage />} />
+          <Route path="/edit" element={<CreateListPage />}/>
+          <Route path="/edit/:listId" element={<CreateListPage />} />
           <Route path="/album/:spotifyId" element={<AlbumPage />} />
           <Route path="/artist/:artistSpotifyId" element={<ArtistPage />} />
           <Route path="/list/:listId" element={<ListPage />} />

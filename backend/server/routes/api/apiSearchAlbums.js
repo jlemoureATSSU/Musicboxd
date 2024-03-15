@@ -1,25 +1,10 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
-const myCache = require('../../utilities/cache'); 
 const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.get('/searchAlbums', async (req, res) => {
     const searchQuery = req.query.search;
-    const cacheKey = `search-${searchQuery}`; 
-    let cachedIds = myCache.get(cacheKey);
-
-    if (cachedIds) {
-        console.log(`results from cache for query: "${searchQuery}"`);
-        const albums = cachedIds.map(id => myCache.get(`album-${id}`))
-                                .filter(detail => detail !== undefined)
-                                .map(album => ({
-                                  ...album,
-                                  artists: album.artists || '',
-                                  artistIds: album.artistIds || []
-                                }));
-        return res.json({ albums });
-    }
 
     try {
         const accessToken = await getSpotifyAccessToken();
@@ -46,15 +31,10 @@ router.get('/searchAlbums', async (req, res) => {
                 coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
             };
 
-            myCache.set(`album-${album.id}`, albumDetail);
-
             return albumDetail;
         });
 
-        const albumIds = albums.map(album => album.id);
-        myCache.set(cacheKey, albumIds);
         console.log(`results from Spotify API for query: "${searchQuery}"`);
-
         res.json({ albums });
     } catch (error) {
         console.error('Error fetching albums from Spotify: ', error);

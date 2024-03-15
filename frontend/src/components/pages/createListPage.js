@@ -176,9 +176,10 @@ const CreateListPage = () => {
       </div>
         </div>
                 <div className="list-actions">
-          <button onClick={handleDiscardList} className="discard-btn">Discard</button>
+          <div onClick={handleDiscardList} className="discard-btn">Start Over</div>
+          <div onClick={handleSaveList} className="save-btn">Save List</div>
           <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
-          <button onClick={handleSaveList} className="save-btn">Save List</button>
+
         </div>
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable" direction="horizontal">

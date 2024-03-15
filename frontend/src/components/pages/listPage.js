@@ -49,26 +49,50 @@ const ListPage = () => {
         return <div>Loading...</div>;
     }
 
+    const deleteList = async (listId) => {
+        if (window.confirm("Are you sure you want to delete this list?")) {
+            try {
+                const response = await fetch(`${backendUrl}/list/delete/${listId}`, {
+                    method: 'DELETE',
+                });
+                if (response.ok) {
+                    alert("List deleted successfully.");
+                    navigate('/lists');
+                } else {
+                    alert("Failed to delete the list.");
+                }
+            } catch (error) {
+                console.error("Error deleting the list: ", error);
+                alert("An error occurred while trying to delete the list.");
+            }
+        }
+    };
+    
     return (
         <div className="create-list-page">
-            <div className="list-input-card">
-                <h1 className="list-title-input">{listData.listName}</h1>
-                <p className="list-date-input">
-                    List created by<Link className='list-card-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
-                    {new Date(listData.dateCreated).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                    })}
-                </p>
-                <p className="list-description-input">{listData.listDescription}</p>
+            <div> 
+                <div className="list-details">
+                    <div className='list-title-and-date'>
+                        <div className="list-title">{listData.listName}</div>
+                        <div className="list-date">
+                            List created by<Link className='list-card-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
+                            {new Date(listData.dateCreated).toLocaleDateString("en-US", {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                            })}
+                        </div>
+                    </div>
+                    <div className="list-description">
+                        {listData.listDescription || "No Description"}
+                    </div>
+                </div>
+                
                 {currentUser && currentUser.username === listData.userName && (
-                    <button
-                        onClick={() => navigate(`/createList/${listData._id}`)}
-                        className="edit-btn"
-                    >
-                        Edit List
-                    </button>
+                    <div className="list-actions">
+                        <div onClick={() => navigate(`/edit/${listData._id}`)} className="edit-btn"> Edit List</div>
+                        <div onClick={() => deleteList(listData._id)} className="delete-btn"> Delete List</div>
+                    </div>
                 )}
             </div>
             <div className="album-list-card">
