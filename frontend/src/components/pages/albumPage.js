@@ -61,7 +61,6 @@ const AlbumPage = () => {
             try {
                 const ratingResponse = await axios.get(`${backendUrl}/rating/getByUserAndAlbum/${user.username}/${spotifyId}`);
                 if (ratingResponse.data && ratingResponse.data.ratingNum !== undefined) {
-                    // Ensure '10' is displayed without '.0'
                     const userRating = ratingResponse.data.ratingNum;
                     const formattedRating = userRating === 10 ? '10' : userRating.toFixed(1);
                     setRating(formattedRating);
@@ -158,6 +157,12 @@ const AlbumPage = () => {
       const handleRatingChange = (e) => {
         let value = e.target.value;
         const singleDigit = /^[0-9]$/;
+        const lastChar = value.slice(-1);
+        const secondLastChar = value.slice(-2, -1);
+    
+        if (lastChar === '' && secondLastChar === '.') {
+            value = value.slice(0, -2);
+        }
             if (singleDigit.test(value) && e.nativeEvent.data === '0') {
             value = value.includes('.') ? value + '0' : value;
         } else if (value.length === 2 && value.charAt(1) !== '0' && !value.includes('.')) {
@@ -173,23 +178,27 @@ const AlbumPage = () => {
             }
         }
     };
-    
-    
-    
 
-    
+    const handleKeyDown = (e) => {
+        if (e.key === 'Backspace' && rating.includes('.') && rating.length - rating.indexOf('.') === 2) {
+            setRating(rating.slice(0, -2));
+            e.preventDefault();
+        }
+    };
 
     const submitRating = async () => {
-        const numRating = parseFloat(rating);
-        if (rating === '' || isNaN(numRating) || numRating < 0 || numRating > 10 || !/^\d+(\.\d)?$/g.test(rating)) {
-            setSubmitMessage('Please enter a valid rating from 0 to 10, with at most one decimal place.');
+        let processedRating = rating.endsWith('.') ? rating.slice(0, -1) : rating;
+        const numRating = parseFloat(processedRating);
+    
+        if (processedRating === '' || isNaN(numRating) || numRating < 0 || numRating > 10) {
+            setSubmitMessage('Please enter a valid rating from 0 to 10.');
             return;
         }
 
         try {
             const response = await axios.post(`${backendUrl}/rating/save`, {
                 userName: user.username,
-                ratingNum: parseFloat(rating),
+                ratingNum: numRating,
                 albumId: spotifyId, 
             });
 
@@ -258,7 +267,6 @@ const AlbumPage = () => {
         return `https://open.spotify.com/album/${spotifyId}`;
       };
 
-//comments
     const submitComment = async () => {
         if (!comment.trim()) {
         setCommentSubmitMessage('Comment cannot be empty.');
@@ -328,6 +336,7 @@ const AlbumPage = () => {
                     value={rating}
                     onChange={handleRatingChange}
                     onKeyPress={handleRatingSubmit}
+                    onKeyDown={handleKeyDown}
                     placeholder="-"
                 />
                 <button
