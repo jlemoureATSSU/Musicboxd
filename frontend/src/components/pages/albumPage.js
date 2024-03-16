@@ -294,117 +294,124 @@ const AlbumPage = () => {
     
 
     return (
-        <div>
-        <div className="album-header">{title}<button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn"><span className="spotify-green"><FaSpotify /></span></button></div>
-        <div className= "album-page-container">
-        <div className="album-details-wrapper">
-            <div className="album-details">
-                <img src={albumDetails.coverArtUrl} alt={`${title} cover art`} className="album-cover-art" />
-                <div className="album-info">
-                <div className="album-artist">{artistLink}</div>
-                    <div className="album-release-date"> Released: {formattedReleaseDate} </div>
-                </div>
-            </div>
-        </div>
-
-        <div className="album-info-wrapper">
-            <div className="rating-box">
-                <div className="submit-rating-title">Average Rating:</div>
-                <div className={`rating-input ${getRatingClassName(averageRating)}`}>
-                    {numberOfRatings > 0 ? averageRating : 'NR'}
-                </div>
-                {numberOfRatings > 0 ? (
-                    <div className='rating-title'>From {numberOfRatings} <u><b>Musicboxd</b></u> user rating(s)</div>
-                ) : (
-                    <div className='rating-title'>Be the first to rate this album!</div>
-                )}
-            </div>
-
-
-            <div className='list-count'>This album appears in {albumListCount} user-created List(s)</div>
-            <div key={ratingMessageKey} className={`rating-message ${submitMessage ? 'visible' : ''}`}>
-                {submitMessage}
-            </div>
-        </div>  
-        
-        <div className="album-actions-wrapper">
-            <div className="submit-rating-box">
-                <div className="submit-rating-title">Your Rating:</div>
-                <input
-                    type="text"
-                    className={`submit-rating-input ${getRatingClassName(rating)}`}
-                    value={rating}
-                    onChange={handleRatingChange}
-                    onKeyPress={handleRatingSubmit}
-                    onKeyDown={handleKeyDown}
-                    placeholder="-"
-                />
-                <button
-                    className="submit-rating-btn"
-                    onClick={handleRatingSubmit}
-                >
-                    Submit Rating
+        <div className='album-page'>
+            <div className="album-header">
+                {title}
+                <button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn">
+                    <span className="spotify-green">
+                        <FaSpotify />
+                    </span>
                 </button>
             </div>
-            <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Create an account and Log In to add albums to Lists')} className="add-album-btn">Add Album to a <b>List</b></button>
-            <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
-                <Modal.Header><Modal.Title>add <b>{title}</b> by <b>{artist}</b> to one of your lists...</Modal.Title></Modal.Header>
-                <Modal.Body>
-                    {userLists.map(list => (
-                        <Button 
-                            key={list._id} 
-                            onClick={() => addAlbumToList(list._id)} 
-                            className="list-select-btn"
-                            variant="outline-secondary"
-                        >
-                            {list.listName}
-                        </Button>
-                    ))}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setShowModal(false)}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
-        <div className="comments-section">
-            <div className='comments-header'>Comments</div>
-            <div className="comments-container">
-                {comments.map(comment => (
-                    <div key={comment._id} className="comment">
-                        <div className="comment-header">
-                        <span className="comment-user" onClick={() => navigate(`/user/${comment.userName}`)}>{comment.userName}</span>
-                            <span className="comment-date">
-                            {new Date(comment.dateCreated).toLocaleDateString()} {new Date(comment.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </span>
+            <div className="album-page-container">
+                <div className="album-details-wrapper">
+                    <div className="album-details">
+                        <img src={albumDetails.coverArtUrl} alt={`${title} cover art`} className="album-cover-art" />
+                        <div className="album-info">
+                            <div className="album-artist"><span style={{ color: 'white' }}> by </span>{artistLink}</div>
+                            <div className="album-release-date"> Released: {formattedReleaseDate} </div>
                         </div>
-                        <p className="comment-content">{comment.content}</p>
                     </div>
-                ))}
-            </div>
-            <div className="comment-submission-section">
-            <textarea
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Write a comment..."
-                className="comment-textarea"
-                onKeyDown={(e) => {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    submitComment();
-                    }
-                }}
-                ></textarea>
-                <button
-                    onClick={submitComment}
-                    className="submit-comment-btn"
-                    >Submit 
-                </button>
+                </div>
+
+                <div className="album-info-wrapper">
+                    <div className="rating-box">
+                        <div className="submit-rating-title">Average Rating:</div>
+                        <div className={`rating-input ${getRatingClassName(averageRating)}`}>
+                            {numberOfRatings > 0 ? averageRating : 'NR'}
+                        </div>
+                        {numberOfRatings > 0 ? (
+                            <div className='rating-title'>From {numberOfRatings} <u><b>Musicboxd</b></u> user rating(s)</div>
+                        ) : (
+                            <div className='rating-title'>Be the first to rate this album!</div>
+                        )}
+                    </div>
+
+
+                    <div className='list-count'>This album appears in {albumListCount} user-created List(s)</div>
+                    <div key={ratingMessageKey} className={`rating-message ${submitMessage ? 'visible' : ''}`}>
+                        {submitMessage}
+                    </div>
+                </div>
+
+                <div className="album-actions-wrapper">
+                    <div className="submit-rating-box">
+                        <div className="submit-rating-title">Your Rating:</div>
+                        <input
+                            type="text"
+                            className={`submit-rating-input ${getRatingClassName(rating)}`}
+                            value={rating}
+                            onChange={handleRatingChange}
+                            onKeyPress={handleRatingSubmit}
+                            onKeyDown={handleKeyDown}
+                            placeholder="-"
+                        />
+                        <button
+                            className="submit-rating-btn"
+                            onClick={handleRatingSubmit}
+                        >
+                            Submit Rating
+                        </button>
+                    </div>
+                    <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Create an account and Log In to add albums to Lists')} className="add-album-btn">Add Album to a <b>List</b></button>
+                    <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
+                        <Modal.Header><Modal.Title>add <b>{title}</b> by <b>{artist}</b> to one of your lists...</Modal.Title></Modal.Header>
+                        <Modal.Body>
+                            {userLists.map(list => (
+                                <Button
+                                    key={list._id}
+                                    onClick={() => addAlbumToList(list._id)}
+                                    className="list-select-btn"
+                                    variant="outline-secondary"
+                                >
+                                    {list.listName}
+                                </Button>
+                            ))}
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={() => setShowModal(false)}>
+                                Close
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+                <div className="comments-section">
+                    <div className='comments-header'>Comments</div>
+                    <div className="comments-container">
+                        {comments.map(comment => (
+                            <div key={comment._id} className="comment">
+                                <div className="comment-header">
+                                    <span className="comment-user" onClick={() => navigate(`/user/${comment.userName}`)}>{comment.userName}</span>
+                                    <span className="comment-date">
+                                        {new Date(comment.dateCreated).toLocaleDateString()} {new Date(comment.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </span>
+                                </div>
+                                <p className="comment-content">{comment.content}</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="comment-submission-section">
+                        <textarea
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="Write a comment..."
+                            className="comment-textarea"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    submitComment();
+                                }
+                            }}
+                        ></textarea>
+                        <button
+                            onClick={submitComment}
+                            className="submit-comment-btn"
+                        >Submit
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
-  );
+    );
 };
 export default AlbumPage;

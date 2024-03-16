@@ -17,6 +17,15 @@
   z-index: 100;
 }
 
+@media (max-width: 760px) {
+  .sidebar {
+    max-width: 400px;
+    left: 50%; 
+    transform: translateX(-50%); /* Center it by moving it back by half of its width */
+    width: calc(100% - 20px); /* Make the width responsive with 10px padding on each side */
+  }
+}
+
 .sidebar-links {
   display: flex;
   flex-direction: row;

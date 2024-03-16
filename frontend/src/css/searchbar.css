@@ -2,29 +2,31 @@
   position: fixed;
   display: flex;
   top: 9px;
-  right: 10px; /* Ensure the search bar ends 10px from the right */
-  left: 420px; /* Initial position from the left */
+  right: 10px; 
+  left: 420px;
   padding-right: 5px;
   padding-left: 1px;
   background-color: #181818;
   box-shadow: inset 0 8px 16px rgba(0,0,0,0.4);
   border-radius: 15px;
-  width: calc(100% - 430px); /* Calculate width based on the viewport width */
+  width: calc(100% - 430px);
   max-width: 550px;
   align-items: center;
   z-index: 100;
   height: 38px;
 }
-  @media (max-width: 760px) {
-    .search-bar {
-      position: fixed;
-      margin-top: 7px;
-      left: 10px;
-      right: 10px;
-      width: calc(100% - 20px);
-      top: 55px;
-    }
+@media (max-width: 760px) {
+  .search-bar {
+    position: fixed;
+    top: 55px; /* Adjusted vertically as per your setup */
+    left: 50%; /* Center horizontally relative to the viewport */
+    transform: translateX(-50%); /* Offset by half of its own width to center */
+    width: calc(100% - 20px); /* Responsive width with 10px margin on each side */
+    margin-top: 7px; /* Your additional vertical adjustment if needed */
+    right: auto; /* Resetting or removing unnecessary properties for clarity */
+    max-width: none; /* Allow it to expand based on the viewport width */
   }
+}
   .search-results {
     position: absolute;
     top: 100%;

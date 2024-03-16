@@ -61,7 +61,7 @@ const ArtistPage = () => {
     };
 
     return (
-        <div>
+        <div className= "album-page">
             <h1 className="artist-header">
                 <div className='artist-name'>{artistDetails?.name || 'Artist'}</div>
                 <span className="album-count">({albums.length} Albums)</span>
