@@ -61,21 +61,26 @@ const AlbumPage = () => {
             try {
                 const ratingResponse = await axios.get(`${backendUrl}/rating/getByUserAndAlbum/${user.username}/${spotifyId}`);
                 if (ratingResponse.data && ratingResponse.data.ratingNum !== undefined) {
-                  setRating(ratingResponse.data.ratingNum.toString());
+                    // Ensure '10' is displayed without '.0'
+                    const userRating = ratingResponse.data.ratingNum;
+                    const formattedRating = userRating === 10 ? '10' : userRating.toFixed(1);
+                    setRating(formattedRating);
                 } else {
-                  setRating('');
+                    setRating('');
                 }
-              } catch (error) {
+            } catch (error) {
                 if (error.response && error.response.status === 404) {
-                  setRating('');
+                    setRating('');
                 } else {
-                  console.error("Error fetching user's rating for album", error);
+                    console.error("Error fetching user's rating for album", error);
                 }
-              }
+            }
             try {
                 const avgRatingResponse = await axios.get(`${backendUrl}/rating/getAvgByAlbum/${spotifyId}`);
-                if (avgRatingResponse.data && avgRatingResponse.data.averageRating && avgRatingResponse.data.numberOfRatings !== undefined) {
-                    setAverageRating(avgRatingResponse.data.averageRating.toFixed(1)); 
+                if (avgRatingResponse.data && avgRatingResponse.data.averageRating !== undefined) {
+                    const avgRating = avgRatingResponse.data.averageRating;
+                    const formattedAvgRating = avgRating === 10 ? '10' : avgRating.toFixed(1);
+                    setAverageRating(formattedAvgRating);
                     setNumberOfRatings(avgRatingResponse.data.numberOfRatings);
                 } else {
                     setAverageRating('NR');
@@ -150,18 +155,28 @@ const AlbumPage = () => {
         }
       };
     
-
       const handleRatingChange = (e) => {
-        const value = e.target.value;
-        const regex = /^(10|[0-9])?(\.[0-9]?)?$/; 
+        let value = e.target.value;
+        const singleDigit = /^[0-9]$/;
+            if (singleDigit.test(value) && e.nativeEvent.data === '0') {
+            value = value.includes('.') ? value + '0' : value;
+        } else if (value.length === 2 && value.charAt(1) !== '0' && !value.includes('.')) {
+            value = value.charAt(0) + '.' + value.charAt(1);
+        } else if (value.startsWith('10')) {
+            value = '10';
+        }
     
-        if (value === '' || regex.test(value)) {
-            const numValue = parseFloat(value);
+        if (value === '.' || /^(10|[0-9])?(\.[0-9]?)?$/.test(value)) {
+            const numValue = parseFloat(`0${value}`);
             if ((numValue >= 0 && numValue <= 10) || value === '') {
                 setRating(value);
             }
         }
     };
+    
+    
+    
+
     
 
     const submitRating = async () => {
@@ -285,58 +300,64 @@ const AlbumPage = () => {
         </div>
 
         <div className="album-info-wrapper">
-        <div className="rating-box">
+            <div className="rating-box">
                 <div className="submit-rating-title">Average Rating:</div>
-                <div className={`rating-input ${getRatingClassName(averageRating)}`}>{averageRating}</div>
-                <div className='rating-title'>From {numberOfRatings} <u><b>Musicboxd</b></u> user rating(s)</div>
+                <div className={`rating-input ${getRatingClassName(averageRating)}`}>
+                    {numberOfRatings > 0 ? averageRating : 'NR'}
+                </div>
+                {numberOfRatings > 0 ? (
+                    <div className='rating-title'>From {numberOfRatings} <u><b>Musicboxd</b></u> user rating(s)</div>
+                ) : (
+                    <div className='rating-title'>Be the first to rate this album!</div>
+                )}
             </div>
 
-        <div className='list-count'>This album appears in {albumListCount} user-created List(s)</div>
-        <div key={ratingMessageKey} className={`rating-message ${submitMessage ? 'visible' : ''}`}>
-            {submitMessage}
-        </div>
+
+            <div className='list-count'>This album appears in {albumListCount} user-created List(s)</div>
+            <div key={ratingMessageKey} className={`rating-message ${submitMessage ? 'visible' : ''}`}>
+                {submitMessage}
+            </div>
         </div>  
         
         <div className="album-actions-wrapper">
-        <div className="submit-rating-box">
-            <div className="submit-rating-title">Your Rating:</div>
-            <input
-                type="text"
-                className={`submit-rating-input ${getRatingClassName(rating)}`}
-                value={rating}
-                onChange={handleRatingChange}
-                onKeyPress={handleRatingSubmit}
-                placeholder="-"
-            />
-            <button
-                className="submit-rating-btn"
-                onClick={handleRatingSubmit}
-            >
-                Submit Rating
-            </button>
-        </div>
-        <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Create an account and Log In to add albums to Lists')} className="add-album-btn">Add Album to a <b>List</b></button>
-          <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
-            <Modal.Header><Modal.Title>add <b>{title}</b> by <b>{artist}</b> to one of your lists...</Modal.Title></Modal.Header>
-            <Modal.Body>
-                {userLists.map(list => (
-                    <Button 
-                        key={list._id} 
-                        onClick={() => addAlbumToList(list._id)} 
-                        className="list-select-btn"
-                        variant="outline-secondary"
-                    >
-                        {list.listName}
+            <div className="submit-rating-box">
+                <div className="submit-rating-title">Your Rating:</div>
+                <input
+                    type="text"
+                    className={`submit-rating-input ${getRatingClassName(rating)}`}
+                    value={rating}
+                    onChange={handleRatingChange}
+                    onKeyPress={handleRatingSubmit}
+                    placeholder="-"
+                />
+                <button
+                    className="submit-rating-btn"
+                    onClick={handleRatingSubmit}
+                >
+                    Submit Rating
+                </button>
+            </div>
+            <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Create an account and Log In to add albums to Lists')} className="add-album-btn">Add Album to a <b>List</b></button>
+            <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
+                <Modal.Header><Modal.Title>add <b>{title}</b> by <b>{artist}</b> to one of your lists...</Modal.Title></Modal.Header>
+                <Modal.Body>
+                    {userLists.map(list => (
+                        <Button 
+                            key={list._id} 
+                            onClick={() => addAlbumToList(list._id)} 
+                            className="list-select-btn"
+                            variant="outline-secondary"
+                        >
+                            {list.listName}
+                        </Button>
+                    ))}
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={() => setShowModal(false)}>
+                        Close
                     </Button>
-                ))}
-            </Modal.Body>
-            <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowModal(false)}>
-                    Close
-                </Button>
-            </Modal.Footer>
-        </Modal>
-
+                </Modal.Footer>
+            </Modal>
         </div>
         <div className="comments-section">
             <div className='comments-header'>Comments</div>
