@@ -64,7 +64,6 @@ const ArtistPage = () => {
         <div className= "album-page">
             <h1 className="artist-header">
                 <div className='artist-name'>{artistDetails?.name || 'Artist'}</div>
-                <span className="album-count">({albums.length} Albums)</span>
                 <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn2"><span className="spotify-green"><FaSpotify /></span></button>
             </h1>
             <div className="artist-page-container">
