@@ -19,6 +19,8 @@ const CreateListPage = () => {
   const handleTitleChange = (e) => setListTitle(e.target.value);
   const handleDescriptionChange = (e) => setListDescription(e.target.value);
   const [playlistUrl, setPlaylistUrl] = useState('');
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+
 
   
   useEffect(() => {
@@ -64,6 +66,19 @@ const CreateListPage = () => {
     fetchListDetails();
   }, [listId]);
 
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const userInfo = await getUserInfo();
+      setUser(userInfo);
+      const isLoggedIn = userInfo && userInfo.username;
+      setShowLoginPrompt(!isLoggedIn);
+    };
+  
+    checkLoginStatus();
+  }, []);
+  
+  
+
   
   const fetchAlbumsFromPlaylist = async () => {
     try {
@@ -104,6 +119,12 @@ const CreateListPage = () => {
   };
 
   const handleSaveList = async () => {
+
+    if (!user.username) {
+      setShowLoginPrompt(true);
+      return;
+    }
+
     const listData = {
       userName: user.username,
       listName: listTitle,
@@ -159,7 +180,7 @@ const CreateListPage = () => {
 
   
   return (
-    <div className="create-list-page">
+<div className={`create-list-page ${showLoginPrompt ? 'blur' : ''}`}>
       <div className="list-input-card">
         <div className="list-inputs">
         <input type="text" placeholder="List Title" value={listTitle} onChange={handleTitleChange} className="list-title-input"/>
@@ -168,11 +189,14 @@ const CreateListPage = () => {
         <div className="playlist-input">
         <textarea
           className="playlist-url-input"
-          placeholder="Drag Spotify Playlist, or paste URL here to add albums that appear in that playlist to this List"
+          placeholder="Drag Spotify Playlist, or paste URL here to add albums that appear in that playlist to this List. (Note: This will remove all other albums added to the List. Only public playlists are supported)"
           value={playlistUrl}
           onChange={(e) => setPlaylistUrl(e.target.value)}
         />
-      <button onClick={fetchAlbumsFromPlaylist} className="add-playlist-btn">Add to List</button>
+
+        {playlistUrl.trim() && (
+          <button onClick={fetchAlbumsFromPlaylist} className="add-playlist-btn">Add to List</button>
+        )}
       </div>
         </div>
                 <div className="list-actions">
@@ -213,6 +237,14 @@ const CreateListPage = () => {
         onClose={() => setIsModalOpen(false)}
         onSelectAlbum={addAlbumToList}
       />
+      {showLoginPrompt && (
+      <div className="login-prompt-overlay">
+        <div className="login-prompt">
+          <p>Please log in to create a list.</p>
+          <button onClick={() => navigate('/login')}>Log In</button>
+        </div>
+      </div>
+    )}
     </div>
   );
 }

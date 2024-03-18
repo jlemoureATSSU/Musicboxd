@@ -267,27 +267,34 @@ const AlbumPage = () => {
         return `https://open.spotify.com/album/${spotifyId}`;
       };
 
-    const submitComment = async () => {
+      const submitComment = async () => {
+        if (!user || !user.username) {
+            displayMessage('Please log in to comment');
+            setComment('');
+            return;
+        }
+    
         if (!comment.trim()) {
-        setCommentSubmitMessage('Comment cannot be empty.');
-        return;
+            setCommentSubmitMessage('Comment cannot be empty.');
+            return;
         }
     
         try {
-        const response = await axios.post(`${backendUrl}/comment/submit`, {
-            userName: user.username,
-            albumId: spotifyId,
-            content: comment,
-        });
-        
-        setComments([...comments, response.data]);
-        setComment('');
+            const response = await axios.post(`${backendUrl}/comment/submit`, {
+                userName: user.username,
+                albumId: spotifyId,
+                content: comment,
+            });
+            
+            setComments([...comments, response.data]);
+            setComment('');
     
         } catch (error) {
-        console.error('Error submitting comment:', error);
-        setCommentSubmitMessage('Failed to submit comment. Please try again.');
+            console.error('Error submitting comment:', error);
+            setCommentSubmitMessage('Failed to submit comment. Please try again.');
         }
     };
+    
   
       
       

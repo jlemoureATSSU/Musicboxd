@@ -16,6 +16,7 @@ const Sidebar = () => {
       <div className="sidebar-links">
         {!user ? (
           <>
+          <Link to="/edit" title="Create a List"><IoIosCreate className="icon-size"/>Create&nbsp;List</Link>
           <Link to="/albums" title="Albums"><PiVinylRecordBold className="icon-size"/>Albums</Link>
           <Link to="/login" title="Login"><CiLogin className="icon-size"/>Login</Link>
 
