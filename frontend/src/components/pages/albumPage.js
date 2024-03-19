@@ -295,6 +295,17 @@ const AlbumPage = () => {
         }
     };
 
+    const deleteComment = async (commentId) => {
+        try {
+            await axios.delete(`${backendUrl}/comment/deleteAlbumComment/${commentId}`);
+            setComments(comments.filter(comment => comment._id !== commentId));
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+            alert('Failed to delete comment. Please try again.');
+        }
+    };
+    
+
     const createNewListWithAlbum = async () => {
         if (!user || !user.username) {
           displayMessage('Please sign up and log in to create Lists');
@@ -413,6 +424,9 @@ const AlbumPage = () => {
                                     <span className="comment-date">
                                         {new Date(comment.dateCreated).toLocaleDateString()} {new Date(comment.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </span>
+                                    {user && user.username === comment.userName && (
+                                    <span className="delete-comment-btn" onClick={() => deleteComment(comment._id)}>delete</span>
+                                    )}
                                 </div>
                                 <p className="comment-content">{comment.content}</p>
                             </div>

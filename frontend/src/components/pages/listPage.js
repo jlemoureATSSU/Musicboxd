@@ -9,6 +9,8 @@ const ListPage = () => {
     const { listId } = useParams();
     const [listData, setListData] = useState(null);
     const [albumDetails, setAlbumDetails] = useState([]);
+    const [comments, setComments] = useState([]); 
+    const [comment, setComment] = useState('');
     const [currentUser, setCurrentUser] = useState(null); 
     const navigate = useNavigate();
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
@@ -25,11 +27,21 @@ const ListPage = () => {
             }
         };
 
+        const fetchComments = async () => {
+            try {
+                const response = await axios.get(`${backendUrl}/comment/getAllByList/${listId}`);
+                setComments(response.data);
+            } catch (error) {
+                console.error('Error fetching comments for list:', error);
+            }
+        };
+
         const userInfo = getUserInfo();
         setCurrentUser(userInfo);
 
         fetchListData();
-    }, [listId]);
+        fetchComments();
+    }, [listId , backendUrl]);
 
     const fetchAlbumsDetails = async (albumIds) => {
         if (albumIds.length === 0) return;
@@ -44,11 +56,6 @@ const ListPage = () => {
         }
     };
     
-
-    if (!listData) {
-        return <div>Loading...</div>;
-    }
-
     const deleteList = async (listId) => {
         if (window.confirm("Are you sure you want to delete this list?")) {
             try {
@@ -67,6 +74,48 @@ const ListPage = () => {
             }
         }
     };
+
+    const submitComment = async () => {
+        if (!currentUser || !currentUser.username) {
+            alert('Please log in to comment');
+            return;
+        }
+
+        if (!comment.trim()) {
+            alert('Comment cannot be empty.');
+            return;
+        }
+
+        try {
+            const response = await axios.post(`${backendUrl}/comment/submitToList`, {
+                userName: currentUser.username,
+                listId: listId,
+                content: comment,
+            });
+
+            setComments([...comments, response.data]);
+            setComment('');
+        } catch (error) {
+            console.error('Error submitting comment:', error);
+            alert('Failed to submit comment. Please try again.');
+        }
+    };
+
+    const deleteComment = async (commentId) => {
+        try {
+            await axios.delete(`${backendUrl}/comment/deleteListComment/${commentId}`);
+            setComments(comments.filter(comment => comment._id !== commentId));
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+            alert('Failed to delete comment. Please try again.');
+        }
+    };
+
+
+
+    if (!listData) {
+        return <div>Loading...</div>;
+    }
     
     return (
         <div className="create-list-page">
@@ -110,9 +159,48 @@ const ListPage = () => {
                         />
                     ))}
             </div>
+            <div className="list-comments-section">
+            <div className='comments-header'>Comments</div>
+                <div className="comments-container">
+                    {comments.map((comment) => (
+                        <div key={comment._id} className="comment">
+                            <div className="comment-header">
+                                <span className="comment-user" onClick={() => navigate(`/user/${comment.userName}`)}>
+                                    {comment.userName}
+                                </span>
+                                <span className="comment-date">
+                                    {new Date(comment.dateCreated).toLocaleDateString()} at {new Date(comment.dateCreated).toLocaleTimeString()}
+                                </span>
+                                {currentUser && currentUser.username === comment.userName && (
+                                    <span className="delete-comment-btn" onClick={() => deleteComment(comment._id)}>delete</span>
+                                    )}
+                            </div>
+                            <p className="comment-content">{comment.content}</p>
+                        </div>
+                    ))}
+                </div>
+                <div className="comment-submission-section">
+                        <textarea
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            placeholder="Write a comment..."
+                            className="comment-textarea"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' && !e.shiftKey) {
+                                    e.preventDefault();
+                                    submitComment();
+                                }
+                            }}
+                        ></textarea>
+                        <button
+                            onClick={submitComment}
+                            className="submit-comment-btn"
+                        >Submit
+                        </button>
+                    </div>
+            </div>
         </div>
     );
-    
 };
 
 export default ListPage;

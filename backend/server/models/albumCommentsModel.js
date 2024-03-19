@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const newCommentSchema = new mongoose.Schema(
+const newAlbumCommentSchema = new mongoose.Schema(
   {
     userName: {
       type: String,
@@ -21,7 +21,7 @@ const newCommentSchema = new mongoose.Schema(
       default: Date.now,
     },
   },
-  { collection: "comments" }
+  { collection: "albumComments" }
 );
 
-module.exports = mongoose.model('comments', newCommentSchema)
+module.exports = mongoose.model('albumComments', newAlbumCommentSchema)

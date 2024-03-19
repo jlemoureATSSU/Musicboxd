@@ -349,6 +349,7 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
 
+.list-comments-section,
 .comments-section {
     background: #181818;
     margin-top: 5px;
@@ -415,6 +416,17 @@
   .comment-date {
     font-size: 11px;
     color: #aaa;
+  }
+
+  .delete-comment-btn{
+    font-size: 11px;
+    color: #e11515;
+  }
+
+  .delete-comment-btn:hover {
+    text-decoration: underline;
+    color: #ff2020;
+    cursor: pointer;
   }
   
   .comment-content {

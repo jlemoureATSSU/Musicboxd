@@ -54,3 +54,7 @@
     border-bottom: 1px solid #252525;
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   }
+
+  .list-comments-section{
+    margin-left: 10px;
+  }

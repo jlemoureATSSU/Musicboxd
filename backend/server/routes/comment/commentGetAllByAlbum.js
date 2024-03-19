@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Comment = require('../../models/commentModel');
+const Comment = require('../../models/albumCommentsModel');
 
 router.get('/getAllByAlbum/:albumId', async (req, res) => {
     try {
@@ -10,7 +10,7 @@ router.get('/getAllByAlbum/:albumId', async (req, res) => {
             return res.status(400).json({ message: 'Album ID is required' });
         }
 
-        const comments = await Comment.find({ albumId: albumId }).sort({ dateCreated: -1 }); // This sorts the comments by date, newest first
+        const comments = await Comment.find({ albumId: albumId }).sort({ dateCreated: -1 }); 
 
         res.json(comments);
     } catch (error) {
