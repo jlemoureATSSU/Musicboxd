@@ -294,12 +294,30 @@ const AlbumPage = () => {
             setCommentSubmitMessage('Failed to submit comment. Please try again.');
         }
     };
-    
-  
-      
-      
-    
 
+    const createNewListWithAlbum = async () => {
+        if (!user || !user.username) {
+          displayMessage('Please sign up and log in to create Lists');
+          setShowModal(false);
+          return;
+        }
+      
+        const listName = `${albumDetails.name}`; 
+        try {
+          const response = await axios.post(`${backendUrl}/list/save`, {
+            userName: user.username,
+            listName: listName,
+            albums: [{ id: spotifyId }],
+          });
+      
+          displayMessage(`List created!`);
+          setShowModal(false); 
+        } catch (error) {
+          console.error('Error creating new list:', error);
+          displayMessage('Failed to create a new list');
+        }
+    };      
+    
     return (
         <div className='album-page'>
             <div className="album-header">
@@ -360,9 +378,11 @@ const AlbumPage = () => {
                             Submit Rating
                         </button>
                     </div>
-                    <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Create an account and Log In to add albums to Lists')} className="add-album-btn">Add Album to a <b>List</b></button>
+                    <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Sign Up and Log In to create Lists')} className="add-album-btn">Add to a <b>List</b></button>
                     <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
-                        <Modal.Header><Modal.Title>add <b>{title}</b> by <b>{artist}</b> to one of your lists...</Modal.Title></Modal.Header>
+                        <Modal.Header>
+                            <Modal.Title style={{ width: '100%', fontSize: '18px'}}>add {title} by {artist} to...</Modal.Title>
+                        </Modal.Header>
                         <Modal.Body>
                             {userLists.map(list => (
                                 <Button
@@ -371,11 +391,12 @@ const AlbumPage = () => {
                                     className="list-select-btn"
                                     variant="outline-secondary"
                                 >
-                                    {list.listName}
+                                    <span style={{ fontSize: '17px'}}>{list.listName}</span><span style={{fontSize: '14px', color : 'grey'}}>{list.dateCreated ? ` (${new Date(list.dateCreated).toLocaleDateString()})` : ''}</span>
                                 </Button>
                             ))}
                         </Modal.Body>
-                        <Modal.Footer>
+                        <Modal.Footer> 
+                            <div onClick={createNewListWithAlbum} className="new-list-btn">Add to a new List</div>
                             <Button variant="secondary" onClick={() => setShowModal(false)}>
                                 Close
                             </Button>

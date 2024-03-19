@@ -278,7 +278,7 @@
   font-size: 11px;
   border: none;
   cursor: pointer;
-  margin-left: 50px;
+  margin-left: 44px;
   transition: transform 0.2s ease, box-shadow 0.2s ease; 
 }
 .remove-album-btn:hover {

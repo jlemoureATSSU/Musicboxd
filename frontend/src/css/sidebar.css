@@ -37,7 +37,7 @@
   margin-right: 7px;
   text-decoration: none;
   text-align: center;
-  font-size: 11px;
+  font-size: 10px;
   border-radius: 5px;
   transition: transform 0.2s ease, box-shadow 0.2s ease; 
   margin-bottom: 5px;
@@ -51,6 +51,7 @@
 .icon-size {
   font-size: 20px;
   vertical-align: middle;
+  margin-bottom: 2px;
 }
 
 .sidebar .home-link {
