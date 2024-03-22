@@ -119,15 +119,16 @@ const CreateListPage = () => {
   };
 
   const handleSaveList = async () => {
-
     if (!user.username) {
       setShowLoginPrompt(true);
       return;
     }
-
+  
+    const finalListTitle = listTitle || "Untitled List";
+  
     const listData = {
       userName: user.username,
-      listName: listTitle,
+      listName: finalListTitle,
       listDescription: listDescription,
       albums: albums.map((album) => ({ id: album.id })),
     };
@@ -145,6 +146,7 @@ const CreateListPage = () => {
       console.error('Error saving the list:', error);
     }
   };
+  
 
   const handleDiscardList = () => {
     setListTitle('');
@@ -199,11 +201,14 @@ const CreateListPage = () => {
         )}
       </div>
         </div>
-                <div className="list-actions">
+        <div className="list-actions">
           <div onClick={handleDiscardList} className="discard-btn">Start Over</div>
           <div onClick={handleSaveList} className="save-btn">Save List</div>
-          <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
-
+          {albums.length < 20 ? (
+            <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
+          ) : (
+            <div className="max-reached">MAX Albums (20)</div>
+          )}
         </div>
             <DragDropContext onDragEnd={onDragEnd}>
               <Droppable droppableId="droppable" direction="horizontal">

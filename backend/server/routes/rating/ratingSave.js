@@ -4,7 +4,7 @@ const Rating = require('../../models/ratingModel');
 const AvgRating = require('../../models/avgRatingModel'); 
 
 router.post('/save', async (req, res) => {
-    const { userName, ratingNum, albumId } = req.body;
+    const { userName, ratingNum, albumId, artistId } = req.body;
 
     try {
         let rating = await Rating.findOne({ userName, albumId });
@@ -15,9 +15,10 @@ router.post('/save', async (req, res) => {
             oldRatingNum = rating.ratingNum;
             rating.ratingNum = ratingNum;
             rating.dateUpdated = new Date();
+            rating.artistId = artistId; 
             isNewRating = false; 
         } else {
-            rating = new Rating({ userName, ratingNum, albumId });
+            rating = new Rating({ userName, ratingNum, albumId, artistId });
         }
 
         const savedRating = await rating.save();

@@ -16,6 +16,11 @@ const newRatingSchema = new mongoose.Schema(
       required: true,
       label: "albumId",
     },
+    artistId: {
+      type: String,
+      required: true,
+      label: "artistId",
+    },
     dateCreated: {
       type: Date,
       default: Date.now,

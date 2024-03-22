@@ -20,7 +20,7 @@
 @media (max-width: 760px) {
   .search-bar {
     position: fixed;
-    top: 55px; 
+    top: 57px; 
     left: 50%; 
     transform: translateX(-50%); 
     width: calc(100% - 20px); 

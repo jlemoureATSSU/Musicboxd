@@ -19,9 +19,13 @@ router.get('/getAlbumsFromPlaylist', async (req, res) => {
       params: { fields: 'items(track(album(id)))' }
     });
 
-    const albumIds = [...new Set(tracksResponse.data.items.map(item => item.track.album.id))];
+    let albumIds = new Set();
+    for (let item of tracksResponse.data.items) {
+      if (albumIds.size >= 20) break; 
+      albumIds.add(item.track.album.id);
+    }
     
-    res.json({ albumIds }); // Return only the album IDs
+    res.json({ albumIds: Array.from(albumIds) });
   } catch (error) {
     console.error("Error fetching albums from Spotify playlist:", error);
     res.status(500).send("Internal server error");

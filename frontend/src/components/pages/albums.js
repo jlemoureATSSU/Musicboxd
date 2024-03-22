@@ -2,9 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
+import getUserInfo from "../../utilities/decodeJwt";
+
 
 const Albums = () => {
     const location = useLocation();
+    const user = getUserInfo();
     const sortingModeFromLink = location.state?.sortingMode;
     const [albums, setAlbums] = useState([]);
     const [albumDetails, setAlbumDetails] = useState({});
@@ -18,9 +21,13 @@ const Albums = () => {
     const fetchAlbums = async (nextPage, mode) => {
         const limit = 12;
         const offset = nextPage * limit;
-        let url = mode === 'highestRated' 
-                  ? `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`
-                  : `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
+    
+        let url = `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
+        if (mode === 'highestRated') {
+            url = `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`;
+        } else if (mode === 'recommended') {
+            url = `${backendUrl}/api/getRecommendedAlbums/${user.username}`;
+        }
     
         try {
             const response = await axios.get(url);
@@ -29,15 +36,16 @@ const Albums = () => {
                 setAlbums(prevAlbums => [...prevAlbums, ...newAlbums]);
                 const newAlbumIds = newAlbums.map(album => album.albumId);
                 fetchAlbumDetails(newAlbumIds); // Fetch new album details only
-                setHasMore(newAlbums.length === limit);
+                if (mode !== 'recommended') setHasMore(newAlbums.length === limit);
             } else {
                 setHasMore(false);
             }
         } catch (error) {
-            console.error(`Error fetching albums for mode ${mode}`, error);
+            console.error(`Error fetching albums for mode ${mode}:`, error);
             setHasMore(false);
         }
     };
+    
     
 
     
@@ -86,7 +94,7 @@ const fetchAlbumDetails = async (albumIds) => {
                     className={`sort-button ${sortingMode === 'highestRated' ? 'active' : ''}`} 
                     onClick={() => handleChangeSortingMode('highestRated')}
                 >
-                    Highest Rated
+                    Rating
                 </button>
                 <button 
                     className={`sort-button ${sortingMode === 'newest' ? 'active' : ''}`} 
@@ -94,6 +102,13 @@ const fetchAlbumDetails = async (albumIds) => {
                 >
                     Newest
                 </button>
+                <button 
+                    className={`sort-button ${sortingMode === 'recommended' ? 'active' : ''}`} 
+                    onClick={() => handleChangeSortingMode('recommended')}
+                >
+                    For You
+                </button>
+
             </div>
             <div className="all-albums-container">
                 {albums.map(({ albumId }) => {

@@ -128,7 +128,7 @@
 
     @media (max-width: 760px) {
       .artist-header {
-          margin-top: 45px;
+          margin-top: 50px;
       }
       .artist-albums-container {
           max-height: calc(100vh - 163px); 

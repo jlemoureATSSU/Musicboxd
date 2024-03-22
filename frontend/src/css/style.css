@@ -46,7 +46,7 @@
   background-color: #252525;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 2px;
   padding-top: 4px;
   text-align: left;
@@ -78,7 +78,7 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   margin-right: 5px;
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 2px;
   padding-top: 4px;
   text-align: left;
@@ -95,7 +95,7 @@
 }
 
 .see-more{
-  font-size: 15px;
+  font-size: 13px;
   margin-left: 12px;
   color: #a0a0a0;
   text-decoration: none;
@@ -165,6 +165,8 @@
 .recent-lists-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
 }
+
+.user-highest-rated-albums-container::-webkit-scrollbar-track,
 .highest-rated-albums-container::-webkit-scrollbar-track,
 .newest-releases-container::-webkit-scrollbar-track {
   margin-left: 14px;
@@ -174,7 +176,7 @@
 
 }
 
-
+.user-highest-rated-albums-container::-webkit-scrollbar-thumb,
 .highest-rated-albums-container::-webkit-scrollbar-thumb,
 .newest-releases-container::-webkit-scrollbar-thumb {
   background-color: #181818; 
@@ -182,12 +184,13 @@
   
 }
 
-
+.user-highest-rated-albums-container::-webkit-scrollbar,
 .highest-rated-albums-container::-webkit-scrollbar,
 .newest-releases-container::-webkit-scrollbar {
   height: 7px;
 }
 
+.user-highest-rated-albums-container::-webkit-scrollbar-thumb:hover,
 .highest-rated-albums-container::-webkit-scrollbar-thumb:hover,
 .newest-releases-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
@@ -200,6 +203,7 @@
   width: auto;
   margin-top: 10px;
   margin-left: 27px;
+  margin-right: 27px;
   padding-top: 7px;
   padding-left: 7px;
   padding-right: 7px;
@@ -279,6 +283,7 @@
 .albums-page {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   padding-bottom: 12px;
   overflow-y: auto; 
 }

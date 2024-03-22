@@ -5,11 +5,12 @@ import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 import ListCard from '../listCard';
 import getUserInfo from "../../utilities/decodeJwt";
-
+import AlbumCard from '../albumCard';
 
 const UserProfile = () => {
   const [show, setShow] = useState(false);
   const [userLists, setUserLists] = useState([]);
+  const [topRated, setTopRated] = useState([]);
   const [albumDetails, setAlbumDetails] = useState({});
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -18,47 +19,47 @@ const UserProfile = () => {
   const { username } = useParams();
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-
   useEffect(() => {
-    const userInfo = getUserInfo(); // This function should return the logged-in user's information
-    setLoggedInUser(userInfo ? userInfo.username : null);
+    const fetchInitialData = async () => {
+      if (!username) return;
 
-    if (username) {
-      fetchUserLists(username);
-    }
-  }, [username]);
+      const userInfo = getUserInfo(); 
+      setLoggedInUser(userInfo ? userInfo.username : null);
 
-  const fetchUserLists = async (username) => {
-    try {
-      const response = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
-      setUserLists(response.data);
+      try {
+        const userListsResponse = axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
+        const topRatedResponse = axios.get(`${backendUrl}/rating/topRatings/${username}`);
 
-      // Collect album IDs from the first three albums of each list
-      const albumIds = response.data.flatMap(list => 
-        list.albums.slice(0, 3).map(album => album.id)
-      );
+        const [userListsResult, topRatedResult] = await Promise.all([userListsResponse, topRatedResponse]);
 
-      // Ensure unique IDs for the bulk fetch
-      fetchAlbumDetails([...new Set(albumIds)]);
-    } catch (error) {
-      console.error('Error fetching user lists:', error);
-    }
-  };
+        setUserLists(userListsResult.data);
+        setTopRated(topRatedResult.data);
 
-  const fetchAlbumDetails = async (albumIds) => {
-    try {
-        const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
-            albumIds: albumIds
-        });
-        const details = detailsResponse.data.reduce((acc, detail) => ({
-            ...acc,
-            [detail.id]: detail
-        }), {});
-        setAlbumDetails(details);
-    } catch (error) {
-        console.error("Error fetching album details in bulk:", error);
-    }
-  };
+        // Combine album IDs from user lists and top rated albums
+        const listAlbumIds = userListsResult.data.flatMap(list => 
+          list.albums.slice(0, 3).map(album => album.id)
+        );
+        const topRatedAlbumIds = topRatedResult.data.map(rating => rating.albumId);
+
+        const allAlbumIds = [...new Set([...listAlbumIds, ...topRatedAlbumIds])];
+
+        if (allAlbumIds.length > 0) {
+          const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
+              albumIds: allAlbumIds
+          });
+          const details = detailsResponse.data.reduce((acc, detail) => ({
+              ...acc,
+              [detail.id]: detail
+          }), {});
+          setAlbumDetails(details);
+        }
+      } catch (error) {
+        console.error('Error fetching initial data for user profile:', error);
+      }
+    };
+
+    fetchInitialData();
+  }, [username, backendUrl]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -66,28 +67,60 @@ const UserProfile = () => {
     window.location.reload();
   };
 
+  const UserRatedAlbumCard = ({ userRating, ...albumCardProps }) => {
+    return (
+      <div className="user-rated-album-card">
+        <AlbumCard {...albumCardProps} />
+        <div className="user-rating">{username}'s rating: {userRating}</div>
+      </div>
+    );
+  };
+  
 
   if (!username) return (<div><h4>User profile not found.</h4></div>);
 
   return (
     <div className="profile-page">
-      {/* Profile UI */}
-      <div className="your-lists">
-        <div className="your-lists-container-title">{username}'s Lists ({userLists.length})</div>
-        <div className="your-lists-container">
-          {userLists.map(list => (
-            <ListCard
-              key={list._id}
-              userName={list.userName}
-              title={list.listName}
-              listId={list._id}
-              albums={list.albums}
-              dateCreated={list.dateCreated}
-              albumDetails={albumDetails}
-            />
-          ))}
-        </div>
-      </div>
+
+      <div className='user-highest-rated-albums-container-title'>{username}'s Highest Rated </div>
+            <div className="user-highest-rated-albums-container">
+                {topRated.map(({ albumId }) => { 
+                    const album = albumDetails[albumId];
+                    if (!album) return null; 
+                    const releaseDate = new Date(album.release_date).getFullYear();
+                    return (
+                      <UserRatedAlbumCard
+                          key={album.id}
+                          coverArtUrl={album.coverArtUrl}
+                          title={album.name}
+                          artist={album.artists} 
+                          artistIds={album.artistIds}
+                          releaseDate={releaseDate}
+                          spotifyId={album.id}
+                          averageRating={album.averageRating}
+                          numberOfRatings={album.numberOfRatings}
+                          type={album.type}
+                          isClickable={true}
+                          userRating={topRated.find(rating => rating.albumId === album.id).ratingNum}
+                      />
+                  );
+              })}
+            </div>
+
+            <div className='recent-lists-container-title'>{username}'s Lists</div>
+            <div className="recent-lists-container">
+                {userLists.map(list => (
+                  <ListCard
+                      key={list._id}
+                      userName={list.userName}
+                      title={list.listName}
+                      listId={list._id}
+                      albums={list.albums}
+                      dateCreated={list.dateCreated}
+                      albumDetails={albumDetails}
+                    />
+                ))}
+            </div>
       {loggedInUser === username && (
         <div className="col-md-12 text-center">
           <>

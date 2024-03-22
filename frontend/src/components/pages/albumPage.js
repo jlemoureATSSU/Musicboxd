@@ -200,6 +200,7 @@ const AlbumPage = () => {
                 userName: user.username,
                 ratingNum: numRating,
                 albumId: spotifyId, 
+                artistId: artistId 
             });
 
             setSubmitMessage('Rating saved!');

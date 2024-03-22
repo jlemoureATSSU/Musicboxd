@@ -41,7 +41,7 @@ const Login = () => {
     <div className="signup-page">
       <div className="signup-header">Log In</div>
       <form onSubmit={handleSubmit} className="login-form">
-      <div className="login-container-required">
+      <div className="login-container">
         <div className="form-group">
           <input
             type="text"
