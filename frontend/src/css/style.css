@@ -63,7 +63,7 @@
     padding-top: 60px;
   }
   .home-page {
-    margin-top: 40px;
+    margin-top: 34px;
     max-height: calc(100vh - 100px); 
 
   }
@@ -181,6 +181,7 @@
   background-color: #111;
 }
 
+.related-artists-container::-webkit-scrollbar-track,
 .user-highest-rated-albums-container::-webkit-scrollbar-track,
 .highest-rated-albums-container::-webkit-scrollbar-track,
 .newest-releases-container::-webkit-scrollbar-track {
@@ -191,6 +192,7 @@
 
 }
 
+.related-artists-container::-webkit-scrollbar-thumb,
 .user-highest-rated-albums-container::-webkit-scrollbar-thumb,
 .highest-rated-albums-container::-webkit-scrollbar-thumb,
 .newest-releases-container::-webkit-scrollbar-thumb {
@@ -199,12 +201,14 @@
   
 }
 
+.related-artists-container::-webkit-scrollbar,
 .user-highest-rated-albums-container::-webkit-scrollbar,
 .highest-rated-albums-container::-webkit-scrollbar,
 .newest-releases-container::-webkit-scrollbar {
   height: 7px;
 }
 
+.related-artists-container::-webkit-scrollbar-thumb:hover,
 .user-highest-rated-albums-container::-webkit-scrollbar-thumb:hover,
 .highest-rated-albums-container::-webkit-scrollbar-thumb:hover,
 .newest-releases-container::-webkit-scrollbar-thumb:hover {
@@ -332,10 +336,10 @@
 
   @media (max-width: 760px) {
     .albums-page {
-      margin-top: 40px;
+      margin-top: 35px;
         }
 
     .all-albums-container {
-      max-height: calc(100vh - 167px); 
+      max-height: calc(100vh - 162px); 
     }
   }

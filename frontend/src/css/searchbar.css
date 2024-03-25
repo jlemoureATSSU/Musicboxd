@@ -8,7 +8,7 @@
   padding-left: 1px;
   background-color: #333;
   box-shadow:  0 4px 8px rgba(0,0,0,0.4);
-  border-radius: 15px;
+  border-radius: 12px;
   width: calc(100% - 430px);
   max-width: 550px;
   align-items: center;
@@ -27,8 +27,11 @@
     max-width: 550px;
     margin-top: 7px; 
     right: auto;
+    height: 32px;
+
   }
 }
+
   .search-results {
     position: absolute;
     top: 100%;

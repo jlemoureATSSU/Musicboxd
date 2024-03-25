@@ -331,7 +331,7 @@
 
 @media (max-width: 760px) {
   .create-list-page {
-    margin-top: 45px;
+    margin-top: 40px;
     max-height: calc(100vh - 105px); 
   }
 
@@ -360,7 +360,7 @@
   }
 
   .playlist-input{
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
   .playlist-url-input {
     height: 100px;

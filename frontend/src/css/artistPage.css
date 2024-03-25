@@ -128,7 +128,7 @@
 
     @media (max-width: 760px) {
       .artist-header {
-          margin-top: 50px;
+          margin-top: 45px;
       }
       .artist-albums-container {
           max-height: calc(100vh - 163px); 
@@ -205,9 +205,9 @@
     border: none;
     color: white;
     font-size: 17px;
-    width: 45x;
-    min-width: 45px;
-    height: 45px;
+    width: 40x;
+    min-width: 40px;
+    height: 40px;
     border-radius: 12px;
     padding-bottom: 4px;
     cursor: pointer;
@@ -224,3 +224,5 @@
     transform: translateY(-1px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
+
+

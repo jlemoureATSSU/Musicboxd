@@ -47,7 +47,7 @@
 }
 @media (max-width: 760px) {
     .album-header {
-        margin-top: 50px;
+        margin-top: 45px;
     }
     .album-page-container {
         max-height: calc(100vh - 160px);

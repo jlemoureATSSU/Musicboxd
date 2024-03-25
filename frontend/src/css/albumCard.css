@@ -147,13 +147,15 @@
   .album-card-artist-link,
   .album-card-artist a {
     font-size: 13px;
-    height: 27px;
+    height: 23px;
     line-height: 16px;
+    margin-bottom: 0px;
   }
 
   .album-card-type,
   .album-card-release-date {
     font-size: 12px;
+    margin-bottom: 2px;
   }
 
   .album-card-rating {
