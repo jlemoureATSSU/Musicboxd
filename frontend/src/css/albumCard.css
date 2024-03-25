@@ -20,6 +20,8 @@
 .album-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  background-color: #212121;
+
 }
 
 .album-card-cover-art {

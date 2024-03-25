@@ -154,6 +154,7 @@
 .add-album-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    
 }
 .album-modal .modal-content {
     margin-top: 100px;
@@ -512,7 +513,68 @@
 
 }
 
-  
+.tracklist-section{
+    background-color: #181818;
+    border-radius: 10px;
+    margin-top: 5px;
+    padding: 10px;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    width: 410px;    
+    position: relative;
+}
 
+.tracklist-header {
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.tracklist{
+    display: flex;
+    flex-direction: column;
+    background-color: #181818;
+
+}
+
+.track{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #444;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+.track:last-child{
+    border-bottom: none;
+    margin-bottom: 0px;
+}
+
+.track-name {
+    color: #fff;
+    font-size: 15px;
+}
+
+.track-number {
+    color: #aaa;
+}
+
+
+.track-duration {
+    font-size: 14px;
+    color: #aaa;
+}
+  
+@media (max-width: 1710px) {
+    .tracklist-section {
+        margin-top: -190px;
+    }
+  }
+
+  @media (max-width: 877px) {
+    .tracklist-section {
+        margin-top: 5px;
+    }
+  }
 
 

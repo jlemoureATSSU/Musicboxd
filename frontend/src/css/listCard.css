@@ -19,6 +19,8 @@
 .list-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+  background: #212121;
+
 }
 
 .list-card-header {
@@ -93,7 +95,6 @@
 
 .list-card-date {
   color: #aaa; 
-  background-color: #181818;
   border-radius: 10px;
   height: 60px;
   font-size: 13px;

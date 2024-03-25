@@ -19,7 +19,7 @@ const Albums = () => {
 
 
     const fetchAlbums = async (nextPage, mode) => {
-        const limit = 12;
+        const limit = 10;
         const offset = nextPage * limit;
     
         let url = `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;

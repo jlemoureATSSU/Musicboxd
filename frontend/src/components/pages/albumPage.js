@@ -27,6 +27,8 @@ const AlbumPage = () => {
     const [commentSubmitMessage, setCommentSubmitMessage] = useState('');
     const [comments, setComments] = useState([]);
     const navigate = useNavigate();
+    const [tracks, setTracks] = useState([]);
+
 
 
     useEffect(() => {
@@ -44,6 +46,18 @@ const AlbumPage = () => {
             }
            
         };
+        const fetchAlbumTracks = async () => {
+            try {
+                const tracksResponse = await axios.get(`${backendUrl}/api/getTracklist/${spotifyId}`);
+                setTracks(tracksResponse.data.tracks);
+            } catch (error) {
+                console.error("Error fetching album tracks", error);
+            }
+        };
+
+        if (spotifyId) {
+            fetchAlbumTracks();
+        }
     
         fetchAlbumDetailsFromSpotify();
     }, [spotifyId]);
@@ -329,6 +343,12 @@ const AlbumPage = () => {
           displayMessage('Failed to create a new list');
         }
     };      
+
+    function formatDuration(durationMs) {
+        const minutes = Math.floor(durationMs / 60000);
+        const seconds = ((durationMs % 60000) / 1000).toFixed(0);
+        return `${minutes}:${seconds.padStart(2, '0')}`;
+    }
     
     return (
         <div className='album-page'>
@@ -453,6 +473,17 @@ const AlbumPage = () => {
                         </button>
                     </div>
                 </div>
+                <div className="tracklist-section">
+                <div className='tracklist-header'>Tracklist</div>
+                <div className="tracklist">
+                {tracks.map((track) => (
+                        <li key={track.id} className="track">
+                            <span className="track-name"><span className="track-number">{track.track_number}.</span> {track.name}</span>
+                            <span className="track-duration">{formatDuration(track.duration_ms)}</span>
+                        </li>
+                    ))}
+                </div>
+            </div>
             </div>
         </div>
     );

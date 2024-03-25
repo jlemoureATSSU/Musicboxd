@@ -35,6 +35,7 @@ const deleteListComment = require('./routes/comment/deleteListComment')
 const getAlbumsFromPlaylist = require('./routes/api/apiGetAlbumsFromPlaylist')
 const getHighestByUser = require('./routes/rating/ratingGetHighestByUser')
 const getRecommendedAlbums = require('./routes/api/apiGetRecommendedAlbums')
+const getTracklist = require('./routes/api/apiGetTracklist')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -75,6 +76,7 @@ app.use('/api', getMultipleAlbumDetails)
 app.use('/api', getRelatedArtists)
 app.use('/api', getAlbumsFromPlaylist)
 app.use('/api', getRecommendedAlbums)
+app.use('/api', getTracklist)
 
 
 
