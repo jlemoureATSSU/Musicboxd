@@ -138,7 +138,7 @@ const ListPage = () => {
                 </div>
                 
                 {currentUser && currentUser.username === listData.userName && (
-                    <div className="list-actions">
+                    <div className="edit-list-actions">
                         <div onClick={() => navigate(`/edit/${listData._id}`)} className="edit-btn"> Edit List</div>
                         <div onClick={() => deleteList(listData._id)} className="delete-btn"> Delete List</div>
                     </div>

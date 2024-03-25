@@ -182,74 +182,74 @@ const CreateListPage = () => {
 
   
   return (
-<div className={`create-list-page ${showLoginPrompt ? 'blur' : ''}`}>
+    <div className={`create-list-page ${showLoginPrompt ? 'blur' : ''}`}>
       <div className="list-input-card">
         <div className="list-inputs">
-        <input type="text" placeholder="List Title" value={listTitle} onChange={handleTitleChange} className="list-title-input"/>
-        <textarea placeholder="List Description" value={listDescription} onChange={handleDescriptionChange}className="list-description-input"/>
+          <input type="text" placeholder="List Title" value={listTitle} onChange={handleTitleChange} className="list-title-input" />
+          <textarea placeholder="List Description" value={listDescription} onChange={handleDescriptionChange} className="list-description-input" />
         </div>
         <div className="playlist-input">
-        <textarea
-          className="playlist-url-input"
-          placeholder="Drag Spotify Playlist, or paste URL here to add albums that appear in that playlist to this List. (Note: This will remove all other albums added to the List. Only public playlists are supported)"
-          value={playlistUrl}
-          onChange={(e) => setPlaylistUrl(e.target.value)}
-        />
+          <textarea
+            className="playlist-url-input"
+            placeholder="Drag Spotify Playlist, or paste URL here to add albums that appear in that playlist to this List. (Note: This will remove all other albums added to the List. Only public playlists are supported)"
+            value={playlistUrl}
+            onChange={(e) => setPlaylistUrl(e.target.value)}
+          />
 
-        {playlistUrl.trim() && (
-          <button onClick={fetchAlbumsFromPlaylist} className="add-playlist-btn">Add to List</button>
-        )}
-      </div>
-        </div>
-        <div className="list-actions">
-          <div onClick={handleDiscardList} className="discard-btn">Start Over</div>
-          <div onClick={handleSaveList} className="save-btn">Save List</div>
-          {albums.length < 20 ? (
-            <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
-          ) : (
-            <div className="max-reached">MAX Albums (20)</div>
+          {playlistUrl.trim() && (
+            <button onClick={fetchAlbumsFromPlaylist} className="add-playlist-btn">Add to List</button>
           )}
         </div>
-            <DragDropContext onDragEnd={onDragEnd}>
-              <Droppable droppableId="droppable" direction="horizontal">
-                {(provided, snapshot) => (
-                  <div ref={provided.innerRef} {...provided.droppableProps} className="album-list-card">
-                    {albums.map((album, index) => (
-                        <Draggable key={album.id} draggableId={album.id} index={index}>
-                          {(provided, snapshot) => (
-                            <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{...provided.draggableProps.style,}}className="album-wrapper">
-                              <button onClick={() => removeAlbum(album.id)} className="remove-album-btn">remove album</button>
-                              <AlbumCard
-                                  coverArtUrl={album.coverArtUrl}
-                                  title={album.name}
-                                  artist={album.artist}
-                                  releaseDate={album.releaseDate}
-                                  spotifyId={album.id}
-                                  type={album.type}
-                                  isClickable={false} 
-                                />
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-      <AlbumSearchModal 
-        isOpen={isModalOpen} 
+      </div>
+      <div className="list-actions">
+        <div onClick={handleDiscardList} className="discard-btn">Start Over</div>
+        <div onClick={handleSaveList} className="save-btn">Save List</div>
+        {albums.length < 20 ? (
+          <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
+        ) : (
+          <div className="max-reached">MAX Albums (20)</div>
+        )}
+      </div>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable droppableId="droppable" direction="horizontal">
+          {(provided, snapshot) => (
+            <div ref={provided.innerRef} {...provided.droppableProps} className="album-list-card">
+              {albums.map((album, index) => (
+                <Draggable key={album.id} draggableId={album.id} index={index}>
+                  {(provided, snapshot) => (
+                    <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{ ...provided.draggableProps.style }} className="album-wrapper">
+                      <button onClick={() => removeAlbum(album.id)} className="remove-album-btn">remove album</button>
+                      <AlbumCard
+                        coverArtUrl={album.coverArtUrl}
+                        title={album.name}
+                        artist={album.artist}
+                        releaseDate={album.releaseDate}
+                        spotifyId={album.id}
+                        type={album.type}
+                        isClickable={false}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
+      <AlbumSearchModal
+        isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onSelectAlbum={addAlbumToList}
       />
       {showLoginPrompt && (
-      <div className="login-prompt-overlay">
-        <div className="login-prompt">
-          <p>Please log in to create a list.</p>
-          <button onClick={() => navigate('/login')}>Log In</button>
+        <div className="login-prompt-overlay">
+          <div className="login-prompt">
+            <p>Please log in to create a list.</p>
+            <button onClick={() => navigate('/login')}>Log In</button>
+          </div>
         </div>
-      </div>
-    )}
+      )}
     </div>
   );
 }

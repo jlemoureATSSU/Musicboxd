@@ -143,6 +143,21 @@
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
 }
 
+@media (max-width: 430px) {
+  .recent-lists-container {
+    margin-left: 7px;
+    margin-right: 7px;
+    gap: 10px;
+  }
+  .highest-rated-albums-container,
+  .newest-releases-container {
+    margin-left: 7px;
+    margin-right: 7px;
+    gap: 10px;
+  }
+}
+
+
 .recent-lists-container::-webkit-scrollbar-track {
   margin-left: 14px;
   margin-right: 14px;
@@ -255,6 +270,16 @@
   box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
   width: 100%;
 
+}
+
+@media (max-width: 430px) {
+  .all-albums-container {
+    margin-left: 7px;
+    margin-right: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+  }
 }
 
 .all-albums-container::-webkit-scrollbar-track {

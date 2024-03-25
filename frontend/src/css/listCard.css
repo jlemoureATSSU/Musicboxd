@@ -107,3 +107,65 @@
   text-align: center;
 
 }
+
+@media (max-width: 430px) {
+  .list-card {
+    height: 85px;
+    min-width: 290px;
+    max-width: 290px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    margin-bottom: 7px;
+  }
+
+  .list-card:hover {
+  }
+
+  .list-card-header {
+    padding-right: 5px;
+    margin-left: 4px;
+    width: 282px;
+    margin-bottom: 0px;
+  }
+
+  .list-card-title {
+    font-size: 14px;
+  }
+
+  .list-card-username,
+  .list-card-username a {
+    font-size: 12px;
+    margin-left: 9px;
+  }
+
+  .list-card-content {
+  }
+
+  .list-card-album-previews {
+    padding: 6px;
+    width: 220px;
+    margin-bottom: 4px;
+    gap: 8px;
+  }
+
+  .list-card-album-previews img {
+    width: 47px;
+    height: 47px;
+  }
+
+  .list-card-album-previews div {
+    font-size: 0.7rem;
+  }
+
+  .list-card-date {
+    height: 55px;
+    width: 65px;
+    font-size: 12px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    padding-top: 7px;
+    padding-left: 3px;
+    padding-right: 3px;
+  }
+}

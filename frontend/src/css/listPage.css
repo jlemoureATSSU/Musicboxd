@@ -54,6 +54,22 @@
     box-shadow: 0 4px 8px rgba(0,0,0,0.5);
   }
 
+  .edit-list-actions {
+    display: inline-flex;
+    justify-content: flex-start;
+    margin-left: 23px;
+    margin-right: 23px;
+    background-color: #252525;
+    border-top-left-radius: 15px; 
+    border-top-right-radius: 15px; 
+    gap: 10px;
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  }
+
   .list-comments-section{
     margin-left: 10px;
   }

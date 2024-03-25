@@ -26,13 +26,8 @@
     background-color: #111;
   }
 
-@media (max-width: 760px) {
-  .create-list-page {
-      margin-top: 45px;
-      max-height: calc(100vh - 105px); 
-  }
 
-}
+  
 
 .list-input-card {
   margin-left: 10px;
@@ -334,3 +329,60 @@
   box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
 }
 
+@media (max-width: 760px) {
+  .create-list-page {
+    margin-top: 45px;
+    max-height: calc(100vh - 105px); 
+  }
+
+  .list-input-card {
+    flex-direction: column;
+    margin-right: 10px; 
+  }
+
+  .list-inputs,
+  .playlist-input {
+    width: 100%;
+  }
+
+  .list-inputs{
+    margin-bottom: 0px;
+  }
+
+  .list-title-input{
+    border-top-right-radius: 10px;
+  }
+
+  .list-description-input{
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    height: 60px;
+  }
+
+  .playlist-input{
+    margin-bottom: 10px;
+  }
+  .playlist-url-input {
+    height: 100px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 10px;
+    font-size: 13.5px;
+  }
+
+  .list-actions {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .discard-btn,
+  .delete-btn,
+  .edit-btn,
+  .save-btn,
+  .add-btn {
+    font-size: 13.5px;
+
+  }
+  
+  
+
+}

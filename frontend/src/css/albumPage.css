@@ -92,7 +92,7 @@
 .album-artist-link,
 .album-artist a { 
     color: rgb(149, 149, 149);
-    font-size: 1.5rem;
+    font-size: 22px;
     margin: 0;
     margin-bottom: 7px; 
     text-decoration: none;
@@ -106,7 +106,7 @@
 }
 
 .album-release-date {
-    font-size: 1.2rem;
+    font-size: 18px;
     margin: 0;
     margin-bottom: 10px;
     text-align: center;
@@ -256,7 +256,7 @@
     margin: 0;
 }
 .avg-rating-box {
-    width: 300px;
+    width: 200px;
     background-color: #181818;
     padding: 20px;
     border-radius: 8px;
@@ -576,5 +576,81 @@
         margin-top: 5px;
     }
   }
+
+  @media (max-width: 430px) {
+    .album-details-wrapper, 
+    .album-details, 
+    .album-cover-art,
+    .list-comments-section, 
+    .comments-section,
+    .tracklist-section {
+        width: 350px;
+    }
+
+    .album-cover-art {
+        height: 350px;
+    }
+
+    .album-info-wrapper,
+    .album-actions-wrapper,
+    .add-album-btn,
+    .list-count,
+    .avg-rating-box,
+    .submit-rating-box,
+    .rating-box {
+        width: 170px;
+    }
+
+    .add-album-btn, 
+    .list-select-btn,
+    .submit-rating-btn,
+    .new-list-btn {
+        width: 170px;
+        height: 48px;
+        font-size: 14px;
+    }
+
+    .submit-rating-btn {
+        width: 150px;
+        height: 45px;
+    }
+    
+    .submit-rating-box,
+    .rating-box {
+        height: 235px;
+    }
+
+    .rating-title {
+        margin-top: 0px;
+    }
+
+    .rating-input,
+    .submit-rating-input {
+        height: 125px;
+        padding: 8px;
+        font-size: 73px;
+    }
+
+    .album-modal .modal-content {
+        width: 380px;
+    }
+
+    .album-header{
+        font-size: 20px;
+    }
+
+    .album-artist,
+    .album-artist-link,
+    .album-artist a { 
+        font-size: 18px;
+
+    }
+
+    .album-release-date {
+        font-size: 16px;
+    }
+}
+
+
 
 

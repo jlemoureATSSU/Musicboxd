@@ -118,3 +118,49 @@
   margin-top: 1px;
 }
 
+@media (max-width: 430px) {
+  .album-card {
+    height: 260px;
+    width: 160px;
+    min-width: 160px;
+  }
+
+  .album-card-cover-art {
+    height: 160px;
+    min-height: 160px;
+    width: 160px;
+    margin-top: 0px;
+    margin-left: 0px;
+  }
+
+  .album-card-info {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .album-card-title {
+    font-size: 15px;
+    height: 27px;
+  }
+
+  .album-card-artist,
+  .album-card-artist-link,
+  .album-card-artist a {
+    font-size: 13px;
+    height: 27px;
+    line-height: 16px;
+  }
+
+  .album-card-type,
+  .album-card-release-date {
+    font-size: 12px;
+  }
+
+  .album-card-rating {
+    font-size: 30px;
+    margin-left: 80px;
+  }
+}
+
+
+
