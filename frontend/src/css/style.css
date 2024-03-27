@@ -1,15 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
 
 .app {
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: -.5px;
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: -0.5px;
   padding-top: 55px;
   color: #f0f0f0;
   background-color: #252525;
   min-height: 100vh;
 }
 
-.page{
+.page {
   margin-left: 20px;
   display: flex;
   flex-wrap: wrap;
@@ -22,26 +22,30 @@
   flex-wrap: wrap;
   padding-top: 12px;
   padding-bottom: 12px;
-  max-height: calc(100vh - 55px); 
-  overflow-y: auto; 
+  max-height: calc(100vh - 55px);
+  overflow-y: auto;
 }
 
 .home-page::-webkit-scrollbar-track {
   margin-top: 20px;
-  margin-bottom: 20px; 
-} 
+  margin-bottom: 20px;
+}
+
 .home-page::-webkit-scrollbar-thumb {
-    background-color: #181818; 
-    border-radius: 10px;
-    border: 4px solid transparent; 
-    background-clip: padding-box; 
-  }
-  .home-page::-webkit-scrollbar {
-    height: 8px;
-  }
-  .home-page::-webkit-scrollbar-thumb:hover {
-    background-color: #111;
-  }
+  background-color: #181818;
+  border-radius: 10px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
+
+.home-page::-webkit-scrollbar {
+  height: 8px;
+}
+
+.home-page::-webkit-scrollbar-thumb:hover {
+  background-color: #111;
+}
+
 .recent-lists-container-title {
   background-color: #252525;
   border-top-left-radius: 10px;
@@ -55,25 +59,26 @@
   margin-right: 27px;
   padding-left: 8px;
   padding-right: 8px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 760px) {
   .app {
     padding-top: 60px;
   }
+
   .home-page {
     margin-top: 34px;
-    max-height: calc(100vh - 100px); 
-
+    max-height: calc(100vh - 100px);
   }
+
   .page {
     margin-top: 40px;
   }
 }
+
 .highest-rated-albums-container-title,
-.newest-releases-container-title
-  {
+.newest-releases-container-title {
   background-color: #252525;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -86,22 +91,21 @@
   margin-right: 27px;
   padding-left: 8px;
   padding-right: 8px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-.newest-releases-container-title{
+.newest-releases-container-title {
   margin-top: 10px;
-
 }
 
-.see-more{
+.see-more {
   font-size: 13px;
   margin-left: 12px;
   color: #a0a0a0;
   text-decoration: none;
 }
 
-.see-more:hover{
+.see-more:hover {
   color: #bcbcbc;
   text-decoration: underline;
 }
@@ -113,15 +117,15 @@
   width: 100%;
   border-radius: 18px;
   padding-top: 15px;
-  padding-bottom:5px;
+  padding-bottom: 5px;
   margin-left: 10px;
   margin-right: 10px;
   padding-left: 13px;
   padding-right: 13px;
   overflow-x: auto;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   gap: 12px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .highest-rated-albums-container,
@@ -137,10 +141,10 @@
   padding-left: 13px;
   padding-right: 13px;
   overflow-x: auto;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   padding-bottom: 5px;
   gap: 15px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 430px) {
@@ -149,6 +153,7 @@
     margin-right: 7px;
     gap: 10px;
   }
+
   .highest-rated-albums-container,
   .newest-releases-container {
     margin-left: 7px;
@@ -157,7 +162,6 @@
   }
 }
 
-
 .recent-lists-container::-webkit-scrollbar-track {
   margin-left: 14px;
   margin-right: 14px;
@@ -165,17 +169,14 @@
   border-radius: 10px;
 }
 
-
 .recent-lists-container::-webkit-scrollbar-thumb {
-  background-color: #181818; 
+  background-color: #181818;
   border-radius: 10px;
 }
-
 
 .recent-lists-container::-webkit-scrollbar {
   height: 7px;
 }
-
 
 .recent-lists-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
@@ -189,16 +190,14 @@
   margin-right: 14px;
   background-color: transparent;
   border-radius: 10px;
-
 }
 
 .related-artists-container::-webkit-scrollbar-thumb,
 .user-highest-rated-albums-container::-webkit-scrollbar-thumb,
 .highest-rated-albums-container::-webkit-scrollbar-thumb,
 .newest-releases-container::-webkit-scrollbar-thumb {
-  background-color: #181818; 
+  background-color: #181818;
   border-radius: 10px;
-  
 }
 
 .related-artists-container::-webkit-scrollbar,
@@ -214,11 +213,12 @@
 .newest-releases-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
 }
+
 .sorting-buttons {
   display: inline-flex;
   background-color: #252525;
   flex-wrap: nowrap;
-  justify-content:flex-start;
+  justify-content: flex-start;
   width: auto;
   margin-top: 10px;
   margin-left: 27px;
@@ -228,10 +228,11 @@
   padding-right: 7px;
   padding-bottom: 7px;
   gap: 15px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+
 .sort-button {
   position: relative;
   background-color: #181818;
@@ -241,17 +242,19 @@
   cursor: pointer;
   border-radius: 10px;
   font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .sort-button:hover {
   transform: translateY(-1.5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
-.sort-button.active, .sort:hover {
-  border-color: #1DB954;
-}  
+.sort-button.active,
+.sort:hover {
+  border-color: #1db954;
+}
 
 .all-albums-container {
   display: flex;
@@ -259,8 +262,8 @@
   align-content: flex-start;
   background-color: #252525;
   border-radius: 18px;
-  max-height: calc(100vh - 122px); 
-  overflow-y: auto; 
+  max-height: calc(100vh - 122px);
+  overflow-y: auto;
   padding-left: 13px;
   padding-right: 13px;
   justify-content: center;
@@ -269,11 +272,10 @@
   margin-left: 10px;
   padding-top: 15px;
   padding-bottom: 10px;
-  column-gap:  15px;
+  column-gap: 15px;
   row-gap: 2px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
   width: 100%;
-
 }
 
 @media (max-width: 430px) {
@@ -288,22 +290,18 @@
 
 .all-albums-container::-webkit-scrollbar-track {
   margin-top: 20px;
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
   border-radius: 10px;
 }
-
 
 .all-albums-container::-webkit-scrollbar-thumb {
-  background-color: #181818; 
+  background-color: #181818;
   border-radius: 10px;
-
 }
-
 
 .all-albums-container::-webkit-scrollbar {
   width: 8px;
 }
-
 
 .all-albums-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
@@ -314,32 +312,35 @@
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 12px;
-  overflow-y: auto; 
+  overflow-y: auto;
 }
 
 .albums-page::-webkit-scrollbar-track {
   margin-top: 20px;
-  margin-bottom: 20px; 
-} 
+  margin-bottom: 20px;
+}
+
 .albums-page::-webkit-scrollbar-thumb {
-    background-color: #181818; 
-    border-radius: 10px;
-    border: 4px solid transparent; 
-    background-clip: padding-box; 
-  }
-  .albums-page::-webkit-scrollbar {
-    height: 8px;
-  }
-  .albums-page::-webkit-scrollbar-thumb:hover {
-    background-color: #111;
+  background-color: #181818;
+  border-radius: 10px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
+
+.albums-page::-webkit-scrollbar {
+  height: 8px;
+}
+
+.albums-page::-webkit-scrollbar-thumb:hover {
+  background-color: #111;
+}
+
+@media (max-width: 760px) {
+  .albums-page {
+    margin-top: 35px;
   }
 
-  @media (max-width: 760px) {
-    .albums-page {
-      margin-top: 35px;
-        }
-
-    .all-albums-container {
-      max-height: calc(100vh - 162px); 
-    }
+  .all-albums-container {
+    max-height: calc(100vh - 162px);
   }
+}

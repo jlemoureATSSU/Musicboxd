@@ -396,6 +396,7 @@ const AlbumPage = () => {
                         <div className="submit-rating-title">Your Rating:</div>
                         <input
                             type="text"
+                            inputMode="decimal"
                             className={`submit-rating-input ${getRatingClassName(rating)}`}
                             value={rating}
                             onChange={handleRatingChange}

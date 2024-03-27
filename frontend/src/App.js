@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import './css/style.css';
 import './css/albumCard.css';
 import './css/sidebar.css';
@@ -13,6 +13,8 @@ import './css/artistPage.css';
 import './css/showMessage.css';
 import './css/profile.css';
 import './css/lists.css';
+import './css/welcome.css';
+import Welcome from "./components/pages/welcome";
 import Sidebar from "./components/sidebar";
 import HomePage from "./components/pages/homePage";
 import Login from "./components/pages/loginPage";
@@ -31,20 +33,24 @@ export const UserContext = createContext();
 
 const App = () => {
   const [user, setUser] = useState();
+  const location = useLocation(); 
 
   useEffect(() => {
     setUser(getUserInfo());
   }, []);
 
   const isLoggedIn = Boolean(user);
+  const showSidebarAndSearchBar = location.pathname !== "/welcome";
+
 
   return (
     <div className="app">
       <UserContext.Provider value={user}>
-      <Sidebar isLoggedIn={isLoggedIn} />
-      <SearchBar />
+      {showSidebarAndSearchBar && <Sidebar isLoggedIn={isLoggedIn} />}
+        {showSidebarAndSearchBar && <SearchBar />}
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/welcome" element={<Welcome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/user/:username" element={<Profile />} />
