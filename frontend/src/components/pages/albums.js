@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link,useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
 import getUserInfo from "../../utilities/decodeJwt";
@@ -21,14 +21,14 @@ const Albums = () => {
     const fetchAlbums = async (nextPage, mode) => {
         const limit = 10;
         const offset = nextPage * limit;
-    
+
         let url = `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
         if (mode === 'highestRated') {
             url = `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`;
         } else if (mode === 'recommended') {
             url = `${backendUrl}/api/getRecommendedAlbums/${user.username}`;
         }
-    
+
         try {
             const response = await axios.get(url);
             if (response.data.length > 0) {
@@ -45,33 +45,33 @@ const Albums = () => {
             setHasMore(false);
         }
     };
-    
-    
 
-    
+
+
+
     useEffect(() => {
         fetchAlbums(page, sortingMode);
     }, [page, sortingMode]);
 
-const fetchAlbumDetails = async (albumIds) => {
-    try {
-        const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
-            albumIds: albumIds
-        });
-        const newDetails = detailsResponse.data;
-        setAlbumDetails(prevDetails => {
-            const updatedDetails = { ...prevDetails };
-            newDetails.forEach(album => {
-                updatedDetails[album.id] = album;
+    const fetchAlbumDetails = async (albumIds) => {
+        try {
+            const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
+                albumIds: albumIds
             });
-            return updatedDetails;
-        });
-    } catch (error) {
-        console.error("Error fetching album details in bulk:", error);
-    }
-};
+            const newDetails = detailsResponse.data;
+            setAlbumDetails(prevDetails => {
+                const updatedDetails = { ...prevDetails };
+                newDetails.forEach(album => {
+                    updatedDetails[album.id] = album;
+                });
+                return updatedDetails;
+            });
+        } catch (error) {
+            console.error("Error fetching album details in bulk:", error);
+        }
+    };
 
-    
+
 
 
     const handleSeeMore = () => {
@@ -90,20 +90,20 @@ const fetchAlbumDetails = async (albumIds) => {
     return (
         <div className='albums-page'>
             <div className="sorting-buttons">
-                <button 
-                    className={`sort-button ${sortingMode === 'highestRated' ? 'active' : ''}`} 
+                <button
+                    className={`sort-button ${sortingMode === 'highestRated' ? 'active' : ''}`}
                     onClick={() => handleChangeSortingMode('highestRated')}
                 >
                     Rating
                 </button>
-                <button 
-                    className={`sort-button ${sortingMode === 'newest' ? 'active' : ''}`} 
+                <button
+                    className={`sort-button ${sortingMode === 'newest' ? 'active' : ''}`}
                     onClick={() => handleChangeSortingMode('newest')}
                 >
                     Newest
                 </button>
-                <button 
-                    className={`sort-button ${sortingMode === 'recommended' ? 'active' : ''}`} 
+                <button
+                    className={`sort-button ${sortingMode === 'recommended' ? 'active' : ''}`}
                     onClick={() => handleChangeSortingMode('recommended')}
                 >
                     For You
@@ -115,14 +115,14 @@ const fetchAlbumDetails = async (albumIds) => {
                     const album = albumDetails[albumId];
                     if (!album) return null;
                     return (
-                        
+
                         <AlbumCard
                             key={albumId}
                             coverArtUrl={album.coverArtUrl}
                             title={album.name}
                             artist={album.artists}
                             artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).getFullYear()}                           
+                            releaseDate={new Date(album.release_date).getFullYear()}
                             spotifyId={albumId}
                             averageRating={album.averageRating}
                             numberOfRatings={album.numberOfRatings}
@@ -132,10 +132,10 @@ const fetchAlbumDetails = async (albumIds) => {
                     );
                 })}
                 {hasMore && (
-                    <div class = "see-more-btn-container">
-                    <button onClick={handleSeeMore} className="see-more-btn">
-                        see more
-                    </button>
+                    <div class="see-more-btn-container">
+                        <button onClick={handleSeeMore} className="see-more-btn">
+                            see more
+                        </button>
                     </div>
                 )}
             </div>

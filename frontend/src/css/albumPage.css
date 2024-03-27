@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
 
-.album-page{
+.album-page {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,7 +8,8 @@
 
 
 }
-.album-header{
+
+.album-header {
     background-color: #252525;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
@@ -20,7 +21,7 @@
     display: inline-flex;
     width: auto;
     align-items: center;
-    box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
     margin-top: 7px;
     margin-left: 22px;
     margin-right: 22px;
@@ -31,7 +32,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    overflow-y: auto; 
+    overflow-y: auto;
     background-color: #252525;
     height: auto;
     max-height: calc(100vh - 125px);
@@ -42,29 +43,35 @@
     padding-bottom: 15px;
     margin-left: 7px;
     margin-right: 7px;
-    box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
     justify-content: center;
 }
+
 @media (max-width: 760px) {
     .album-header {
         margin-top: 45px;
     }
+
     .album-page-container {
         max-height: calc(100vh - 160px);
     }
-  }
+}
+
 /*styling of scrollbar*/
 .album-page-container::-webkit-scrollbar-track {
     margin-top: 20px;
-    margin-bottom: 20px; 
-  }
+    margin-bottom: 20px;
+}
+
 .album-page-container::-webkit-scrollbar-thumb {
-    background-color: #181818; 
+    background-color: #181818;
     border-radius: 10px;
-} 
+}
+
 .album-page-container::-webkit-scrollbar {
     width: 8px;
-}   
+}
+
 .album-page-container::-webkit-scrollbar-thumb:hover {
     background-color: #111;
 }
@@ -85,16 +92,16 @@
     padding-left: 1px;
     padding-right: 1px;
     width: 410px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .album-artist,
 .album-artist-link,
-.album-artist a { 
+.album-artist a {
     color: rgb(149, 149, 149);
     font-size: 22px;
     margin: 0;
-    margin-bottom: 7px; 
+    margin-bottom: 7px;
     text-decoration: none;
     text-align: center;
 }
@@ -111,6 +118,7 @@
     margin-bottom: 10px;
     text-align: center;
 }
+
 .album-cover-art {
     width: 408px;
     height: 408px;
@@ -125,7 +133,7 @@
     display: flex;
     margin-top: 5px;
     width: 200px;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     gap: 10px;
 }
@@ -133,7 +141,7 @@
 .album-actions-wrapper {
     margin-top: 5px;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     width: 200px;
     gap: 10px;
@@ -148,14 +156,16 @@
     height: 50px;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .add-album-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
-    
+
 }
+
 .album-modal .modal-content {
     margin-top: 100px;
     width: 400px;
@@ -174,25 +184,30 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .album-modal .modal-title {
     font-size: 1.5rem;
     font-weight: bold;
 }
+
 .album-modal .modal-body {
     padding: 20px 24px;
     max-height: 400px;
     overflow-y: auto;
 }
+
 .album-modal .list-item-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 12px;
 }
+
 .album-modal .list-name {
     font-size: 1.2rem;
     margin: 0;
 }
+
 .album-modal .list-select-btn {
     display: block;
     width: 100%;
@@ -205,16 +220,17 @@
     margin-bottom: 8px;
     cursor: pointer;
     font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.35);
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .album-modal .list-select-btn:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
     background-color: #444;
 }
 
-.spotify-link-btn{
+.spotify-link-btn {
     background-color: #151515;
     display: flex;
     align-items: center;
@@ -229,41 +245,44 @@
     border-radius: 15px;
     padding-bottom: 4px;
     cursor: pointer;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .spotify-green {
     color: #1DB954;
     font-size: 28px;
-  }
-  
+}
+
 
 .spotify-link-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
+
 .list-count {
     background-color: #181818;
     color: white;
     border-radius: 8px;
     padding-left: 10px;
     padding-top: 7px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
     height: 50px;
     width: 200px;
     font-size: 12px;
     margin: 0;
 }
+
 .avg-rating-box {
     width: 200px;
     background-color: #181818;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     margin-bottom: 15px;
 }
+
 .submit-rating-box {
     width: 200px;
     background-color: #181818;
@@ -271,15 +290,17 @@
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     height: 250px;
 }
+
 .submit-rating-title {
     color: white;
     margin-bottom: 10px;
     font-size: 1rem;
 }
+
 .submit-rating-input {
     font-family: 'JetBrains Mono', monospace;
     font-size: 80px;
@@ -291,7 +312,7 @@
     color: white;
     border: 1px solid #444;
     border-radius: 4px;
-    box-shadow: inset   0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .rating-box {
@@ -301,15 +322,17 @@
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
     height: 250px;
 }
+
 .rating-title {
     color: white;
     margin-top: 10px;
     font-size: 1rem;
 }
+
 .rating-input {
     font-family: 'JetBrains Mono', monospace;
     font-size: 80px;
@@ -324,15 +347,19 @@
     border-radius: 4px;
 
 }
+
 .rating-red {
     color: rgba(190, 31, 31, 0.844);
 }
+
 .rating-orange {
     color: rgb(185, 178, 32);
 }
+
 .rating-green {
     color: #1DB954;
 }
+
 .submit-rating-btn {
     width: 100%;
     padding: 10px;
@@ -340,14 +367,14 @@
     color: white;
     border: none;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .submit-rating-btn:hover {
     transform: translateY(-2px);
-    background-color: #555; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    background-color: #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .list-comments-section,
@@ -357,14 +384,14 @@
     border-radius: 10px;
     padding: 10px;
     color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    width: 410px;    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 410px;
     max-height: 310px;
     position: relative;
     padding-bottom: 80px;
-  }
+}
 
-  .comments-container {
+.comments-container {
     max-height: 213px;
     overflow-y: auto;
     background-color: #181818;
@@ -372,106 +399,108 @@
 
 .comments-container::-webkit-scrollbar-track {
     margin-top: 20px;
-    margin-bottom: 20px; 
-  }
+    margin-bottom: 20px;
+}
+
 .comments-container::-webkit-scrollbar-thumb {
-    background-color: #000; 
+    background-color: #000;
     border-radius: 10px;
-} 
+}
+
 .comments-container::-webkit-scrollbar {
     width: 5px;
-}   
+}
 
-  .comments-header {
+.comments-header {
     margin-bottom: 5px;
     font-size: 18px;
     text-align: center;
 
-  } 
-  
-  .comment {
-    border-bottom: 1px solid #444; 
+}
+
+.comment {
+    border-bottom: 1px solid #444;
     margin-bottom: 10px;
     margin-right: 5px;
-  }
+}
 
-  .comment-header {
+.comment-header {
     display: flex;
     justify-content: flex-start;
     gap: 10px;
     align-items: center;
-  }
-  
-  .comment-user {
+}
+
+.comment-user {
     font-weight: bold;
     color: #1DB954;
     font-size: 14px;
-  }
+}
 
-  .comment-user:hover {
+.comment-user:hover {
     text-decoration: underline;
     color: #22d460;
     cursor: pointer;
-  }
-  
-  .comment-date {
+}
+
+.comment-date {
     font-size: 11px;
     color: #aaa;
-  }
+}
 
-  .delete-comment-btn{
+.delete-comment-btn {
     font-size: 11px;
     color: #e11515;
-  }
+}
 
-  .delete-comment-btn:hover {
+.delete-comment-btn:hover {
     text-decoration: underline;
     color: #ff2020;
     cursor: pointer;
-  }
-  
-  .comment-content {
-    font-size: 13px;
-    overflow-wrap: break-word; 
+}
 
-  }
-  
-  .comment-submission-section {
-    display: flex; 
+.comment-content {
+    font-size: 13px;
+    overflow-wrap: break-word;
+
+}
+
+.comment-submission-section {
+    display: flex;
     gap: 10px;
-    height: 45px; 
+    height: 45px;
     position: absolute;
     bottom: 10px;
-    left: 10px; 
-    right: 10px; 
-  }
-  
-  .comment-textarea {
+    left: 10px;
+    right: 10px;
+}
+
+.comment-textarea {
     flex-grow: 1;
     border-radius: 4px;
     border: 1px solid #444;
     padding: 10px;
-    font-size: 13px; 
+    font-size: 13px;
     color: #ddd;
-    background-color: #222; 
-    resize: none; 
-  }
-  
-  .submit-comment-btn {
+    background-color: #222;
+    resize: none;
+}
+
+.submit-comment-btn {
     padding: 10px;
     background-color: #252525;
     color: white;
     border: none;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    transition: transform 0.2s ease, box-shadow 0.2s ease; 
-  }
-  
-  .submit-comment-btn:hover {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit-comment-btn:hover {
     transform: translateY(-2px);
-    background-color: #555; 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  }
+    background-color: #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
 .modal-header,
 .modal-footer,
@@ -481,20 +510,23 @@
 
 .modal-body::-webkit-scrollbar-track {
     margin-top: 20px;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
+
 .modal-body::-webkit-scrollbar-thumb {
-    background-color: #252525; 
+    background-color: #252525;
     border-radius: 10px;
 }
+
 .modal-body::-webkit-scrollbar {
     width: 6px;
 }
+
 .modal-body::-webkit-scrollbar-thumb:hover {
     background-color: #111;
 }
 
-.new-list-btn{
+.new-list-btn {
     background-color: #252525;
     border: none;
     color: white;
@@ -503,9 +535,10 @@
     font-size: 16px;
     border-radius: 8px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .new-list-btn:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
@@ -513,14 +546,14 @@
 
 }
 
-.tracklist-section{
+.tracklist-section {
     background-color: #181818;
     border-radius: 10px;
     margin-top: 5px;
     padding: 10px;
     color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    width: 410px;    
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    width: 410px;
     position: relative;
 }
 
@@ -530,14 +563,14 @@
     text-align: center;
 }
 
-.tracklist{
+.tracklist {
     display: flex;
     flex-direction: column;
     background-color: #181818;
 
 }
 
-.track{
+.track {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #444;
@@ -545,7 +578,7 @@
     margin-right: 5px;
 }
 
-.track:last-child{
+.track:last-child {
     border-bottom: none;
     margin-bottom: 0px;
 }
@@ -564,24 +597,25 @@
     font-size: 14px;
     color: #aaa;
 }
-  
+
 @media (max-width: 1710px) {
     .tracklist-section {
         margin-top: -190px;
     }
-  }
+}
 
-  @media (max-width: 877px) {
+@media (max-width: 877px) {
     .tracklist-section {
         margin-top: 5px;
     }
-  }
+}
 
-  @media (max-width: 430px) {
-    .album-details-wrapper, 
-    .album-details, 
+@media (max-width: 430px) {
+
+    .album-details-wrapper,
+    .album-details,
     .album-cover-art,
-    .list-comments-section, 
+    .list-comments-section,
     .comments-section,
     .tracklist-section {
         width: 350px;
@@ -601,7 +635,7 @@
         width: 170px;
     }
 
-    .add-album-btn, 
+    .add-album-btn,
     .list-select-btn,
     .submit-rating-btn,
     .new-list-btn {
@@ -614,7 +648,7 @@
         width: 150px;
         height: 45px;
     }
-    
+
     .submit-rating-box,
     .rating-box {
         height: 235px;
@@ -635,13 +669,13 @@
         width: 380px;
     }
 
-    .album-header{
+    .album-header {
         font-size: 20px;
     }
 
     .album-artist,
     .album-artist-link,
-    .album-artist a { 
+    .album-artist a {
         font-size: 18px;
 
     }
@@ -650,7 +684,3 @@
         font-size: 16px;
     }
 }
-
-
-
-

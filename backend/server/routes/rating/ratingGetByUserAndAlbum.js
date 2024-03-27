@@ -6,7 +6,7 @@ router.get('/getByUserAndAlbum/:userName/:albumId', async (req, res) => {
     try {
         const { userName, albumId } = req.params;
         const rating = await Rating.findOne({ userName, albumId });
-        
+
         if (rating) {
             res.json(rating);
         } else {

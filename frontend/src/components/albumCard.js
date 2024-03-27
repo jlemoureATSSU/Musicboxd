@@ -16,7 +16,7 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
         setAverageRating(response.data.averageRating);
       } catch (error) {
         console.error('Error fetching album rating:', error);
-        setAverageRating('N/A'); 
+        setAverageRating('N/A');
       }
     };
 
@@ -29,9 +29,9 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
     }
   };
 
-  const formattedRating = typeof averageRating === 'number' 
-  ? (averageRating === 10 ? averageRating.toFixed(0) : averageRating.toFixed(1))
-  : 'NR';
+  const formattedRating = typeof averageRating === 'number'
+    ? (averageRating === 10 ? averageRating.toFixed(0) : averageRating.toFixed(1))
+    : 'NR';
 
   const getRatingClassName = (ratingValue) => {
     const numRating = parseFloat(ratingValue);
@@ -52,15 +52,15 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
         return '';
     }
   };
-  
+
 
   if (!Array.isArray(artistIds)) {
     console.error('Expected artistIds to be an array, but received:', artistIds);
-    artistIds = []; 
+    artistIds = [];
   }
 
   const artistLink = artistIds.length > 0 ? (
-    <Link 
+    <Link
       to={`/artist/${artistIds[0]}`}
       className="album-card-artist-link"
       onClick={(e) => e.stopPropagation()}
@@ -70,26 +70,26 @@ const AlbumCard = ({ coverArtUrl, title, artist, artistIds, releaseDate, spotify
   ) : (
     <span>{artist}</span>
   );
-  
-  
+
+
 
   return (
-      <div 
-      className="album-card" 
-      onClick={goToAlbumPage} 
-      role={isClickable ? "button" : undefined} 
-      tabIndex={isClickable ? 0 : undefined} 
+    <div
+      className="album-card"
+      onClick={goToAlbumPage}
+      role={isClickable ? "button" : undefined}
+      tabIndex={isClickable ? 0 : undefined}
       onKeyDown={isClickable ? (e) => { if (e.key === 'Enter') goToAlbumPage(); } : undefined}
     >
       <div className="album-card-cover-art" style={{ backgroundImage: `url(${coverArtUrl})` }}></div>
       <div className="album-card-info">
-      <div ref={titleRef} className="album-card-title">{title}</div>
+        <div ref={titleRef} className="album-card-title">{title}</div>
         <p ref={artistRef} className="album-card-artist">{artistLink}</p>
         <p className={`album-card-type ${getTypeClassName(type)}`}>{type}</p>
         <p className="album-card-release-date">{releaseDate}</p>
         <p className={`album-card-rating ${getRatingClassName(averageRating)}`}>{formattedRating}</p>
+      </div>
     </div>
-  </div>
   );
 };
 

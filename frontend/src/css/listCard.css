@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 105px; 
+  height: 105px;
 }
 
 .list-card:hover {
@@ -29,21 +29,22 @@
   align-items: center;
   padding-right: 2px;
   margin-left: 5px;
-  margin-bottom: 2px; 
+  margin-bottom: 2px;
   width: 302px;
 }
 
-.list-card-title{
+.list-card-title {
   color: white;
   font-size: 15px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   flex-grow: 1;
-  min-width: 0; 
+  min-width: 0;
 }
 
-.list-card-username, .list-card-username a {
+.list-card-username,
+.list-card-username a {
   color: #999;
   justify-content: flex-end;
   font-size: 13px;
@@ -52,8 +53,7 @@
 }
 
 /* Optionally, add hover effects */
-.list-card-username a:hover
-{
+.list-card-username a:hover {
   color: #aaa;
   text-decoration: underline;
 }
@@ -66,20 +66,20 @@
 }
 
 .list-card-album-previews {
-  display: flex; 
+  display: flex;
   padding: 7px;
   width: 240px;
   border-radius: 8px;
-  align-items: center; 
-  gap: 10px; 
-  margin-bottom: 5px; 
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 5px;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.3);
 
 }
 
 .list-card-album-previews img {
-  width: 55px; 
-  height: 55px; 
+  width: 55px;
+  height: 55px;
   border-radius: 1px;
   object-fit: cover;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -89,16 +89,16 @@
   font-size: 0.8rem;
   color: white;
   background: rgba(0, 0, 0, 0.5);
-  border-radius: 4px; 
-  padding: 5px 10px; 
+  border-radius: 4px;
+  padding: 5px 10px;
 }
 
 .list-card-date {
-  color: #aaa; 
+  color: #aaa;
   border-radius: 10px;
   height: 60px;
   font-size: 13px;
-  margin-left: 6px; 
+  margin-left: 6px;
   margin-bottom: 6px;
   width: 70px;
   padding-top: 8px;
@@ -119,8 +119,7 @@
     margin-bottom: 7px;
   }
 
-  .list-card:hover {
-  }
+  .list-card:hover {}
 
   .list-card-header {
     padding-right: 5px;
@@ -140,8 +139,9 @@
   }
 
   .list-card-content {
+    margin-bottom: 0px;
   }
-
+  
   .list-card-album-previews {
     padding: 6px;
     width: 220px;

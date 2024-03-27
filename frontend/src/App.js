@@ -33,7 +33,7 @@ export const UserContext = createContext();
 
 const App = () => {
   const [user, setUser] = useState();
-  const location = useLocation(); 
+  const location = useLocation();
 
   useEffect(() => {
     setUser(getUserInfo());
@@ -46,7 +46,7 @@ const App = () => {
   return (
     <div className="app">
       <UserContext.Provider value={user}>
-      {showSidebarAndSearchBar && <Sidebar isLoggedIn={isLoggedIn} />}
+        {showSidebarAndSearchBar && <Sidebar isLoggedIn={isLoggedIn} />}
         {showSidebarAndSearchBar && <SearchBar />}
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -54,7 +54,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/user/:username" element={<Profile />} />
-          <Route path="/edit" element={<CreateListPage />}/>
+          <Route path="/edit" element={<CreateListPage />} />
           <Route path="/edit/:listId" element={<CreateListPage />} />
           <Route path="/album/:spotifyId" element={<AlbumPage />} />
           <Route path="/artist/:artistSpotifyId" element={<ArtistPage />} />

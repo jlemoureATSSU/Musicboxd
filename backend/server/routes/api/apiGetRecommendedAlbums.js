@@ -8,8 +8,8 @@ router.get('/getRecommendedAlbums/:userName', async (req, res) => {
     try {
         const { userName } = req.params;
         const topRatedAlbums = await Rating.find({ userName })
-                                           .sort({ ratingNum: -1 })
-                                           .limit(5);
+            .sort({ ratingNum: -1 })
+            .limit(5);
 
         if (topRatedAlbums.length === 0) {
             return res.status(404).json({ message: 'No ratings found for user' });

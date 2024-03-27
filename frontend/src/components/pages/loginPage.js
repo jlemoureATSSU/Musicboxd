@@ -41,27 +41,27 @@ const Login = () => {
     <div className="signup-page">
       <div className="signup-header">Log In</div>
       <form onSubmit={handleSubmit} className="login-form">
-      <div className="login-container">
-        <div className="form-group">
-          <input
-            type="text"
-            name="username"
-            onChange={handleChange}
-            placeholder="Username"
-            className="form-control"
-            required
-          />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            name="password"
-            onChange={handleChange}
-            placeholder="Password"
-            className="form-control"
-            required
-          />
-        </div>
+        <div className="login-container">
+          <div className="form-group">
+            <input
+              type="text"
+              name="username"
+              onChange={handleChange}
+              placeholder="Username"
+              className="form-control"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="password"
+              name="password"
+              onChange={handleChange}
+              placeholder="Password"
+              className="form-control"
+              required
+            />
+          </div>
         </div>
         <button type="submit" className="login-button">
           Log In

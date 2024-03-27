@@ -3,61 +3,61 @@ import axios from 'axios';
 import { debounce } from 'lodash';
 
 const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [results, setResults] = useState([]);
-  
-    const searchAlbums = debounce(async (search) => {
-      if (search) {
-          try {
-            const backendUrl = process.env.REACT_APP_BACKEND_URL;
-            const response = await axios.get(`${backendUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`);
-  
-              const albums = response.data.albums.map(album => ({
-                  id: album.id,
-                  name: album.name,
-                  artist: album.artists,
-                  year: album.release_date ? new Date(album.release_date).getFullYear() : 'Unknown Year',
-                  coverArtUrl: album.coverArtUrl
-              }));
-              setResults(albums);
-          } catch (error) {
-              console.error('Error fetching search results', error);
-              setResults([]);
-          }
-      } else {
-          setResults([]);
-      }
-  }, 600);
-  
+  const [searchTerm, setSearchTerm] = useState('');
+  const [results, setResults] = useState([]);
 
-    useEffect(() => {
-      if (isOpen) {
-        setSearchTerm('');
+  const searchAlbums = debounce(async (search) => {
+    if (search) {
+      try {
+        const backendUrl = process.env.REACT_APP_BACKEND_URL;
+        const response = await axios.get(`${backendUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`);
+
+        const albums = response.data.albums.map(album => ({
+          id: album.id,
+          name: album.name,
+          artist: album.artists,
+          year: album.release_date ? new Date(album.release_date).getFullYear() : 'Unknown Year',
+          coverArtUrl: album.coverArtUrl
+        }));
+        setResults(albums);
+      } catch (error) {
+        console.error('Error fetching search results', error);
         setResults([]);
       }
-    }, [isOpen]);
-  
-    useEffect(() => {
-      searchAlbums(searchTerm);
-      return () => {
-        searchAlbums.cancel();
-      };
-    }, [searchTerm]);
-  
-    if (!isOpen) return null;
-  
-    const handleSelectAlbum = (selectedAlbum) => {
-      const albumDetails = {
-        id: selectedAlbum.id,
-        name: selectedAlbum.name,
-        artist: selectedAlbum.artist,
-        releaseDate: selectedAlbum.year,
-        coverArtUrl: selectedAlbum.coverArtUrl,
-      };
-    
-      onSelectAlbum(albumDetails);
-      onClose();
+    } else {
+      setResults([]);
+    }
+  }, 600);
+
+
+  useEffect(() => {
+    if (isOpen) {
+      setSearchTerm('');
+      setResults([]);
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    searchAlbums(searchTerm);
+    return () => {
+      searchAlbums.cancel();
     };
+  }, [searchTerm]);
+
+  if (!isOpen) return null;
+
+  const handleSelectAlbum = (selectedAlbum) => {
+    const albumDetails = {
+      id: selectedAlbum.id,
+      name: selectedAlbum.name,
+      artist: selectedAlbum.artist,
+      releaseDate: selectedAlbum.year,
+      coverArtUrl: selectedAlbum.coverArtUrl,
+    };
+
+    onSelectAlbum(albumDetails);
+    onClose();
+  };
 
   const overlayStyle = {
     position: 'fixed',
@@ -130,18 +130,18 @@ const AlbumSearchModal = ({ isOpen, onClose, onSelectAlbum }) => {
           placeholder="Search for an album ..."
           style={searchInputStyle}
           value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div style={searchResultsStyle}>
-            {results.map((album) => (
-                <div 
-                    key={album.id} 
-                    style={resultItemStyle} 
-                    onClick={() => handleSelectAlbum(album)}
-                >
-                {album.name} by {album.artist} ({album.year})
-                </div>
-            ))}
+          {results.map((album) => (
+            <div
+              key={album.id}
+              style={resultItemStyle}
+              onClick={() => handleSelectAlbum(album)}
+            >
+              {album.name} by {album.artist} ({album.year})
+            </div>
+          ))}
         </div>
       </div>
     </div>

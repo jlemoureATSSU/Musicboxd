@@ -12,7 +12,7 @@ const CreateListPage = () => {
   const [user, setUser] = useState({})
   const [listTitle, setListTitle] = useState('');
   const [listDescription, setListDescription] = useState('');
-  const [albums, setAlbums] = useState([]); 
+  const [albums, setAlbums] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { listId } = useParams();
@@ -22,17 +22,17 @@ const CreateListPage = () => {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
 
-  
+
   useEffect(() => {
     const fetchListDetails = async () => {
-      if (listId) { 
+      if (listId) {
         try {
           const listResponse = await axios.get(`${backendUrl}/list/getListById/${listId}`);
           const { listName, listDescription, albums } = listResponse.data;
-          
+
           setListTitle(listName);
           setListDescription(listDescription);
-          
+
           const albumDetailsResponses = await Promise.all(
             albums.map((album) =>
               axios.get(`${backendUrl}/api/getAlbumDetails/${album.id}`)
@@ -43,26 +43,26 @@ const CreateListPage = () => {
               id: response.data.id,
               coverArtUrl: response.data.coverArtUrl,
               name: response.data.name,
-              artist: response.data.artists, 
-              releaseDate: new Date(response.data.release_date).getFullYear(), 
+              artist: response.data.artists,
+              releaseDate: new Date(response.data.release_date).getFullYear(),
               type: response.data.type,
             };
           });
           setAlbums(detailedAlbums);
-  
+
         } catch (error) {
           console.error('Error fetching list details:', error);
         }
       }
-  
+
       const setUserInfo = async () => {
         const info = await getUserInfo();
         setUser(info);
       };
-      
+
       setUserInfo();
     };
-  
+
     fetchListDetails();
   }, [listId]);
 
@@ -73,27 +73,27 @@ const CreateListPage = () => {
       const isLoggedIn = userInfo && userInfo.username;
       setShowLoginPrompt(!isLoggedIn);
     };
-  
+
     checkLoginStatus();
   }, []);
-  
-  
 
-  
+
+
+
   const fetchAlbumsFromPlaylist = async () => {
     try {
       const idsResponse = await axios.get(`${backendUrl}/api/getAlbumsFromPlaylist?url=${encodeURIComponent(playlistUrl)}`);
       const albumIds = idsResponse.data.albumIds;
-  
+
       if (albumIds.length > 0) {
         const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, { albumIds });
         const detailedAlbums = detailsResponse.data;
-  
+
         setAlbums(detailedAlbums.map(album => ({
           id: album.id,
           coverArtUrl: album.coverArtUrl,
           name: album.name,
-          artist: album.artists, 
+          artist: album.artists,
           type: album.type,
           releaseDate: new Date(album.release_date).getFullYear()
         })));
@@ -103,7 +103,7 @@ const CreateListPage = () => {
       console.error('Error fetching albums from playlist:', error);
     }
   };
-  
+
 
   const addAlbumToList = (albumDetails) => {
     if (albums.some((a) => a.id === albumDetails.id)) {
@@ -112,7 +112,7 @@ const CreateListPage = () => {
     }
     setAlbums(prevAlbums => [
       ...prevAlbums,
-      albumDetails 
+      albumDetails
     ]);
 
     setIsModalOpen(false);
@@ -123,20 +123,20 @@ const CreateListPage = () => {
       setShowLoginPrompt(true);
       return;
     }
-  
+
     const finalListTitle = listTitle || "Untitled List";
-  
+
     const listData = {
       userName: user.username,
       listName: finalListTitle,
       listDescription: listDescription,
       albums: albums.map((album) => ({ id: album.id })),
     };
-  
+
     if (listId) {
       listData._id = listId;
     }
-  
+
     try {
       const response = await axios.post(`${backendUrl}/list/save`, listData);
       console.log('List saved:', response.data);
@@ -146,7 +146,7 @@ const CreateListPage = () => {
       console.error('Error saving the list:', error);
     }
   };
-  
+
 
   const handleDiscardList = () => {
     setListTitle('');
@@ -180,7 +180,7 @@ const CreateListPage = () => {
     setAlbums(albums.filter(album => album.id !== albumId));
   };
 
-  
+
   return (
     <div className={`create-list-page ${showLoginPrompt ? 'blur' : ''}`}>
       <div className="list-input-card">

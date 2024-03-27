@@ -10,7 +10,7 @@ router.get('/getAllByAlbum/:albumId', async (req, res) => {
             return res.status(400).json({ message: 'Album ID is required' });
         }
 
-        const comments = await Comment.find({ albumId: albumId }).sort({ dateCreated: -1 }); 
+        const comments = await Comment.find({ albumId: albumId }).sort({ dateCreated: -1 });
 
         res.json(comments);
     } catch (error) {
@@ -19,5 +19,5 @@ router.get('/getAllByAlbum/:albumId', async (req, res) => {
     }
 });
 
-  
-  module.exports = router;
+
+module.exports = router;

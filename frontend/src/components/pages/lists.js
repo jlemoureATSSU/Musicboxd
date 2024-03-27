@@ -18,7 +18,7 @@ const Lists = () => {
             const response = await axios.get(url);
             if (response.data.length > 0) {
                 setLists(prevLists => [...prevLists, ...response.data]);
-                const newAlbumIds = response.data.flatMap(list => 
+                const newAlbumIds = response.data.flatMap(list =>
                     list.albums.slice(0, 3).map(album => album.id)
                 );
                 fetchAlbumDetails(newAlbumIds);
@@ -64,21 +64,21 @@ const Lists = () => {
             <div className='all-lists-header'>Lists</div>
             <div className="all-lists-container">
                 {lists.map(list => (
-                  <ListCard
-                  key={list._id}
-                  userName={list.userName}
-                  title={list.listName}
-                  listId={list._id}
-                  albums={list.albums}
-                  dateCreated={list.dateCreated}
-                  albumDetails={albumDetails}
-                />
+                    <ListCard
+                        key={list._id}
+                        userName={list.userName}
+                        title={list.listName}
+                        listId={list._id}
+                        albums={list.albums}
+                        dateCreated={list.dateCreated}
+                        albumDetails={albumDetails}
+                    />
                 ))}
                 {hasMore && (
-                    <div class = "see-more-btn-container">
-                    <button onClick={handleSeeMore} className="see-more-btn">
-                        see more
-                    </button>
+                    <div class="see-more-btn-container">
+                        <button onClick={handleSeeMore} className="see-more-btn">
+                            see more
+                        </button>
                     </div>
                 )}
             </div>

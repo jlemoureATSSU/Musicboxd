@@ -6,7 +6,7 @@ const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 router.get('/getAlbumsFromPlaylist', async (req, res) => {
   const playlistUrl = req.query.url;
   const playlistIdMatch = playlistUrl.match(/playlist\/([a-zA-Z0-9]+)/);
-  
+
   if (!playlistIdMatch) {
     return res.status(400).json({ message: 'Invalid Spotify playlist URL' });
   }
@@ -21,10 +21,10 @@ router.get('/getAlbumsFromPlaylist', async (req, res) => {
 
     let albumIds = new Set();
     for (let item of tracksResponse.data.items) {
-      if (albumIds.size >= 20) break; 
+      if (albumIds.size >= 20) break;
       albumIds.add(item.track.album.id);
     }
-    
+
     res.json({ albumIds: Array.from(albumIds) });
   } catch (error) {
     console.error("Error fetching albums from Spotify playlist:", error);

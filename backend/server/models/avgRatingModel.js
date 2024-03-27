@@ -9,17 +9,17 @@ const avgRatingSchema = new mongoose.Schema({
   totalRatings: {
     type: Number,
     required: true,
-    default: 0, 
+    default: 0,
   },
   numberOfRatings: {
     type: Number,
     required: true,
-    default: 0, 
+    default: 0,
   },
   averageRating: {
     type: Number,
     required: true,
-    default: 0, 
+    default: 0,
   },
 }, { collection: "avgRatings" });
 

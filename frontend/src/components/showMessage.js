@@ -6,11 +6,11 @@ const ShowMessage = ({ message, visible, onClose }) => {
     useEffect(() => {
         let fadeOutTimer;
         if (visible) {
-            setShow(true); 
+            setShow(true);
             fadeOutTimer = setTimeout(() => {
-                setShow(false); 
-                setTimeout(onClose, 2000); 
-            }, 3000); 
+                setShow(false);
+                setTimeout(onClose, 2000);
+            }, 3000);
         }
         return () => clearTimeout(fadeOutTimer);
     }, [visible, onClose]);

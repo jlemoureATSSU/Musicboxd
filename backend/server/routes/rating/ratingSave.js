@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Rating = require('../../models/ratingModel');
-const AvgRating = require('../../models/avgRatingModel'); 
+const AvgRating = require('../../models/avgRatingModel');
 
 router.post('/save', async (req, res) => {
     const { userName, ratingNum, albumId, artistId } = req.body;
@@ -9,14 +9,14 @@ router.post('/save', async (req, res) => {
     try {
         let rating = await Rating.findOne({ userName, albumId });
         let oldRatingNum = 0;
-        let isNewRating = true; 
+        let isNewRating = true;
 
         if (rating) {
             oldRatingNum = rating.ratingNum;
             rating.ratingNum = ratingNum;
             rating.dateUpdated = new Date();
-            rating.artistId = artistId; 
-            isNewRating = false; 
+            rating.artistId = artistId;
+            isNewRating = false;
         } else {
             rating = new Rating({ userName, ratingNum, albumId, artistId });
         }
@@ -41,7 +41,7 @@ router.post('/save', async (req, res) => {
         }
 
         avgRating.averageRating = avgRating.totalRatings / avgRating.numberOfRatings;
-        
+
         await avgRating.save();
 
         res.status(201).json(savedRating);

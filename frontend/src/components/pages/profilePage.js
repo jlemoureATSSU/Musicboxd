@@ -23,7 +23,7 @@ const UserProfile = () => {
     const fetchInitialData = async () => {
       if (!username) return;
 
-      const userInfo = getUserInfo(); 
+      const userInfo = getUserInfo();
       setLoggedInUser(userInfo ? userInfo.username : null);
 
       try {
@@ -36,7 +36,7 @@ const UserProfile = () => {
         setTopRated(topRatedResult.data);
 
         // Combine album IDs from user lists and top rated albums
-        const listAlbumIds = userListsResult.data.flatMap(list => 
+        const listAlbumIds = userListsResult.data.flatMap(list =>
           list.albums.slice(0, 3).map(album => album.id)
         );
         const topRatedAlbumIds = topRatedResult.data.map(rating => rating.albumId);
@@ -45,11 +45,11 @@ const UserProfile = () => {
 
         if (allAlbumIds.length > 0) {
           const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
-              albumIds: allAlbumIds
+            albumIds: allAlbumIds
           });
           const details = detailsResponse.data.reduce((acc, detail) => ({
-              ...acc,
-              [detail.id]: detail
+            ...acc,
+            [detail.id]: detail
           }), {});
           setAlbumDetails(details);
         }
@@ -75,7 +75,7 @@ const UserProfile = () => {
       </div>
     );
   };
-  
+
 
   if (!username) return (<div><h4>User profile not found.</h4></div>);
 
@@ -83,44 +83,44 @@ const UserProfile = () => {
     <div className="profile-page">
 
       <div className='user-highest-rated-albums-container-title'>{username}'s Highest Rated </div>
-            <div className="user-highest-rated-albums-container">
-                {topRated.map(({ albumId }) => { 
-                    const album = albumDetails[albumId];
-                    if (!album) return null; 
-                    const releaseDate = new Date(album.release_date).getFullYear();
-                    return (
-                      <UserRatedAlbumCard
-                          key={album.id}
-                          coverArtUrl={album.coverArtUrl}
-                          title={album.name}
-                          artist={album.artists} 
-                          artistIds={album.artistIds}
-                          releaseDate={releaseDate}
-                          spotifyId={album.id}
-                          averageRating={album.averageRating}
-                          numberOfRatings={album.numberOfRatings}
-                          type={album.type}
-                          isClickable={true}
-                          userRating={topRated.find(rating => rating.albumId === album.id).ratingNum}
-                      />
-                  );
-              })}
-            </div>
+      <div className="user-highest-rated-albums-container">
+        {topRated.map(({ albumId }) => {
+          const album = albumDetails[albumId];
+          if (!album) return null;
+          const releaseDate = new Date(album.release_date).getFullYear();
+          return (
+            <UserRatedAlbumCard
+              key={album.id}
+              coverArtUrl={album.coverArtUrl}
+              title={album.name}
+              artist={album.artists}
+              artistIds={album.artistIds}
+              releaseDate={releaseDate}
+              spotifyId={album.id}
+              averageRating={album.averageRating}
+              numberOfRatings={album.numberOfRatings}
+              type={album.type}
+              isClickable={true}
+              userRating={topRated.find(rating => rating.albumId === album.id).ratingNum}
+            />
+          );
+        })}
+      </div>
 
-            <div className='recent-lists-container-title'>{username}'s Lists</div>
-            <div className="recent-lists-container">
-                {userLists.map(list => (
-                  <ListCard
-                      key={list._id}
-                      userName={list.userName}
-                      title={list.listName}
-                      listId={list._id}
-                      albums={list.albums}
-                      dateCreated={list.dateCreated}
-                      albumDetails={albumDetails}
-                    />
-                ))}
-            </div>
+      <div className='recent-lists-container-title'>{username}'s Lists</div>
+      <div className="recent-lists-container">
+        {userLists.map(list => (
+          <ListCard
+            key={list._id}
+            userName={list.userName}
+            title={list.listName}
+            listId={list._id}
+            albums={list.albums}
+            dateCreated={list.dateCreated}
+            albumDetails={albumDetails}
+          />
+        ))}
+      </div>
       {loggedInUser === username && (
         <div className="col-md-12 text-center">
           <>

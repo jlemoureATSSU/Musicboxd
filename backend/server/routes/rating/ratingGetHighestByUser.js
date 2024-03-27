@@ -6,8 +6,8 @@ router.get('/topRatings/:userName', async (req, res) => {
     try {
         const { userName } = req.params;
         const topRatings = await Rating.find({ userName })
-                                       .sort({ ratingNum: -1 })
-                                       .limit(7);
+            .sort({ ratingNum: -1 })
+            .limit(7);
 
         if (topRatings.length > 0) {
             res.json(topRatings);

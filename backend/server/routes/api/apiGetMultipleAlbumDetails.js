@@ -5,17 +5,17 @@ const myCache = require('../../utilities/cache');
 const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.post('/getMultipleAlbumDetails', async (req, res) => {
-  const { albumIds } = req.body; 
+  const { albumIds } = req.body;
   const albumDetails = [];
   const uncachedAlbumIds = [];
-  let cachedAlbumCount = 0; 
+  let cachedAlbumCount = 0;
 
   albumIds.forEach(spotifyId => {
     const cacheKey = `album-${spotifyId}`;
     const cachedData = myCache.get(cacheKey);
     if (cachedData) {
       albumDetails.push(cachedData);
-      cachedAlbumCount++; 
+      cachedAlbumCount++;
     } else {
       uncachedAlbumIds.push(spotifyId);
     }
@@ -26,13 +26,13 @@ router.post('/getMultipleAlbumDetails', async (req, res) => {
   if (uncachedAlbumIds.length > 0) {
     try {
       const accessToken = await getSpotifyAccessToken();
-      const batches = []; 
+      const batches = [];
       const totalUncachedAlbums = uncachedAlbumIds.length;
-      let apiCallCount = 0; 
+      let apiCallCount = 0;
 
       while (uncachedAlbumIds.length) {
         const batch = uncachedAlbumIds.splice(0, 20);
-        apiCallCount++; 
+        apiCallCount++;
         const batchPromise = axios.get(`https://api.spotify.com/v1/albums?ids=${batch.join(',')}`, {
           headers: { 'Authorization': `Bearer ${accessToken}` },
         }).then(response => {
@@ -46,8 +46,8 @@ router.post('/getMultipleAlbumDetails', async (req, res) => {
               coverArtUrl: album.images.length > 0 ? album.images[0].url : undefined,
               type: album.album_type === 'album' ? 'Album' : 'Single/EP',
             };
-            myCache.set(`album-${album.id}`, albumData); 
-            albumDetails.push(albumData); 
+            myCache.set(`album-${album.id}`, albumData);
+            albumDetails.push(albumData);
           });
         });
         batches.push(batchPromise);
@@ -56,7 +56,7 @@ router.post('/getMultipleAlbumDetails', async (req, res) => {
       await Promise.all(batches);
 
       console.log(`${apiCallCount} API calls made to Spotify for ${totalUncachedAlbums} albums`);
-      
+
     } catch (error) {
       console.error("Error fetching album details from Spotify:", error);
       return res.status(500).send("Internal server error");

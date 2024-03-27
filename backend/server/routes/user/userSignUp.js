@@ -23,7 +23,7 @@ router.post('/signup', async (req, res) => {
 
         const newUser = new newUserModel({
             username,
-            email, 
+            email,
             password: hashPassword,
             firstName,
             lastName,

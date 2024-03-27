@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ListComment = require('../../models/listCommentsModel'); 
+const ListComment = require('../../models/listCommentsModel');
 
 router.get('/getAllByList/:listId', async (req, res) => {
     try {

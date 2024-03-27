@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import AlbumCard from '../albumCard'; 
-import getUserInfo from "../../utilities/decodeJwt"; 
+import AlbumCard from '../albumCard';
+import getUserInfo from "../../utilities/decodeJwt";
 
 
 const ListPage = () => {
     const { listId } = useParams();
     const [listData, setListData] = useState(null);
     const [albumDetails, setAlbumDetails] = useState([]);
-    const [comments, setComments] = useState([]); 
+    const [comments, setComments] = useState([]);
     const [comment, setComment] = useState('');
-    const [currentUser, setCurrentUser] = useState(null); 
+    const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -41,7 +41,7 @@ const ListPage = () => {
 
         fetchListData();
         fetchComments();
-    }, [listId , backendUrl]);
+    }, [listId, backendUrl]);
 
     const fetchAlbumsDetails = async (albumIds) => {
         if (albumIds.length === 0) return;
@@ -55,7 +55,7 @@ const ListPage = () => {
             console.error("Error fetching album details from backend:", error);
         }
     };
-    
+
     const deleteList = async (listId) => {
         if (window.confirm("Are you sure you want to delete this list?")) {
             try {
@@ -116,10 +116,10 @@ const ListPage = () => {
     if (!listData) {
         return <div>Loading...</div>;
     }
-    
+
     return (
         <div className="create-list-page">
-            <div> 
+            <div>
                 <div className="list-details">
                     <div className='list-title-and-date'>
                         <div className="list-title">{listData.listName}</div>
@@ -136,7 +136,7 @@ const ListPage = () => {
                         {listData.listDescription || "No Description"}
                     </div>
                 </div>
-                
+
                 {currentUser && currentUser.username === listData.userName && (
                     <div className="edit-list-actions">
                         <div onClick={() => navigate(`/edit/${listData._id}`)} className="edit-btn"> Edit List</div>
@@ -145,22 +145,22 @@ const ListPage = () => {
                 )}
             </div>
             <div className="album-list-card">
-                    {albumDetails.map((album) => (
-                        <AlbumCard
-                            key={album.id}
-                            coverArtUrl={album.coverArtUrl}
-                            title={album.name}
-                            artist={album.artists}
-                            artistIds={album.artistIds}
-                            releaseDate={new Date(album.release_date).getFullYear()}                           
-                            spotifyId={album.id}
-                            type={album.type}
-                            isClickable={true}
-                        />
-                    ))}
+                {albumDetails.map((album) => (
+                    <AlbumCard
+                        key={album.id}
+                        coverArtUrl={album.coverArtUrl}
+                        title={album.name}
+                        artist={album.artists}
+                        artistIds={album.artistIds}
+                        releaseDate={new Date(album.release_date).getFullYear()}
+                        spotifyId={album.id}
+                        type={album.type}
+                        isClickable={true}
+                    />
+                ))}
             </div>
             <div className="list-comments-section">
-            <div className='comments-header'>Comments</div>
+                <div className='comments-header'>Comments</div>
                 <div className="comments-container">
                     {comments.map((comment) => (
                         <div key={comment._id} className="comment">
@@ -173,31 +173,31 @@ const ListPage = () => {
                                 </span>
                                 {currentUser && currentUser.username === comment.userName && (
                                     <span className="delete-comment-btn" onClick={() => deleteComment(comment._id)}>delete</span>
-                                    )}
+                                )}
                             </div>
                             <p className="comment-content">{comment.content}</p>
                         </div>
                     ))}
                 </div>
                 <div className="comment-submission-section">
-                        <textarea
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            placeholder="Write a comment..."
-                            className="comment-textarea"
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' && !e.shiftKey) {
-                                    e.preventDefault();
-                                    submitComment();
-                                }
-                            }}
-                        ></textarea>
-                        <button
-                            onClick={submitComment}
-                            className="submit-comment-btn"
-                        >Submit
-                        </button>
-                    </div>
+                    <textarea
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Write a comment..."
+                        className="comment-textarea"
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                                e.preventDefault();
+                                submitComment();
+                            }
+                        }}
+                    ></textarea>
+                    <button
+                        onClick={submitComment}
+                        className="submit-comment-btn"
+                    >Submit
+                    </button>
+                </div>
             </div>
         </div>
     );

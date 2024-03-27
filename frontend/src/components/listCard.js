@@ -5,7 +5,7 @@ import axios from 'axios';
 const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }) => {
   const navigate = useNavigate();
 
-  const coverArts = albums.slice(0, 3).map(album => 
+  const coverArts = albums.slice(0, 3).map(album =>
     albumDetails[album.id]?.coverArtUrl
   ).filter(url => url);
 
@@ -27,9 +27,9 @@ const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }
     <div className="list-card" onClick={handleClick}>
       <div className="list-card-header">
         <div className="list-card-title">{title}</div>
-      <span className="list-card-username">
+        <span className="list-card-username">
           <Link to={`/user/${userName}`}>{userName}</Link>
-        </span>      
+        </span>
       </div>
       <div className="list-card-content">
         <div className="list-card-album-previews">

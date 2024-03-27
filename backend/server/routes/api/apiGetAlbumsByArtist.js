@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const myCache = require('../../utilities/cache'); 
+const myCache = require('../../utilities/cache');
 const { getSpotifyAccessToken } = require('../../utilities/apiGetAccessToken');
 
 router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
@@ -16,7 +16,7 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
     console.log(`Artist ${cachedArtist.name} and their album IDs fetched from cache`);
     return res.json({
       artist: cachedArtist,
-      albumIds: cachedAlbumIds 
+      albumIds: cachedAlbumIds
     });
   }
 

@@ -7,7 +7,7 @@ dotenv.config();
 async function getSpotifyAccessToken() {
   const tokenEndpoint = 'https://accounts.spotify.com/api/token';
   const credentials = Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64');
-  
+
   try {
     const response = await axios.post(tokenEndpoint, 'grant_type=client_credentials', {
       headers: {

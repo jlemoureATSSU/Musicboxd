@@ -5,39 +5,42 @@
   margin-top: 5px;
   padding-top: 7px;
   padding-bottom: 12px;
-  max-height: calc(100vh - 55px); 
-  overflow-y: auto; 
+  max-height: calc(100vh - 55px);
+  overflow-y: auto;
 }
 
 .create-list-page::-webkit-scrollbar-track {
   margin-top: 20px;
-  margin-bottom: 20px; 
-} 
+  margin-bottom: 20px;
+}
+
 .create-list-page::-webkit-scrollbar-thumb {
-    background-color: #181818; 
-    border-radius: 10px;
-    border: 4px solid transparent; 
-    background-clip: padding-box; 
-  }
-  .create-list-page::-webkit-scrollbar {
-    height: 8px;
-  }
-  .create-list-page::-webkit-scrollbar-thumb:hover {
-    background-color: #111;
-  }
+  background-color: #181818;
+  border-radius: 10px;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+}
+
+.create-list-page::-webkit-scrollbar {
+  height: 8px;
+}
+
+.create-list-page::-webkit-scrollbar-thumb:hover {
+  background-color: #111;
+}
 
 
-  
+
 
 .list-input-card {
   margin-left: 10px;
   display: flex;
   width: auto;
   flex-direction: row;
-  width : 100%;  
+  width: 100%;
 }
 
-.list-inputs{
+.list-inputs {
   display: flex;
   flex-direction: column;
   width: 45%;
@@ -46,7 +49,7 @@
   margin-bottom: 10px;
 }
 
-.playlist-input{
+.playlist-input {
   display: flex;
   flex-direction: column;
   width: 55%;
@@ -65,7 +68,7 @@
   color: white;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
   padding: 10px;
   border: none;
   resize: none;
@@ -73,23 +76,26 @@
 
 .playlist-url-input::-webkit-scrollbar-track {
   margin-top: 10px;
-  margin-bottom: 10px; 
+  margin-bottom: 10px;
   border-radius: 10px;
-} 
+}
+
 .playlist-url-input::-webkit-scrollbar-thumb {
-    background-color: #181818; 
-    border-radius: 10px;
+  background-color: #181818;
+  border-radius: 10px;
 
-  }
-  .playlist-url-input::-webkit-scrollbar {
-    width: 6px;
-  }
-  .playlist-url-input::-webkit-scrollbar-thumb:hover {
-    background-color: #111;
-  }
+}
+
+.playlist-url-input::-webkit-scrollbar {
+  width: 6px;
+}
+
+.playlist-url-input::-webkit-scrollbar-thumb:hover {
+  background-color: #111;
+}
 
 
-.playlist-url-input:focus{
+.playlist-url-input:focus {
   outline: none;
   border-bottom: 1px solid #444;
 
@@ -105,9 +111,9 @@
   margin-bottom: 2px;
   cursor: pointer;
   padding: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-} 
+}
 
 .add-playlist-btn:hover {
   transform: translateY(-2px);
@@ -129,39 +135,39 @@
   padding-left: 13px;
   padding-right: 13px;
   overflow-x: auto;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   padding-bottom: 5px;
   gap: 13px;
-  
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 
 
 .album-list-card::-webkit-scrollbar-track {
   margin-left: 14px;
-  margin-right: 14px; 
+  margin-right: 14px;
   background-color: transparent;
 
 }
-  
-  
+
+
 .album-list-card::-webkit-scrollbar-thumb {
   background-color: #181818;
   border-radius: 10px;
   background-clip: padding-box;
 }
 
-  
-  
+
+
 .album-list-card::-webkit-scrollbar {
-  height: 7px; 
+  height: 7px;
 }
-  
-  
+
+
 .album-list-card::-webkit-scrollbar-thumb:hover {
   background-color: #111;
-  height: 8px; 
+  height: 8px;
 
 }
 
@@ -173,7 +179,7 @@
   border-top-left-radius: 10px;
   padding: 10px;
   font-size: 1.2em;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -188,7 +194,7 @@
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   border-bottom: 1px solid #252525;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -214,14 +220,14 @@
   margin-left: 20px;
   margin-right: 20px;
   background-color: #252525;
-  border-top-left-radius: 15px; 
-  border-top-right-radius: 15px; 
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   gap: 10px;
   padding-left: 13px;
   padding-right: 13px;
   padding-top: 10px;
   padding-bottom: 10px;
-  box-shadow: inset 0 4px 8px rgba(0,0,0,0.5);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 .discard-btn,
@@ -236,10 +242,11 @@
   color: white;
   border-radius: 4px;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.35);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  
+
 }
+
 .discard-btn:hover,
 .delete-btn:hover,
 .edit-btn:hover,
@@ -248,6 +255,7 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
 }
+
 .discard-btn {
   background: #642727;
 }
@@ -266,27 +274,29 @@
 }
 
 .add-btn {
-  background: #181818; 
+  background: #181818;
 }
 
 
-.remove-album-btn{
+.remove-album-btn {
   background: transparent;
   color: rgb(205, 205, 205);
   font-size: 11px;
   border: none;
   cursor: pointer;
   margin-left: 44px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease; 
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .remove-album-btn:hover {
   color: white;
   text-decoration: underline;
 }
 
-.max-reached{
+.max-reached {
   margin-top: 5px;
 }
+
 .login-prompt-overlay {
   position: fixed;
   top: 0;
@@ -332,12 +342,12 @@
 @media (max-width: 760px) {
   .create-list-page {
     margin-top: 40px;
-    max-height: calc(100vh - 105px); 
+    max-height: calc(100vh - 105px);
   }
 
   .list-input-card {
     flex-direction: column;
-    margin-right: 10px; 
+    margin-right: 10px;
   }
 
   .list-inputs,
@@ -345,23 +355,24 @@
     width: 100%;
   }
 
-  .list-inputs{
+  .list-inputs {
     margin-bottom: 0px;
   }
 
-  .list-title-input{
+  .list-title-input {
     border-top-right-radius: 10px;
   }
 
-  .list-description-input{
+  .list-description-input {
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
     height: 60px;
   }
 
-  .playlist-input{
+  .playlist-input {
     margin-bottom: 5px;
   }
+
   .playlist-url-input {
     height: 100px;
     border-top-right-radius: 0px;
@@ -373,7 +384,7 @@
     margin-left: auto;
     margin-right: auto;
   }
-  
+
   .discard-btn,
   .delete-btn,
   .edit-btn,
@@ -382,7 +393,7 @@
     font-size: 13.5px;
 
   }
-  
-  
+
+
 
 }
