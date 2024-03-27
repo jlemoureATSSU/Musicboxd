@@ -124,7 +124,7 @@ const ListPage = () => {
                     <div className='list-title-and-date'>
                         <div className="list-title">{listData.listName}</div>
                         <div className="list-date">
-                            List created by<Link className='list-card-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
+                            List created by<Link className='list-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
                             {new Date(listData.dateCreated).toLocaleDateString("en-US", {
                                 month: "short",
                                 day: "numeric",

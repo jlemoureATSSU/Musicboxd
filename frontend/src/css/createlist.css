@@ -74,22 +74,26 @@
   resize: none;
 }
 
+.list-description-input::-webkit-scrollbar-track,
 .playlist-url-input::-webkit-scrollbar-track {
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
 }
 
+.list-description-input::-webkit-scrollbar-thumb,
 .playlist-url-input::-webkit-scrollbar-thumb {
   background-color: #181818;
   border-radius: 10px;
 
 }
 
+.list-description-input::-webkit-scrollbar,
 .playlist-url-input::-webkit-scrollbar {
   width: 6px;
 }
 
+.list-description-input::-webkit-scrollbar-thumb:hover,
 .playlist-url-input::-webkit-scrollbar-thumb:hover {
   background-color: #111;
 }
@@ -107,10 +111,10 @@
   font-size: 15px;
   width: auto;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   margin-bottom: 2px;
   cursor: pointer;
-  padding: 10px;
+  padding: 7px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -240,7 +244,7 @@
   height: 35px;
   padding: 7px;
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -385,6 +389,7 @@
     margin-right: auto;
   }
 
+  .add-playlist-btn,
   .discard-btn,
   .delete-btn,
   .edit-btn,
@@ -393,7 +398,43 @@
     font-size: 13.5px;
 
   }
+}
 
+@media (max-width: 430px) {
+  .list-title-input {
+    font-size: 25px;
+  }
 
+  .list-description-input {
+    font-size: 14px;
+  }
 
+  .add-playlist-btn,
+  .discard-btn,
+  .delete-btn,
+  .edit-btn,
+  .save-btn,
+  .add-btn {
+    font-size: 13px;
+  }
+
+  .list-description-input {
+    height: 50px;
+  }
+
+  .playlist-url-input {
+    height: 80px;
+  }
+
+  .list-description-input {
+    font-size: 12.5px;
+  }
+
+  .playlist-url-input {
+    font-size: 12.5px;
+  }
+  
+  .remove-album-btn {
+    margin-left: 34px;
+  }
 }
