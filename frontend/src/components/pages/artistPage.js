@@ -69,7 +69,6 @@ const ArtistPage = () => {
             <div className="artist-page-container">
                 <CardDisplay albums={albums} artistName={artistDetails?.name} />
                 <div className='related-artists-container'>
-                    <div>Similar Artists</div>
                     <div className='related-artists'>
                         {relatedArtists.map((artist) => (
                             <div key={artist.id} className='related-artist-card' onClick={() => navigate(`/artist/${artist.id}`)}>

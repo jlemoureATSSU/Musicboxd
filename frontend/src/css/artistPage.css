@@ -232,3 +232,66 @@
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
 }
+
+@media only screen and (max-width: 580px) {
+  .artist-page-container {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+  }
+
+  .artist-albums-container {
+    height: calc(100vh - 273px); /* Adjusted to accommodate the related artists container at the bottom */
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 15px;
+    width: auto;
+    margin-bottom: 0;
+    margin-left: 7px;
+    margin-right: 7px;
+    border-radius: 15px;
+  }
+
+  .related-artists-container {
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 110px;
+    min-height: 110px;
+    width: 96.5%;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 15px;
+    border-top-left-radius: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    margin-top: 5px;
+    border-radius: 15px;
+    margin-left: 7px;
+    padding-right: 0px;
+  }
+
+  .related-artists {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .related-artist-card {
+    width: 90px;
+    height: 100px;
+    margin-left: 0;
+    margin-right: 10px;
+  }
+
+  .related-artist-image {
+    width: 68px;
+    height: 68px;
+  }
+
+  .related-artist-name {
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+  }
+
+}

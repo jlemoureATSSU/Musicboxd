@@ -432,6 +432,7 @@
 
   .playlist-url-input {
     font-size: 12.5px;
+    line-height: normal;
   }
   
   .remove-album-btn {
