@@ -69,12 +69,32 @@
   overflow: hidden;
   text-overflow: ellipsis;
   text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
 }
 
-.album-card-artist-link:hover {
-  color: #aaa;
-  text-decoration: underline;
+.album-card-artist-link::after,
+.album-card-artist a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0px;
+  left: 0;
+  background-color: #aaa;
+  transition: width 0.2s ease;
 }
+
+.album-card-artist-link:hover::after,
+.album-card-artist a:hover::after {
+  width: 100%;
+}
+
+.album-card-artist-link:hover,
+.album-card-artist a:hover {
+  color: #aaa;
+}
+
 
 .album-card-type {
   font-size: 14px;
@@ -150,7 +170,7 @@
     font-size: 13px;
     height: 23px;
     line-height: 16px;
-    margin-bottom: 0px;
+    margin-bottom: 1px;
   }
 
   .album-card-type,
@@ -162,5 +182,6 @@
   .album-card-rating {
     font-size: 30px;
     margin-left: 80px;
+    bottom: 3px;
   }
 }

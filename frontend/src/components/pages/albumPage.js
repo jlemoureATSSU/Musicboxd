@@ -353,7 +353,7 @@ const AlbumPage = () => {
     return (
         <div className='album-page'>
             <div className="album-header">
-                {title}
+                <div className='album-name-header'>{title}</div>
                 <button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn">
                     <span className="spotify-green">
                         <FaSpotify />

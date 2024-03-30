@@ -129,7 +129,7 @@ const ListPage = () => {
                                 month: "short",
                                 day: "numeric",
                                 year: "numeric",
-                            })}
+                            })} &middot; {listData.albums.length} albums
                         </div>
                     </div>
                     <div className="list-description">

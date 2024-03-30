@@ -14,16 +14,16 @@
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
 }
 
+.album-name-header,
 .artist-name {
-  font-size: 26px;
-
-
+  font-size: 20px; 
+  line-height: 1; 
+  overflow: visible;
+  white-space: normal; 
 }
+
 
 .album-count {
   font-size: 15px;
@@ -44,8 +44,8 @@
   background-color: #252525;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
-  height: calc(100vh - 130px);
-  max-height: calc(100vh - 130px);
+  height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
   width: 100%;
   overflow-y: auto;
   padding-left: 10px;
@@ -96,8 +96,8 @@
   font-size: 13px;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
-  height: calc(100vh - 130px);
-  max-height: calc(100vh - 130px);
+  height: calc(100vh - 120px);
+  max-height: calc(100vh - 120px);
   overflow-y: auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -215,6 +215,7 @@
   font-size: 17px;
   width: 40x;
   min-width: 40px;
+  max-width: 40px;
   height: 40px;
   border-radius: 12px;
   padding-bottom: 4px;

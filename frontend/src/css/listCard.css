@@ -50,13 +50,29 @@
   font-size: 13px;
   margin-left: 10px;
   text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
 }
 
-/* Optionally, add hover effects */
+.list-card-username a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: .8px;
+  bottom: 0px;
+  left: 0;
+  background-color: #aaa;
+  transition: width 0.2s ease;
+}
+
+.list-card-username a:hover::after {
+  width: 100%;
+}
+
 .list-card-username a:hover {
   color: #aaa;
-  text-decoration: underline;
 }
+
 
 
 .list-card-content {

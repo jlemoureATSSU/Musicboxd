@@ -7,6 +7,8 @@
 }
 
 
+
+
 .profile-header {
   display: flex;
   flex-wrap: wrap;
@@ -48,6 +50,8 @@
 @media (max-width: 760px) {
   .profile-page {
     margin-top: 35px;
+    max-height: calc(100vh - 95px);
+
   }
 }
 

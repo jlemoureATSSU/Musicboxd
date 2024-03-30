@@ -91,7 +91,7 @@ const HomePage = () => {
           />
         ))}
       </div>
-      <div className='newest-releases-container-title'>Newest releases<Link to="/albums" className='see-more' state={{ sortingMode: 'newest' }}>see more</Link></div>
+      <div className='newest-releases-container-title'>Newest Releases<Link to="/albums" className='see-more' state={{ sortingMode: 'newest' }}>see more</Link></div>
       <div className="newest-releases-container">
         {newestReleases.map(({ albumId }) => {
           const album = albumDetails[albumId];
