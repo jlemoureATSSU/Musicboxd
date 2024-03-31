@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
-
 .app {
   font-family: "JetBrains Mono", monospace;
   letter-spacing: -0.5px;
@@ -366,4 +365,28 @@
   .all-albums-container {
     max-height: calc(100vh - 162px);
   }
+}
+
+.albums-log-in-msg {
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 10px 15px;
+  font-size: 18px;
+  background-color: #181818;
+  border-radius: 18px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.albums-log-in-msg a {
+  color: #1db954;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.albums-log-in-msg a:hover {
+  color: #1db954;
+  text-decoration: underline;
 }

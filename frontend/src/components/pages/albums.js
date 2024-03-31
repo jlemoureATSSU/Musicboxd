@@ -15,43 +15,50 @@ const Albums = () => {
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
     const [sortingMode, setSortingMode] = useState(sortingModeFromLink || 'highestRated');
+    const [showLoginMessage, setShowLoginMessage] = useState(false);
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
-    const fetchAlbums = async (nextPage, mode) => {
-        const limit = 10;
-        const offset = nextPage * limit;
-
-        let url = `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
-        if (mode === 'highestRated') {
-            url = `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`;
-        } else if (mode === 'recommended') {
-            url = `${backendUrl}/api/getRecommendedAlbums/${user.username}`;
-        }
-
-        try {
-            const response = await axios.get(url);
-            if (response.data.length > 0) {
-                const newAlbums = response.data;
-                setAlbums(prevAlbums => [...prevAlbums, ...newAlbums]);
-                const newAlbumIds = newAlbums.map(album => album.albumId);
-                fetchAlbumDetails(newAlbumIds); // Fetch new album details only
-                if (mode !== 'recommended') setHasMore(newAlbums.length === limit);
-            } else {
+    useEffect(() => {
+        const fetchAlbums = async () => {
+            if (sortingMode === 'recommended' && (!user || !user.username)) {
+                setShowLoginMessage(true);
+                setAlbums([]); 
+                setHasMore(false);
+                return;
+            }
+    
+            setShowLoginMessage(false);
+            const limit = 10;
+            const offset = page * limit;
+            let url = `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
+    
+            if (sortingMode === 'highestRated') {
+                url = `${backendUrl}/rating/getHighestRatedAlbums?limit=${limit}&offset=${offset}`;
+            } else if (sortingMode === 'recommended') {
+                url = `${backendUrl}/api/getRecommendedAlbums/${user.username}`;
+            }
+    
+            try {
+                const response = await axios.get(url);
+                if (response.data.length > 0) {
+                    const newAlbums = response.data;
+                    setAlbums(prevAlbums => [...prevAlbums, ...newAlbums]);
+                    const newAlbumIds = newAlbums.map(album => album.albumId);
+                    fetchAlbumDetails(newAlbumIds);
+                    if (sortingMode !== 'recommended') setHasMore(newAlbums.length === limit);
+                } else {
+                    setHasMore(false);
+                }
+            } catch (error) {
+                console.error(`Error fetching albums for mode ${sortingMode}:`, error);
                 setHasMore(false);
             }
-        } catch (error) {
-            console.error(`Error fetching albums for mode ${mode}:`, error);
-            setHasMore(false);
-        }
-    };
-
-
-
-
-    useEffect(() => {
-        fetchAlbums(page, sortingMode);
-    }, [page, sortingMode]);
+        };
+    
+        fetchAlbums();
+    }, [page, sortingMode, user]);
+    
 
     const fetchAlbumDetails = async (albumIds) => {
         try {
@@ -111,12 +118,14 @@ const Albums = () => {
 
             </div>
             <div className="all-albums-container">
-                {albums.map(({ albumId }) => {
-                    const album = albumDetails[albumId];
-                    if (!album) return null;
-                    return (
-
-                        <AlbumCard
+                {showLoginMessage ? (
+                    <div className = "albums-log-in-msg"><Link to="/login">Log In</Link> and rate albums to see recommended albums.</div>
+                ) : (
+                    albums.map(({ albumId }) => {
+                        const album = albumDetails[albumId];
+                        if (!album) return null;
+                        return (
+                            <AlbumCard
                             key={albumId}
                             coverArtUrl={album.coverArtUrl}
                             title={album.name}
@@ -129,10 +138,11 @@ const Albums = () => {
                             type={album.type}
                             isClickable={true}
                         />
-                    );
-                })}
-                {hasMore && (
-                    <div class="see-more-btn-container">
+                        );
+                    })
+                )}
+                {hasMore && !showLoginMessage && (
+                    <div className="see-more-btn-container">
                         <button onClick={handleSeeMore} className="see-more-btn">
                             see more
                         </button>

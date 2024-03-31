@@ -76,12 +76,16 @@
   font-size: 14px;
   background-color: #333;
   color: white;
-  transition: font-size 0.3s ease;
 }
 
 .search-bar input:focus {
   outline: none;
-  font-size: 16px;
+}
+
+@media (max-width: 450px) {
+  .search-bar input:focus {
+    font-size: 16px;
+  }
 }
 
 .result-type {
