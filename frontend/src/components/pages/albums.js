@@ -57,7 +57,7 @@ const Albums = () => {
         };
     
         fetchAlbums();
-    }, [page, sortingMode, user]);
+    }, [page, sortingMode]);
     
 
     const fetchAlbumDetails = async (albumIds) => {
