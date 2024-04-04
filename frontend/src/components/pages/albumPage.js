@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap CSS is imported
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import getUserInfo from "../../utilities/decodeJwt";
@@ -354,11 +354,7 @@ const AlbumPage = () => {
         <div className='album-page'>
             <div className="album-header">
                 <div className='album-name-header'>{title}</div>
-                <button onClick={() => window.open(getSpotifyAlbumUrl(spotifyId), '_blank')} className="spotify-link-btn">
-                    <span className="spotify-green">
-                        <FaSpotify />
-                    </span>
-                </button>
+                <a onClick={() => window.open(getSpotifyAlbumUrl(spotifyId))} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
             </div>
             <div className="album-page-container">
                 <div className="album-details-wrapper">

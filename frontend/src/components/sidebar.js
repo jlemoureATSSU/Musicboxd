@@ -76,6 +76,10 @@ const Sidebar = () => {
                 <CiLogin className="icon-size" />
                 Login
               </Link>
+              <Link to="/welcome" title="about" onClick={closeMenu}>
+              <FaUser className="icon-size" />
+                About
+              </Link>
             </>
           ) : (
             <>
@@ -90,6 +94,10 @@ const Sidebar = () => {
               <Link to={profileLink} title="Profile" onClick={closeMenu}>
                 <FaUser className="icon-size" />
                 Profile
+              </Link>
+              <Link to="/welcome" title="about" onClick={closeMenu}>
+              <img src="/Mblogo.png" className="mb-logo" />
+               About
               </Link>
             </>
           )}
@@ -110,6 +118,10 @@ const Sidebar = () => {
               <CiLogin className="icon-size" />
               Login
             </Link>
+            <Link to="/welcome" title="about">
+            <img src="/Mblogo.png" className="mb-logo" />
+              About
+            </Link>
           </>
         ) : (
           <>
@@ -124,6 +136,10 @@ const Sidebar = () => {
             <Link to={profileLink} title="Profile">
               <FaUser className="icon-size" />
               Profile
+            </Link>
+            <Link to="/welcome" title="about">
+            <img src="/Mblogo.png" className="mb-logo" />
+              About
             </Link>
           </>
         )}

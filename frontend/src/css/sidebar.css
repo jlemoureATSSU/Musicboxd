@@ -10,7 +10,7 @@
   border-bottom-left-radius: 7px;
   top: 0;
   left: 10px;
-  width: 400px;
+  width: 430px;
   height: 55px;
   background-color: #181818;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
@@ -19,12 +19,10 @@
 
 @media (max-width: 760px) {
   .sidebar {
-    max-width: 400px;
+    max-width: 430px;
     left: 50%;
     transform: translateX(-50%);
-    /* Center it by moving it back by half of its width */
     width: calc(100% - 20px);
-    /* Make the width responsive with 10px padding on each side */
   }
 }
 
@@ -54,6 +52,10 @@
   font-size: 20px;
   vertical-align: middle;
   margin-bottom: 2px;
+}
+
+.mb-logo {
+  width: 25px;
 }
 
 .sidebar .home-link {
@@ -141,6 +143,10 @@
 
   .icon-size {
     font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .mb-logo {
     margin-right: 10px;
   }
 

@@ -84,7 +84,7 @@
 .list-card-album-previews {
   display: flex;
   padding: 7px;
-  width: 240px;
+  max-width: 240px;
   border-radius: 8px;
   align-items: center;
   gap: 10px;
@@ -127,8 +127,8 @@
 @media (max-width: 430px) {
   .list-card {
     height: 85px;
-    min-width: 290px;
-    max-width: 290px;
+    min-width: 280px;
+    max-width: 280px;
     padding-left: 4px;
     padding-right: 4px;
     padding-top: 4px;
@@ -140,7 +140,7 @@
   .list-card-header {
     padding-right: 5px;
     margin-left: 4px;
-    width: 282px;
+    width: 272px;
     margin-bottom: 0px;
   }
 
@@ -160,8 +160,8 @@
   
   .list-card-album-previews {
     padding: 6px;
-    width: 220px;
-    margin-bottom: 4px;
+    max-width: 205px;
+    margin-bottom: 5px;
     gap: 8px;
   }
 

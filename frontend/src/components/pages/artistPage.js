@@ -64,7 +64,7 @@ const ArtistPage = () => {
         <div className="album-page">
             <h1 className="artist-header">
                 <div className='artist-name'>{artistDetails?.name || 'Artist'}</div>
-                <button onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId), '_blank')} className="spotify-link-btn2"><span className="spotify-green"><FaSpotify /></span></button>
+                <a onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId))} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
             </h1>
             <div className="artist-page-container">
                 <CardDisplay albums={albums} artistName={artistDetails?.name} />

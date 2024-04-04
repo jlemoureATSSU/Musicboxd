@@ -15,13 +15,14 @@ router.get('/searchArtists', async (req, res) => {
       params: {
         q: searchQuery,
         type: 'artist',
-        limit: 3
+        limit: 5
       }
     });
 
     const artists = response.data.artists.items.map(artist => ({
       id: artist.id,
       name: artist.name,
+      image: artist.images.length ? artist.images[0].url : null,
     }));
 
     console.log(`results from Spotify API for query: "${searchQuery}"`);

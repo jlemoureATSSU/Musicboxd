@@ -3,13 +3,13 @@
   display: flex;
   top: 9px;
   right: 10px;
-  left: 420px;
+  left: 450px;
   padding-right: 5px;
   padding-left: 1px;
   background-color: #333;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   border-radius: 12px;
-  width: calc(100% - 430px);
+  width: calc(100% - 460px);
   max-width: 550px;
   align-items: center;
   z-index: 100;
@@ -36,8 +36,8 @@
 .search-results {
   position: absolute;
   top: 100%;
-  left: 25px;
-  right: 25px;
+  left: 15px;
+  right: 15px;
   background-color: #181818;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
@@ -86,6 +86,10 @@
   .search-bar input:focus {
     font-size: 16px;
   }
+  .search-result{
+    padding: 5px;
+  }
+
 }
 
 .result-type {
@@ -94,6 +98,19 @@
   color: rgb(150, 150, 150);
 }
 
+.search-album-cover-art{
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+.search-artist-img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
 .search-album-artist {
   font-size: 14px;
   color: rgb(150, 150, 150);

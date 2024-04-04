@@ -30,6 +30,7 @@ const SearchBar = () => {
         results = response.data.artists.map(artist => ({
           id: artist.id,
           name: artist.name,
+          image: artist.image,
           type: 'artist'
         }));
       } else if (searchMode === 'album' && response.data && Array.isArray(response.data.albums)) {
@@ -40,6 +41,7 @@ const SearchBar = () => {
             name: album.name,
             artist: album.artists,
             year,
+            coverart: album.coverArtUrl,
             type: 'album'
           };
         });
@@ -150,13 +152,13 @@ const SearchBar = () => {
           >
             {result.type === 'album' && (
               <>
-                <span className="result-type">Album</span>
+                <img src={result.coverart} className="search-album-cover-art" />
                 {result.name} <span className="search-album-artist">{result.artist}</span> <span className="album-year">({result.year})</span>
               </>
             )}
             {result.type === 'artist' && (
               <>
-                <span className="result-type">Artist</span>
+                <img src={result.image} className="search-artist-img" />
                 {result.name}
               </>
             )}

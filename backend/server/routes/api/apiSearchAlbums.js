@@ -15,7 +15,7 @@ router.get('/searchAlbums', async (req, res) => {
             params: {
                 q: searchQuery,
                 type: 'album',
-                limit: 3
+                limit: 5
             }
         });
 
