@@ -53,11 +53,28 @@
   font-size: 17px;
   margin-left: 10px;
   text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.list-username::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0px;
+  left: 0;
+  background-color: #aaa;
+  transition: width 0.2s ease;
+}
+
+.list-username:hover::after {
+  width: 100%;
 }
 
 .list-username:hover{
   color: #aaa;
-  text-decoration: underline;
 }
 
 .list-description {

@@ -56,6 +56,7 @@
 
 .mb-logo {
   width: 25px;
+  border-radius: 8px;
 }
 
 .sidebar .home-link {
