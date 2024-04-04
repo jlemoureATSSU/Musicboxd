@@ -6,7 +6,7 @@
   left: 450px;
   padding-right: 5px;
   padding-left: 1px;
-  background-color: #333;
+  background-color: #252525;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   border-radius: 12px;
   width: calc(100% - 460px);
@@ -74,7 +74,7 @@
   border: none;
   border-radius: 15px;
   font-size: 14px;
-  background-color: #333;
+  background-color: #252525;
   color: white;
 }
 
