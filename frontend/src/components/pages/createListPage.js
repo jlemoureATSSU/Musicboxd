@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import AlbumSearchModal from '../albumSearchModal';
 import AlbumCard from '../albumCard';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { debounce } from 'lodash';
 import getUserInfo from "../../utilities/decodeJwt"
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -16,6 +18,8 @@ const CreateListPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { listId } = useParams();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const handleTitleChange = (e) => setListTitle(e.target.value);
   const handleDescriptionChange = (e) => setListDescription(e.target.value);
   const [playlistUrl, setPlaylistUrl] = useState('');
@@ -77,6 +81,37 @@ const CreateListPage = () => {
     checkLoginStatus();
   }, []);
 
+  const searchAlbums = debounce(async (search) => {
+    if (!search) {
+      setSearchResults([]);
+      return;
+    }
+    try {
+      const response = await axios.get(`${backendUrl}/api/searchAlbums?search=${encodeURIComponent(search)}`);
+      const albums = response.data.albums.map(album => ({
+        id: album.id,
+        name: album.name,
+        artist: album.artists,
+        releaseDate: new Date(album.release_date).getFullYear(),
+        coverArtUrl: album.coverArtUrl
+      }));
+      setSearchResults(albums);
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      setSearchResults([]);
+    }
+  }, 300);
+
+  useEffect(() => {
+    searchAlbums(searchTerm);
+    // Cancel the debounced call on component unmount
+    return () => searchAlbums.cancel();
+  }, [searchTerm]);
+
+  const handleSelectAlbum = (album) => {
+    addAlbumToList(album);
+    setIsModalOpen(false);
+  };
 
 
 
@@ -205,10 +240,38 @@ const CreateListPage = () => {
         <div onClick={handleDiscardList} className="discard-btn">Start Over</div>
         <div onClick={handleSaveList} className="save-btn">Save List</div>
         {albums.length < 20 ? (
-          <div className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</div>
+          <button className="add-btn" onClick={() => setIsModalOpen(true)}>Add an Album</button>
         ) : (
           <div className="max-reached">MAX Albums (20)</div>
         )}
+        <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} dialogClassName="album-search-modal">
+          <Modal.Header>
+            <Modal.Title>Add an Album</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <input
+              type="text"
+              className="search-input" // Apply styles to search input
+              placeholder="Search for an album..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div className="modal-search-results"> {/* Apply styles to search results container */}
+              {searchResults.map((album) => (
+                <div
+                  key={album.id}
+                  className="search-result-item" // Apply styles to each search result item
+                  onClick={() => handleSelectAlbum(album)}
+                >
+                  <img src={album.coverArtUrl} className="search-album-cover-art" />{album.name} by <span className="search-album-artist">{album.artist}</span> <span className="album-year">({album.releaseDate})</span>
+                </div>
+              ))}
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setIsModalOpen(false)}>Close</Button>
+          </Modal.Footer>
+        </Modal>
       </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable" direction="horizontal">
@@ -237,11 +300,6 @@ const CreateListPage = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <AlbumSearchModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSelectAlbum={addAlbumToList}
-      />
       {showLoginPrompt && (
         <div className="login-prompt-overlay">
           <div className="login-prompt">

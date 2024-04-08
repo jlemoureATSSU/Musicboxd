@@ -71,7 +71,7 @@ const UserProfile = () => {
     return (
       <div className="user-rated-album-card">
         <AlbumCard {...albumCardProps} />
-        <div className="user-rating">{username}'s rating: {userRating}</div>
+        <div className="user-rating">Rating: {userRating}</div>
       </div>
     );
   };

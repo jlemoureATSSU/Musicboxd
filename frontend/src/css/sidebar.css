@@ -78,9 +78,9 @@
 .pop-out-menu {
   position: fixed;
   top: 105px;
-  left: 0;
+  right: 0;
   background-color: #181818;
-  width: 100%;
+  width: 80%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   z-index: 100;
   border-radius: 10px;
@@ -92,11 +92,12 @@
   padding: 10px;
   font-size: 18px;
   text-decoration: none;
+  transition: background-color 0.35s;
 }
 
 .pop-out-menu a:hover {
-  background-color: #252525;
-  color: white;
+  background-color: #333;
+  color: #fff;
 }
 
 .pop-out-menu a:first-child {

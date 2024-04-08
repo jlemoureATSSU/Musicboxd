@@ -144,6 +144,7 @@
   flex-wrap: nowrap;
   background-color: #252525;
   width: 100%;
+  gap: 15px;
   border-radius: 18px;
   padding-top: 15px;
   margin-left: 10px;
@@ -160,7 +161,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 250px;
+  max-width: 180px;
 }
 
 .user-rating {

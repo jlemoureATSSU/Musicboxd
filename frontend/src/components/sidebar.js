@@ -61,7 +61,6 @@ const Sidebar = () => {
       </div>
       {isMenuOpen && (
         <div className="pop-out-menu">
-          <SearchBar />
           {!user ? (
             <>
               <Link to="/edit" title="Create a List" onClick={closeMenu}>
