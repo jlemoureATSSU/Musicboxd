@@ -104,7 +104,6 @@ const CreateListPage = () => {
 
   useEffect(() => {
     searchAlbums(searchTerm);
-    // Cancel the debounced call on component unmount
     return () => searchAlbums.cancel();
   }, [searchTerm]);
 
@@ -251,16 +250,16 @@ const CreateListPage = () => {
           <Modal.Body>
             <input
               type="text"
-              className="search-input" // Apply styles to search input
+              className="search-input"
               placeholder="Search for an album..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <div className="modal-search-results"> {/* Apply styles to search results container */}
+            <div className="modal-search-results">
               {searchResults.map((album) => (
                 <div
                   key={album.id}
-                  className="search-result-item" // Apply styles to each search result item
+                  className="search-result-item"
                   onClick={() => handleSelectAlbum(album)}
                 >
                   <img src={album.coverArtUrl} className="search-album-cover-art" />{album.name} by <span className="search-album-artist">{album.artist}</span> <span className="album-year">({album.releaseDate})</span>

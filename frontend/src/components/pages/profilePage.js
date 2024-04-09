@@ -22,27 +22,35 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       if (!username) return;
-
+  
       const userInfo = getUserInfo();
       setLoggedInUser(userInfo ? userInfo.username : null);
-
+  
       try {
-        const userListsResponse = axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
-        const topRatedResponse = axios.get(`${backendUrl}/rating/topRatings/${username}`);
-
-        const [userListsResult, topRatedResult] = await Promise.all([userListsResponse, topRatedResponse]);
-
-        setUserLists(userListsResult.data);
-        setTopRated(topRatedResult.data);
-
-        // Combine album IDs from user lists and top rated albums
-        const listAlbumIds = userListsResult.data.flatMap(list =>
+        const userListsResponse = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
+        setUserLists(userListsResponse.data);
+      } catch (error) {
+        console.error('Error fetching user lists:', error);
+      }
+  
+      try {
+        const topRatedResponse = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
+        setTopRated(topRatedResponse.data);
+      } catch (error) {
+        console.error('Error fetching top rated albums:', error);
+        setTopRated([]);
+      }
+  
+      try {
+        const userLists = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
+        const topRated = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
+  
+        const listAlbumIds = userLists.data.flatMap(list =>
           list.albums.slice(0, 3).map(album => album.id)
         );
-        const topRatedAlbumIds = topRatedResult.data.map(rating => rating.albumId);
-
+        const topRatedAlbumIds = topRated.data.map(rating => rating.albumId);
         const allAlbumIds = [...new Set([...listAlbumIds, ...topRatedAlbumIds])];
-
+  
         if (allAlbumIds.length > 0) {
           const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
             albumIds: allAlbumIds
@@ -54,12 +62,13 @@ const UserProfile = () => {
           setAlbumDetails(details);
         }
       } catch (error) {
-        console.error('Error fetching initial data for user profile:', error);
+        console.error('Error fetching album details:', error);
       }
     };
-
+  
     fetchInitialData();
   }, [username, backendUrl]);
+  
 
   const handleLogout = () => {
     localStorage.clear();
@@ -77,50 +86,63 @@ const UserProfile = () => {
   };
 
 
-  if (!username) return (<div><h4>User profile not found.</h4></div>);
+  if (!username) return (<div><h4>User profile not found</h4></div>);
 
   return (
     <div className="profile-page">
-
-      <div className='user-highest-rated-albums-container-title'>{username}'s Highest Rated </div>
-      <div className="user-highest-rated-albums-container">
-        {topRated.map(({ albumId }) => {
-          const album = albumDetails[albumId];
-          if (!album) return null;
-          const releaseDate = new Date(album.release_date).getFullYear();
-          return (
-            <UserRatedAlbumCard
-              key={album.id}
-              coverArtUrl={album.coverArtUrl}
-              title={album.name}
-              artist={album.artists}
-              artistIds={album.artistIds}
-              releaseDate={releaseDate}
-              spotifyId={album.id}
-              averageRating={album.averageRating}
-              numberOfRatings={album.numberOfRatings}
-              type={album.type}
-              isClickable={true}
-              userRating={topRated.find(rating => rating.albumId === album.id).ratingNum}
-            />
-          );
-        })}
-      </div>
-
+  
+      <div className='user-highest-rated-albums-container-title'>{username}'s Highest Rated</div>
+      {topRated.length > 0 ? (
+        <div className="user-highest-rated-albums-container">
+          {topRated.map(({ albumId }) => {
+            const album = albumDetails[albumId];
+            if (!album) return null;
+            const releaseDate = new Date(album.release_date).getFullYear();
+            return (
+              <UserRatedAlbumCard
+                key={album.id}
+                coverArtUrl={album.coverArtUrl}
+                title={album.name}
+                artist={album.artists}
+                artistIds={album.artistIds}
+                releaseDate={releaseDate}
+                spotifyId={album.id}
+                averageRating={album.averageRating}
+                numberOfRatings={album.numberOfRatings}
+                type={album.type}
+                isClickable={true}
+                userRating={topRated.find(rating => rating.albumId === album.id).ratingNum}
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="user-highest-rated-albums-container">
+          <p>No Ratings yet</p>
+        </div>
+      )}
+  
       <div className='recent-lists-container-title'>{username}'s Lists</div>
-      <div className="recent-lists-container">
-        {userLists.map(list => (
-          <ListCard
-            key={list._id}
-            userName={list.userName}
-            title={list.listName}
-            listId={list._id}
-            albums={list.albums}
-            dateCreated={list.dateCreated}
-            albumDetails={albumDetails}
-          />
-        ))}
-      </div>
+      {userLists.length > 0 ? (
+        <div className="recent-lists-container">
+          {userLists.map(list => (
+            <ListCard
+              key={list._id}
+              userName={list.userName}
+              title={list.listName}
+              listId={list._id}
+              albums={list.albums}
+              dateCreated={list.dateCreated}
+              albumDetails={albumDetails}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="recent-lists-container">
+          <p>No Lists created yet</p>
+        </div>
+      )}
+      
       {loggedInUser === username && (
         <div className="col-md-12 text-center">
           <>
@@ -146,6 +168,7 @@ const UserProfile = () => {
       )}
     </div>
   );
+  
 };
 
 export default UserProfile;

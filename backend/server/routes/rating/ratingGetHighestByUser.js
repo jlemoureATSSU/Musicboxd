@@ -9,11 +9,8 @@ router.get('/topRatings/:userName', async (req, res) => {
             .sort({ ratingNum: -1 })
             .limit(7);
 
-        if (topRatings.length > 0) {
-            res.json(topRatings);
-        } else {
-            res.status(404).json({ message: 'No ratings found for user' });
-        }
+        // Instead of sending a 404, send an empty array with a 200 OK status
+        res.json(topRatings);
     } catch (error) {
         console.error('Error getting top ratings:', error);
         res.status(500).json({ message: 'Error getting top ratings', error: error.message });
@@ -21,3 +18,4 @@ router.get('/topRatings/:userName', async (req, res) => {
 });
 
 module.exports = router;
+
