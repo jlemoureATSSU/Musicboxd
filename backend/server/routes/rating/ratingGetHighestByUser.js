@@ -7,7 +7,7 @@ router.get('/topRatings/:userName', async (req, res) => {
         const { userName } = req.params;
         const topRatings = await Rating.find({ userName })
             .sort({ ratingNum: -1 })
-            .limit(7);
+            .limit(10);
 
         // Instead of sending a 404, send an empty array with a 200 OK status
         res.json(topRatings);

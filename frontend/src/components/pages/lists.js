@@ -10,7 +10,7 @@ const Lists = () => {
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
     const fetchListsAndAlbumDetails = async (nextPage) => {
-        const limit = 5;
+        const limit = 6;
         const offset = nextPage * limit;
         let url = `${backendUrl}/list/getRecentLists?limit=${limit}&offset=${offset}`;
 

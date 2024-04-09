@@ -6,7 +6,7 @@ router.get('/getRecentLists', async (req, res) => {
   let limit = parseInt(req.query.limit, 10);
   let offset = parseInt(req.query.offset, 10);
 
-  limit = isNaN(limit) || limit < 1 ? 5 : limit;
+  limit = isNaN(limit) || limit < 1 ? 6 : limit;
 
   offset = isNaN(offset) ? 0 : offset;
 
