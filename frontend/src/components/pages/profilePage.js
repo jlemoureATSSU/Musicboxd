@@ -22,17 +22,17 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       if (!username) return;
-  
+
       const userInfo = getUserInfo();
       setLoggedInUser(userInfo ? userInfo.username : null);
-  
+
       try {
         const userListsResponse = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
         setUserLists(userListsResponse.data);
       } catch (error) {
         console.error('Error fetching user lists:', error);
       }
-  
+
       try {
         const topRatedResponse = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
         setTopRated(topRatedResponse.data);
@@ -40,17 +40,17 @@ const UserProfile = () => {
         console.error('Error fetching top rated albums:', error);
         setTopRated([]);
       }
-  
+
       try {
         const userLists = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
         const topRated = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
-  
+
         const listAlbumIds = userLists.data.flatMap(list =>
           list.albums.slice(0, 3).map(album => album.id)
         );
         const topRatedAlbumIds = topRated.data.map(rating => rating.albumId);
         const allAlbumIds = [...new Set([...listAlbumIds, ...topRatedAlbumIds])];
-  
+
         if (allAlbumIds.length > 0) {
           const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
             albumIds: allAlbumIds
@@ -65,10 +65,10 @@ const UserProfile = () => {
         console.error('Error fetching album details:', error);
       }
     };
-  
+
     fetchInitialData();
   }, [username, backendUrl]);
-  
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -90,8 +90,13 @@ const UserProfile = () => {
 
   return (
     <div className="profile-page">
-  
-      <div className='user-highest-rated-albums-container-title'>{username}'s Ratings <Link to={`/ratings/${username}`} className='see-more'>see more</Link></div>
+
+      <div className='user-highest-rated-albums-container-title'>
+        {username}'s Ratings{' '}
+        {topRated.length >= 10 && (
+          <Link to={`/ratings/${username}`} className='see-more'>see more</Link>
+        )}
+      </div>
       {topRated.length > 0 ? (
         <div className="user-highest-rated-albums-container">
           {topRated.map(({ albumId }) => {
@@ -121,8 +126,13 @@ const UserProfile = () => {
           <p>No Ratings yet</p>
         </div>
       )}
-  
-      <div className='recent-lists-container-title'>{username}'s Lists <Link to={`/userLists/${username}`} className='see-more'>see more</Link></div>
+
+      <div className='recent-lists-container-title'>
+        {username}'s Lists{' '}
+        {userLists.length >= 7 && (
+          <Link to={`/userLists/${username}`} className='see-more'>see more</Link>
+        )}
+      </div>
       {userLists.length > 0 ? (
         <div className="recent-lists-container">
           {userLists.map(list => (
@@ -142,7 +152,7 @@ const UserProfile = () => {
           <p>No Lists created yet</p>
         </div>
       )}
-      
+
       {loggedInUser === username && (
         <div className="col-md-12 text-center">
           <>
@@ -168,7 +178,7 @@ const UserProfile = () => {
       )}
     </div>
   );
-  
+
 };
 
 export default UserProfile;
