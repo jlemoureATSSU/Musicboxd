@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import ListCard from '../listCard';
 import getUserInfo from "../../utilities/decodeJwt";
 import AlbumCard from '../albumCard';
@@ -91,7 +91,7 @@ const UserProfile = () => {
   return (
     <div className="profile-page">
   
-      <div className='user-highest-rated-albums-container-title'>{username}'s Highest Rated</div>
+      <div className='user-highest-rated-albums-container-title'>{username}'s Ratings <Link to={`/userRatings/${username}`} className='see-more'>see more</Link></div>
       {topRated.length > 0 ? (
         <div className="user-highest-rated-albums-container">
           {topRated.map(({ albumId }) => {

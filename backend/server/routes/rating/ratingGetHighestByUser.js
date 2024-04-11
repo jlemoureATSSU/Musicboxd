@@ -5,11 +5,16 @@ const Rating = require('../../models/ratingModel');
 router.get('/topRatings/:userName', async (req, res) => {
     try {
         const { userName } = req.params;
+        let { limit, offset } = req.query;
+
+        limit = parseInt(limit, 10) || 10;
+        offset = parseInt(offset, 10) || 0;
+
         const topRatings = await Rating.find({ userName })
             .sort({ ratingNum: -1 })
-            .limit(10);
+            .skip(offset)
+            .limit(limit);
 
-        // Instead of sending a 404, send an empty array with a 200 OK status
         res.json(topRatings);
     } catch (error) {
         console.error('Error getting top ratings:', error);
@@ -18,4 +23,3 @@ router.get('/topRatings/:userName', async (req, res) => {
 });
 
 module.exports = router;
-

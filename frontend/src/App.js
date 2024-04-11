@@ -28,6 +28,7 @@ import getUserInfo from "./utilities/decodeJwt";
 import ListPage from "./components/pages/listPage";
 import Albums from "./components/pages/albums";
 import Lists from "./components/pages/lists";
+import UserRatings from "./components/pages/userRatings";
 
 export const UserContext = createContext();
 
@@ -61,7 +62,7 @@ const App = () => {
           <Route path="/list/:listId" element={<ListPage />} />
           <Route path="/albums" element={<Albums />} />
           <Route path="/lists" element={<Lists />} />
-
+          <Route path="/userRatings/:username" element={<UserRatings />} />
         </Routes>
       </UserContext.Provider>
     </div>
