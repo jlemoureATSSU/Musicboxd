@@ -80,7 +80,7 @@ const UserProfile = () => {
     return (
       <div className="user-rated-album-card">
         <AlbumCard {...albumCardProps} />
-        <div className="user-rating">Rating: {userRating}</div>
+        <div className="user-rating">User's rating: {userRating}</div>
       </div>
     );
   };
@@ -91,7 +91,7 @@ const UserProfile = () => {
   return (
     <div className="profile-page">
   
-      <div className='user-highest-rated-albums-container-title'>{username}'s Ratings <Link to={`/userRatings/${username}`} className='see-more'>see more</Link></div>
+      <div className='user-highest-rated-albums-container-title'>{username}'s Ratings <Link to={`/ratings/${username}`} className='see-more'>see more</Link></div>
       {topRated.length > 0 ? (
         <div className="user-highest-rated-albums-container">
           {topRated.map(({ albumId }) => {
@@ -122,7 +122,7 @@ const UserProfile = () => {
         </div>
       )}
   
-      <div className='recent-lists-container-title'>{username}'s Lists</div>
+      <div className='recent-lists-container-title'>{username}'s Lists <Link to={`/userLists/${username}`} className='see-more'>see more</Link></div>
       {userLists.length > 0 ? (
         <div className="recent-lists-container">
           {userLists.map(list => (

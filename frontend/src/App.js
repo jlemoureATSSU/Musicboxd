@@ -29,6 +29,7 @@ import ListPage from "./components/pages/listPage";
 import Albums from "./components/pages/albums";
 import Lists from "./components/pages/lists";
 import UserRatings from "./components/pages/userRatings";
+import UserLists from "./components/pages/userLists";
 
 export const UserContext = createContext();
 
@@ -62,7 +63,8 @@ const App = () => {
           <Route path="/list/:listId" element={<ListPage />} />
           <Route path="/albums" element={<Albums />} />
           <Route path="/lists" element={<Lists />} />
-          <Route path="/userRatings/:username" element={<UserRatings />} />
+          <Route path="/ratings/:username" element={<UserRatings />} />
+          <Route path="userLists/:username" element={<UserLists />} />
         </Routes>
       </UserContext.Provider>
     </div>

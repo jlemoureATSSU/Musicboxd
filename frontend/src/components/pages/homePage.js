@@ -77,7 +77,7 @@ const HomePage = () => {
           );
         })}
       </div>
-      <div className='recent-lists-container-title'>Recently Created Lists<Link to="/lists" className='see-more'>see more</Link></div>
+      <div className='recent-lists-container-title'>Recent Lists <Link to="/lists" className='see-more'>see more</Link></div>
       <div className="recent-lists-container">
         {recentLists.map(list => (
           <ListCard
@@ -91,7 +91,7 @@ const HomePage = () => {
           />
         ))}
       </div>
-      <div className='newest-releases-container-title'>Newest Releases<Link to="/albums" className='see-more' state={{ sortingMode: 'newest' }}>see more</Link></div>
+      <div className='newest-releases-container-title'>New Releases <Link to="/albums" className='see-more' state={{ sortingMode: 'newest' }}>see more</Link></div>
       <div className="newest-releases-container">
         {newestReleases.map(({ albumId }) => {
           const album = albumDetails[albumId];

@@ -105,7 +105,6 @@
 
 .see-more {
   font-size: 13px;
-  margin-left: 12px;
   color: #a0a0a0;
   text-decoration: none;
   position: relative;
@@ -404,4 +403,32 @@
 .albums-log-in-msg a:hover {
   color: #1db954;
   text-decoration: underline;
+}
+
+.user-ratings-username{
+  color: #999;
+  justify-content: flex-end;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.user-ratings-username::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: 0px;
+  left: 0;
+  background-color: #aaa;
+  transition: width 0.2s ease;
+}
+
+.user-ratings-username:hover::after {
+  width: 100%;
+}
+
+.user-ratings-username:hover{
+  color: #aaa;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const UserRatings = () => {
   const { username } = useParams();
@@ -50,14 +50,14 @@ const UserRatings = () => {
     return (
       <div className="user-rated-album-card">
         <AlbumCard {...albumCardProps} />
-        <div className="user-rating">Rating: {userRating}</div>
+        <div className="user-rating">User's Rating: {userRating}</div>
       </div>
     );
   };
 
   return (
     <div className='albums-page'>
-      <div className="user-ratings-header">{username}'s Ratings</div>
+      <div className="user-ratings-header"><Link className='user-ratings-username' to={`/user/${username}`}>{username}</Link>ratings</div>
       <div className="user-ratings-container">
         {topRated.map(rating => {
           const albumDetail = albumDetails[rating.albumId];

@@ -49,6 +49,7 @@
 
 }
 
+.user-lists-container,
 .all-lists-container {
   display: flex;
   flex-wrap: wrap;
@@ -69,25 +70,32 @@
   width: 100%;
 }
 
+.user-lists-container{
+  max-height: calc(100vh - 110px);
+
+}
+
+
+.user-lists-container::-webkit-scrollbar-track,
 .all-lists-container::-webkit-scrollbar-track {
   margin-top: 20px;
   margin-bottom: 20px;
   border-radius: 10px;
 }
 
-
+.user-lists-container::-webkit-scrollbar-thumb,
 .all-lists-container::-webkit-scrollbar-thumb {
   background-color: #181818;
   border-radius: 10px;
 
 }
 
-
+.user-lists-container::-webkit-scrollbar,
 .all-lists-container::-webkit-scrollbar {
   width: 8px;
 }
 
-
+.user-lists-container::-webkit-scrollbar-thumb:hover,
 .all-lists-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
 }
@@ -97,6 +105,10 @@
     margin-top: 40px;
   }
 
+  .user-lists-container{
+    max-height: calc(100vh - 155px);
+
+  }
   .all-lists-container {
     max-height: calc(100vh - 165px);
   }
