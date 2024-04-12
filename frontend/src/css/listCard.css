@@ -47,7 +47,7 @@
 .list-card-username a {
   color: #999;
   justify-content: flex-end;
-  font-size: 13px;
+  font-size: 14px;
   margin-left: 10px;
   text-decoration: none;
   position: relative;
@@ -109,19 +109,37 @@
   padding: 5px 10px;
 }
 
+.list-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 75px;
+  max-width: 75px;
+  margin-bottom: 20px;
+}
+
 .list-card-date {
   color: #aaa;
   border-radius: 10px;
-  height: 60px;
-  font-size: 13px;
+  font-size: 14px;
   margin-left: 6px;
-  margin-bottom: 6px;
   width: 70px;
   padding-top: 8px;
   padding-left: 4px;
   padding-right: 3px;
   text-align: center;
 
+}
+
+.list-card-likes {
+  display: flex;;
+  font-size: 14px;
+  padding-top: 4px;
+}
+
+.fa-heart {
+  color: #ff0000;
+  margin-bottom: 1px;
 }
 
 @media (max-width: 430px) {
@@ -175,13 +193,20 @@
   }
 
   .list-card-date {
-    height: 55px;
-    width: 65px;
     font-size: 12px;
     margin-left: 5px;
-    margin-bottom: 5px;
-    padding-top: 7px;
-    padding-left: 3px;
-    padding-right: 3px;
   }
+
+  .list-card-likes {
+    font-size: 12px;
+  }
+
+  .list-card-info {
+    min-width: 60px;
+    max-width: 60px;
+    margin-bottom: 15px;
+  }
+
+
+  
 }

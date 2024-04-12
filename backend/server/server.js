@@ -36,6 +36,8 @@ const getAlbumsFromPlaylist = require('./routes/api/apiGetAlbumsFromPlaylist')
 const getHighestByUser = require('./routes/rating/ratingGetHighestByUser')
 const getRecommendedAlbums = require('./routes/api/apiGetRecommendedAlbums')
 const getTracklist = require('./routes/api/apiGetTracklist')
+const like = require('./routes/list/listLike')
+const unlike = require('./routes/list/listUnlike')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -56,6 +58,8 @@ app.use('/list', getRecentLists)
 app.use('/list', getAllListsByUser)
 app.use('/list', addAlbumToList)
 app.use('/list', albumInListsCount)
+app.use('/list', like)
+app.use('/list', unlike)
 app.use('/rating', saveRating)
 app.use('/rating', getRatingByUserAndAlbum)
 app.use('/rating', getAvgRatingByAlbum)

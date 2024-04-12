@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AlbumCard from '../albumCard';
 import getUserInfo from "../../utilities/decodeJwt";
-
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const ListPage = () => {
     const { listId } = useParams();
@@ -13,6 +13,8 @@ const ListPage = () => {
     const [comment, setComment] = useState('');
     const [currentUser, setCurrentUser] = useState(null);
     const navigate = useNavigate();
+    const [likeCount, setLikeCount] = useState(0);
+    const [userHasLiked, setUserHasLiked] = useState(false);
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 
@@ -21,7 +23,11 @@ const ListPage = () => {
             try {
                 const response = await axios.get(`${backendUrl}/list/getListById/${listId}`);
                 setListData(response.data);
+                setLikeCount(response.data.likes.length);
                 fetchAlbumsDetails(response.data.albums.map(album => album.id));
+                if (currentUser) {
+                    setUserHasLiked(response.data.likes.includes(currentUser.username));
+                }
             } catch (error) {
                 console.error('Error fetching list data:', error);
             }
@@ -42,6 +48,13 @@ const ListPage = () => {
         fetchListData();
         fetchComments();
     }, [listId, backendUrl]);
+
+    useEffect(() => {
+        if (listData && currentUser) {
+            setUserHasLiked(listData.likes.includes(currentUser.username));
+        }
+    }, [listData, currentUser]);
+
 
     const fetchAlbumsDetails = async (albumIds) => {
         if (albumIds.length === 0) return;
@@ -74,6 +87,30 @@ const ListPage = () => {
             }
         }
     };
+
+    const handleLike = async () => {
+        if (!currentUser) {
+            alert('Please log in to like the list');
+            return;
+        }
+
+        try {
+            const url = `${backendUrl}/list/${userHasLiked ? 'unlike' : 'like'}`;
+            const response = await axios.post(url, {
+                username: currentUser.username,
+                listId: listId,
+            });
+
+            if (response.status === 200) {
+                setLikeCount(prev => userHasLiked ? prev - 1 : prev + 1);
+                setUserHasLiked(!userHasLiked);
+            }
+        } catch (error) {
+            console.error('Error liking/unliking the list:', error);
+            alert(`Failed to ${userHasLiked ? 'unlike' : 'like'} the list. Please try again.`);
+        }
+    };
+
 
     const submitComment = async () => {
         if (!currentUser || !currentUser.username) {
@@ -119,12 +156,13 @@ const ListPage = () => {
 
     return (
         <div className="create-list-page">
-            <div>
+            <div className='all-sections'>
+                <div className='list-details-and-like-section'>
                 <div className="list-details">
                     <div className='list-title-and-date'>
                         <div className="list-title">{listData.listName}</div>
                         <div className="list-date">
-                            List created by<Link className='list-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "} 
+                            List created by<Link className='list-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
                             &middot; {new Date(listData.dateCreated).toLocaleDateString("en-US", {
                                 month: "short",
                                 day: "numeric",
@@ -135,6 +173,12 @@ const ListPage = () => {
                     <div className="list-description">
                         {listData.listDescription || "No Description"}
                     </div>
+                </div>
+                <span className="like-section">
+                    <div onClick={handleLike} className="like-btn">
+                        {likeCount} {userHasLiked ? <FaHeart className="fa-heart" /> : <FaRegHeart className="fa-heart" />}
+                    </div>
+                </span>
                 </div>
 
                 {currentUser && currentUser.username === listData.userName && (

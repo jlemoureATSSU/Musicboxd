@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const newListSchema = new mongoose.Schema(
   {
     userName: {
@@ -13,7 +14,6 @@ const newListSchema = new mongoose.Schema(
     },
     listDescription: {
       type: String,
-      required: false,
       label: "listDescription",
     },
     albums: [{
@@ -27,8 +27,12 @@ const newListSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    likes: [{
+      type: String,
+      unique: true 
+    }]
   },
   { collection: "lists" }
 );
 
-module.exports = mongoose.model('lists', newListSchema)
+module.exports = mongoose.model('lists', newListSchema);

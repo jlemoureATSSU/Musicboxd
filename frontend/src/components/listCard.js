@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
-const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }) => {
+
+const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails, likeCount, userHasLiked  }) => {
   const navigate = useNavigate();
 
   const coverArts = albums.slice(0, 3).map(album =>
@@ -17,11 +19,22 @@ const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }
     }
   };
 
-  const formattedDate = new Date(dateCreated).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  });
+  function timeSince(dateCreated) {
+    const date = new Date(dateCreated);
+    const now = new Date();
+    const difference = now.getTime() - date.getTime();
+    const daysDifference = Math.floor(difference / (1000 * 3600 * 24));
+
+    if (daysDifference === 0) {
+      return "today";
+    } else if (daysDifference === 1) {
+      return "1d ago";
+    } else {
+      return `${daysDifference}d ago`;
+    }
+  }
+
+  const formattedDate = timeSince(dateCreated);
 
   return (
     <div className="list-card" onClick={handleClick}>
@@ -38,7 +51,12 @@ const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails }
           ))}
           {albums.length > 3 && <div>+ {albums.length - 3}</div>}
         </div>
-        <div className="list-card-date">{formattedDate}</div>
+        <div className="list-card-info">
+          <div className="list-card-date">{formattedDate}</div>
+          <div className="list-card-likes">
+            <span>{likeCount} <FaRegHeart className="fa-heart" color="red" /> </span>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -195,10 +195,11 @@
 .recent-lists-container::-webkit-scrollbar-thumb {
   background-color: #181818;
   border-radius: 10px;
+  border-bottom: 2px solid #252525;
 }
 
 .recent-lists-container::-webkit-scrollbar {
-  height: 7px;
+  height: 9px;
 }
 
 .recent-lists-container::-webkit-scrollbar-thumb:hover {
@@ -221,13 +222,14 @@
 .newest-releases-container::-webkit-scrollbar-thumb {
   background-color: #181818;
   border-radius: 10px;
+  border-bottom: 2px solid #252525;
 }
 
 .related-artists-container::-webkit-scrollbar,
 .user-highest-rated-albums-container::-webkit-scrollbar,
 .highest-rated-albums-container::-webkit-scrollbar,
 .newest-releases-container::-webkit-scrollbar {
-  height: 7px;
+  height: 9px;
 }
 
 .related-artists-container::-webkit-scrollbar-thumb:hover,

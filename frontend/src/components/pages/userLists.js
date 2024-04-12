@@ -62,6 +62,7 @@ const UserLists = () => {
             albums={list.albums}
             dateCreated={list.dateCreated}
             albumDetails={albumDetails}
+            likeCount={list.likes.length}
           />
         ))}
         {hasMore && (

@@ -160,19 +160,18 @@
 .album-list-card::-webkit-scrollbar-thumb {
   background-color: #181818;
   border-radius: 10px;
-  background-clip: padding-box;
+  border-bottom: 2px solid #252525;
 }
 
 
 
 .album-list-card::-webkit-scrollbar {
-  height: 7px;
+  height: 9px;
 }
 
 
 .album-list-card::-webkit-scrollbar-thumb:hover {
   background-color: #111;
-  height: 8px;
 
 }
 
