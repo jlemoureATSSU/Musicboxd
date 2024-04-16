@@ -1,6 +1,7 @@
 .rating-message {
     position: fixed;
     left: 50%;
+    bottom: -40px;
     transform: translateX(-50%);
     background-color: rgba(24, 24, 24, 0.8);
     color: white;
