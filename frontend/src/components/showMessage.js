@@ -8,8 +8,7 @@ const ShowMessage = ({ message, visible, onClose }) => {
         if (visible) {
             setShow(true);
             fadeOutTimer = setTimeout(() => {
-                setShow(false);
-                setTimeout(onClose, 2000);
+                closeMessage();  // Use the closeMessage function
             }, 3000);
         }
         return () => clearTimeout(fadeOutTimer);
@@ -21,6 +20,12 @@ const ShowMessage = ({ message, visible, onClose }) => {
         }
     }, [visible]);
 
+    // Function to handle closing the message
+    const closeMessage = () => {
+        setShow(false);
+        setTimeout(onClose, 2000);  // Delay the onClose prop to allow fade-out effect
+    };
+
     const messageClasses = `rating-message ${show ? 'visible' : 'fade-out'}`;
 
     if (!visible) return null;
@@ -28,6 +33,7 @@ const ShowMessage = ({ message, visible, onClose }) => {
     return (
         <div className={messageClasses}>
             {message}
+            <button onClick={closeMessage} style={{ marginLeft: '10px' }}>Close</button>
         </div>
     );
 };

@@ -501,6 +501,11 @@
 }
 
 
+.rating-btns {
+    display: flex;
+    gap: 8px; 
+}
+
 .submit-comment-btn {
     padding: 10px;
     background-color: #252525;
@@ -514,6 +519,22 @@
 .submit-comment-btn:hover {
     transform: translateY(-2px);
     background-color: #353535;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.delete-rating-btn {
+    padding: 5px;
+    background-color: #642727;
+    font-size: 22px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease;
+}
+
+.delete-rating-btn:hover {
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -791,4 +812,5 @@
     .album-release-date {
         font-size: 16px;
     }
+
 }

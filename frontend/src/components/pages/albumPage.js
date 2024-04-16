@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import getUserInfo from "../../utilities/decodeJwt";
 import { FaSpotify } from 'react-icons/fa';
+import { MdDeleteForever } from "react-icons/md";
+
 
 
 const AlbumPage = () => {
@@ -235,6 +237,43 @@ const AlbumPage = () => {
         }
     };
 
+    const deleteRating = async () => {
+        try {
+            const response = await axios({
+                method: 'delete',
+                url: `${backendUrl}/rating/delete`,
+                data: {
+                    userName: user.username,
+                    albumId: spotifyId
+                }
+            });
+    
+            if (response.status === 200) {
+                setRating('');
+                setSubmitMessage('Rating deleted!');
+                setShowMessage(true);
+                setTimeout(() => setShowMessage(false), 3000);
+                
+                if (response.data.avgDeleted) {
+                    setAverageRating('NR');
+                    setNumberOfRatings(0);
+                } else {
+                    if (response.data.averageRating) {
+                        setAverageRating(response.data.averageRating.toFixed(1));
+                        setNumberOfRatings(response.data.numberOfRatings);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error deleting rating:', error);
+            setSubmitMessage('Failed to delete rating');
+            setShowMessage(true);
+            setTimeout(() => setShowMessage(false), 3000);
+        }
+    };
+    
+
+
 
 
     if (!albumDetails) {
@@ -400,12 +439,23 @@ const AlbumPage = () => {
                             onKeyDown={handleKeyDown}
                             placeholder="-"
                         />
-                        <button
-                            className="submit-rating-btn"
-                            onClick={handleRatingSubmit}
-                        >
-                            Submit Rating
-                        </button>
+                        <div className="rating-btns">
+                            <button
+                                className="submit-rating-btn"
+                                onClick={handleRatingSubmit}
+                            >
+                                Submit
+                            </button>
+                            {rating && (
+                                <button
+                                    className="delete-rating-btn"
+                                    onClick={deleteRating}
+                                    aria-label="Delete Rating"
+                                >
+                                    <MdDeleteForever />
+                                </button>
+                            )}
+                        </div>
                     </div>
                     <button onClick={user && user.username ? fetchUserLists : () => displayMessage('Sign Up and Log In to create Lists')} className="add-album-btn">Add to a <b>List</b></button>
                     <Modal show={showModal} onHide={() => setShowModal(false)} dialogClassName="album-modal">
