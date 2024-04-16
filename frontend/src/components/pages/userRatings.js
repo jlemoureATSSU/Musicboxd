@@ -13,7 +13,7 @@ const UserRatings = () => {
 
   useEffect(() => {
     const fetchAlbumsAndDetails = async () => {
-      const limit = 10; 
+      const limit = 14; 
       const offset = page * limit;
 
       try {

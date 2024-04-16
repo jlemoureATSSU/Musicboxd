@@ -3,13 +3,13 @@
   display: flex;
   top: 9px;
   right: 10px;
-  left: 450px;
+  left: 500px;
   padding-right: 5px;
   padding-left: 1px;
   background-color: #252525;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   border-radius: 12px;
-  width: calc(100% - 460px);
+  width: calc(100% - 510px);
   max-width: 550px;
   align-items: center;
   z-index: 100;
@@ -17,7 +17,7 @@
 }
 
 
-@media (max-width: 760px) {
+@media (max-width: 835px) {
   .search-bar {
     position: fixed;
     top: 57px;
@@ -82,7 +82,7 @@
   outline: none;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 470px) {
   .search-bar input:focus {
     font-size: 16px;
   }

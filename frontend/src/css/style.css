@@ -67,7 +67,7 @@
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 835px) {
   .app {
     padding-top: 60px;
   }
@@ -170,7 +170,7 @@
   font-size: 100px;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 470px) {
   .recent-lists-container {
     margin-left: 7px;
     margin-right: 7px;
@@ -308,7 +308,7 @@
   max-height: calc(100vh - 110px);
   row-gap: 7px;
 }
-@media (max-width: 430px) {
+@media (max-width: 470px) {
   .user-ratings-container,
   .all-albums-container {
     margin-left: 5px;
@@ -370,7 +370,7 @@
   background-color: #111;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 835px) {
   .albums-page {
     margin-top: 35px;
   }

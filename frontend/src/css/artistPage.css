@@ -135,7 +135,7 @@
   background-color: #111;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 835px) {
   .artist-header {
     margin-top: 45px;
   }

@@ -139,7 +139,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 835px) {
 
   .all-sections {
     width: 100%;
@@ -155,7 +155,7 @@
 
 }
 
-@media (max-width: 430px) {
+@media (max-width: 470px) {
 
   .list-details-and-like-section {
     flex-direction: column;

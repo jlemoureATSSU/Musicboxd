@@ -137,7 +137,7 @@
   transform: width 0.2s ease;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 835px) {
   .welcome{
     padding-top: 15px;
     height: calc(100vh - 60px);

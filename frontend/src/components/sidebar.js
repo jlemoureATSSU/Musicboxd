@@ -7,7 +7,8 @@ import { FaBars } from "react-icons/fa6";
 import { VscChromeClose } from "react-icons/vsc";
 import { PiVinylRecordBold } from "react-icons/pi";
 import { IoIosCreate } from "react-icons/io";
-import { CiLogin } from "react-icons/ci";
+import { CiLogin, CiBoxList } from "react-icons/ci";
+
 
 const Sidebar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -71,6 +72,10 @@ const Sidebar = () => {
                 <PiVinylRecordBold className="icon-size" />
                 Albums
               </Link>
+              <Link to="/lists" title="Lists" onClick={closeMenu}>
+                <CiBoxList className="icon-size" />
+                Lists
+              </Link>
               <Link to="/login" title="Login" onClick={closeMenu}>
                 <CiLogin className="icon-size" />
                 Login
@@ -89,6 +94,10 @@ const Sidebar = () => {
               <Link to="/albums" title="Albums" onClick={closeMenu}>
                 <PiVinylRecordBold className="icon-size" />
                 Albums
+              </Link>
+              <Link to="/lists" title="Lists" onClick={closeMenu}>
+                <CiBoxList className="icon-size" />
+                Lists
               </Link>
               <Link to={profileLink} title="Profile" onClick={closeMenu}>
                 <FaUser className="icon-size" />
@@ -113,6 +122,10 @@ const Sidebar = () => {
               <PiVinylRecordBold className="icon-size" />
               Albums
             </Link>
+            <Link to="/lists" title="Lists">
+              <CiBoxList className="icon-size" />
+              Lists
+            </Link>
             <Link to="/login" title="Login">
               <CiLogin className="icon-size" />
               Login
@@ -131,6 +144,10 @@ const Sidebar = () => {
             <Link to="/albums" title="Albums">
               <PiVinylRecordBold className="icon-size" />
               Albums
+            </Link>
+            <Link to="/lists" title="Lists">
+              <CiBoxList className="icon-size" />
+              Lists
             </Link>
             <Link to={profileLink} title="Profile">
               <FaUser className="icon-size" />
