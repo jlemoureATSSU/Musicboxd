@@ -135,6 +135,7 @@
   display: flex;;
   font-size: 14px;
   padding-top: 4px;
+  margin-left: 8px;
 }
 
 .fa-heart {
@@ -163,7 +164,7 @@
   }
 
   .list-card-title {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .list-card-username,

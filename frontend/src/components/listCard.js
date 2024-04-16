@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 
 
-const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails, likeCount, userHasLiked  }) => {
+const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails, likeCount  }) => {
   const navigate = useNavigate();
 
   const coverArts = albums.slice(0, 3).map(album =>

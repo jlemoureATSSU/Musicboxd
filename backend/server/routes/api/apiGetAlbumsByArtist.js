@@ -61,7 +61,7 @@ router.get('/getRelatedArtists/:artistSpotifyId', async (req, res) => {
       headers: { 'Authorization': `Bearer ${accessToken}` }
     });
 
-    const relatedArtists = relatedArtistsResponse.data.artists.slice(0, 6).map(artist => {
+    const relatedArtists = relatedArtistsResponse.data.artists.slice(0, 7).map(artist => {
       return {
         id: artist.id,
         name: artist.name,

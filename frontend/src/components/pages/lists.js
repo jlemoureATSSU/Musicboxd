@@ -7,12 +7,17 @@ const Lists = () => {
     const [albumDetails, setAlbumDetails] = useState({});
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
+    const [sortingMode, setSortingMode] = useState('recent');
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-    const fetchListsAndAlbumDetails = async (nextPage) => {
-        const limit = 6;
-        const offset = nextPage * limit;
+    const fetchListsAndAlbumDetails = async () => {
+        const limit = 7;
+        const offset = page * limit;
         let url = `${backendUrl}/list/getRecentLists?limit=${limit}&offset=${offset}`;
+
+        if (sortingMode === 'mostLiked') {
+            url = `${backendUrl}/list/getMostLiked?limit=${limit}&offset=${offset}`;
+        }
 
         try {
             const response = await axios.get(url);
@@ -27,7 +32,7 @@ const Lists = () => {
                 setHasMore(false);
             }
         } catch (error) {
-            console.error("Error fetching lists:", error);
+            console.error(`Error fetching lists for mode ${sortingMode}:`, error);
             setHasMore(false);
         }
     };
@@ -52,16 +57,38 @@ const Lists = () => {
     };
 
     useEffect(() => {
-        fetchListsAndAlbumDetails(page);
-    }, [page]);
+        fetchListsAndAlbumDetails();
+    }, [page, sortingMode]);
 
     const handleSeeMore = () => {
         setPage(prevPage => prevPage + 1);
     };
 
+    const handleChangeSortingMode = (newMode) => {
+        if (newMode !== sortingMode) {
+            setSortingMode(newMode);
+            setLists([]);
+            setPage(0);
+            setHasMore(true);
+        }
+    };
+
     return (
         <div className='lists-page'>
-            <div className='all-lists-header'>Lists</div>
+            <div className="sorting-buttons">
+                <button
+                    className={`sort-button ${sortingMode === 'recent' ? 'active' : ''}`}
+                    onClick={() => handleChangeSortingMode('recent')}
+                >
+                    Recent
+                </button>
+                <button
+                    className={`sort-button ${sortingMode === 'mostLiked' ? 'active' : ''}`}
+                    onClick={() => handleChangeSortingMode('mostLiked')}
+                >
+                    Most Liked
+                </button>
+            </div>
             <div className="all-lists-container">
                 {lists.map(list => (
                     <ListCard
@@ -72,12 +99,11 @@ const Lists = () => {
                         albums={list.albums}
                         dateCreated={list.dateCreated}
                         albumDetails={albumDetails}
-                        likeCount={list.likes.length}
-
+                        likeCount={list.likeCount}
                     />
                 ))}
                 {hasMore && (
-                    <div class="see-more-btn-container">
+                    <div className="see-more-btn-container">
                         <button onClick={handleSeeMore} className="see-more-btn">
                             see more
                         </button>

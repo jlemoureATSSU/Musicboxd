@@ -23,7 +23,7 @@ const ListPage = () => {
             try {
                 const response = await axios.get(`${backendUrl}/list/getListById/${listId}`);
                 setListData(response.data);
-                setLikeCount(response.data.likes.length);
+                setLikeCount(response.data.likeCount);
                 fetchAlbumsDetails(response.data.albums.map(album => album.id));
                 if (currentUser) {
                     setUserHasLiked(response.data.likes.includes(currentUser.username));
@@ -158,33 +158,32 @@ const ListPage = () => {
         <div className="create-list-page">
             <div className='all-sections'>
                 <div className='list-details-and-like-section'>
-                <div className="list-details">
-                    <div className='list-title-and-date'>
-                        <div className="list-title">{listData.listName}</div>
-                        <div className="list-date">
-                            List created by<Link className='list-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
-                            &middot; {new Date(listData.dateCreated).toLocaleDateString("en-US", {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                            })} &middot; {listData.albums.length} albums
+                    <div className="list-details">
+                        <div className='list-title-and-date'>
+                            <div className="list-title">{listData.listName}</div>
+                            <div className="list-date">
+                                List created by<Link className='list-username' to={`/user/${listData.userName}`}>{listData.userName}</Link>{" "}
+                                &middot; {new Date(listData.dateCreated).toLocaleDateString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                })} &middot; {listData.albums.length} albums
+                            </div>
+                        </div>
+                        <div className="list-description">
+                            {listData.listDescription || "No Description"}
                         </div>
                     </div>
-                    <div className="list-description">
-                        {listData.listDescription || "No Description"}
-                    </div>
+                    <span className="like-section">
+                        <div onClick={handleLike} className="like-btn">
+                            {likeCount} {userHasLiked ? <FaHeart className="fa-heart" /> : <FaRegHeart className="fa-heart" />}
+                        </div>
+                    </span>
                 </div>
-                <span className="like-section">
-                    <div onClick={handleLike} className="like-btn">
-                        {likeCount} {userHasLiked ? <FaHeart className="fa-heart" /> : <FaRegHeart className="fa-heart" />}
-                    </div>
-                </span>
-                </div>
-
                 {currentUser && currentUser.username === listData.userName && (
                     <div className="edit-list-actions">
-                        <div onClick={() => navigate(`/edit/${listData._id}`)} className="edit-btn"> Edit List</div>
-                        <div onClick={() => deleteList(listData._id)} className="delete-btn"> Delete List</div>
+                        <div onClick={() => navigate(`/edit/${listData._id}`)} className="edit-btn"> Edit</div>
+                        <div onClick={() => deleteList(listData._id)} className="delete-btn"> Delete</div>
                     </div>
                 )}
             </div>

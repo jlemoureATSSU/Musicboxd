@@ -12,7 +12,10 @@ router.post('/like', async (req, res) => {
     try {
         const updatedList = await List.findOneAndUpdate(
             { _id: listId, likes: { $ne: username } },
-            { $push: { likes: username } },
+            {
+              $push: { likes: username },
+              $inc: { likeCount: 1 }
+            },
             { new: true }
         );
 
@@ -26,5 +29,6 @@ router.post('/like', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
 
 module.exports = router;

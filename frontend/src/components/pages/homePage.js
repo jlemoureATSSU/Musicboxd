@@ -88,8 +88,7 @@ const HomePage = () => {
             albums={list.albums}
             dateCreated={list.dateCreated}
             albumDetails={albumDetails}
-            likeCount={list.likes.length}
-            userHasLiked={list.currentUserHasLiked}
+            likeCount={list.likeCount}
           />
         ))}
       </div>

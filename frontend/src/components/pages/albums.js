@@ -29,7 +29,7 @@ const Albums = () => {
             }
     
             setShowLoginMessage(false);
-            const limit = 10;
+            const limit = 14;
             const offset = page * limit;
             let url = `${backendUrl}/api/getNewestAlbums?limit=${limit}&offset=${offset}`;
     
