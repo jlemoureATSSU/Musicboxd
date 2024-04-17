@@ -52,6 +52,55 @@ router.get('/getAlbumsByArtist/:artistSpotifyId', async (req, res) => {
   }
 });
 
+router.get('/getSinglesByArtist/:artistSpotifyId', async (req, res) => {
+  const { artistSpotifyId } = req.params;
+  const singlesEpsCacheKey = `artist-singles-eps-ids-${artistSpotifyId}`;
+  const artistCacheKey = `artist-name-${artistSpotifyId}`;
+
+  let cachedSinglesEpsIds = myCache.get(singlesEpsCacheKey);
+  let cachedArtist = myCache.get(artistCacheKey);
+
+  if (cachedArtist && cachedSinglesEpsIds) {
+    console.log(`Artist ${cachedArtist.name} and their single & EP IDs fetched from cache`);
+    return res.json({
+      artist: cachedArtist,
+      singleEpsIds: cachedSinglesEpsIds
+    });
+  }
+
+  try {
+    const accessToken = await getSpotifyAccessToken();
+
+    if (!cachedArtist) {
+      const artistResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}`, {
+        headers: { 'Authorization': `Bearer ${accessToken}` }
+      });
+
+      cachedArtist = { name: artistResponse.data.name };
+      myCache.set(artistCacheKey, cachedArtist);
+    }
+
+    if (!cachedSinglesEpsIds) {
+      const singlesEpsResponse = await axios.get(`https://api.spotify.com/v1/artists/${artistSpotifyId}/albums`, {
+        headers: { 'Authorization': `Bearer ${accessToken}` },
+        params: { include_groups: 'single', limit: 50 }
+      });
+
+      cachedSinglesEpsIds = singlesEpsResponse.data.items.map(singleOrEp => singleOrEp.id);
+      myCache.set(singlesEpsCacheKey, cachedSinglesEpsIds);
+    }
+
+    res.json({
+      artist: cachedArtist,
+      singleEpsIds: cachedSinglesEpsIds
+    });
+  } catch (error) {
+    console.error("Error fetching data from Spotify:", error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+
 router.get('/getRelatedArtists/:artistSpotifyId', async (req, res) => {
   const { artistSpotifyId } = req.params;
 

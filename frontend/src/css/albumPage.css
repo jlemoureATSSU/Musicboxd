@@ -677,8 +677,7 @@
     }
 
     .add-album-btn,
-    .list-select-btn,
-    .submit-rating-btn
+    .list-select-btn
     {
         width: 170px;
         height: 48px;
@@ -688,6 +687,7 @@
     .submit-rating-btn {
         width: 150px;
         height: 45px;
+        font-size: 16px;
     }
 
     .submit-rating-box,

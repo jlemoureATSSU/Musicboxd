@@ -22,17 +22,26 @@ const ListCard = ({ userName, title, listId, albums, dateCreated, albumDetails, 
   function timeSince(dateCreated) {
     const date = new Date(dateCreated);
     const now = new Date();
-    const difference = now.getTime() - date.getTime();
-    const daysDifference = Math.floor(difference / (1000 * 3600 * 24));
-
-    if (daysDifference === 0) {
-      return "today";
+    const differenceInSeconds = Math.floor((now - date) / 1000);
+    const daysDifference = Math.floor(differenceInSeconds / (3600 * 24));
+    const hoursDifference = Math.floor(differenceInSeconds / 3600);
+    const minutesDifference = Math.floor(differenceInSeconds / 60);
+  
+    if (daysDifference < 1) {
+      if (hoursDifference < 1) {
+        if (minutesDifference < 1) {
+          return "now";
+        }
+        return `${minutesDifference}m ago`;
+      }
+      return `${hoursDifference}h ago`;
     } else if (daysDifference === 1) {
       return "1d ago";
     } else {
       return `${daysDifference}d ago`;
     }
   }
+  
 
   const formattedDate = timeSince(dateCreated);
 

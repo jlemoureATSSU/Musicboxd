@@ -1,27 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
+import AlbumCard from '../albumCard';
 import { useParams, useNavigate } from 'react-router-dom';
-import CardDisplay from '../cardDisplay';
 import { FaSpotify } from 'react-icons/fa';
 
 const ArtistPage = () => {
     const [artistDetails, setArtistDetails] = useState(null);
-    const [albums, setAlbums] = useState([]);
+    const [content, setContent] = useState([]); // Generic state for either albums or singles & EPs
     const { artistSpotifyId } = useParams();
     const [relatedArtists, setRelatedArtists] = useState([]);
+    const [contentType, setContentType] = useState('albums'); // State to control whether albums or singles & EPs are shown
     const fetchInProgress = useRef(new Set());
     const navigate = useNavigate();
     const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
-
     useEffect(() => {
-        const fetchArtistAndAlbumIds = async () => {
+        const fetchData = async () => {
             try {
-                const response = await axios.get(`${backendUrl}/api/getAlbumsByArtist/${artistSpotifyId}`);
+                let url = `${backendUrl}/api/getAlbumsByArtist/${artistSpotifyId}`;
+                if (contentType === 'singlesEps') {
+                    url = `${backendUrl}/api/getSinglesByArtist/${artistSpotifyId}`;
+                }
+                const response = await axios.get(url);
                 setArtistDetails(response.data.artist);
-                fetchAlbumDetails(response.data.albumIds);
+                fetchDetails(response.data.albumIds || response.data.singleEpsIds);
             } catch (error) {
-                console.error("Error fetching artist and album IDs", error);
+                console.error(`Error fetching ${contentType}`, error);
             }
         };
 
@@ -34,31 +38,25 @@ const ArtistPage = () => {
             }
         };
 
-        fetchArtistAndAlbumIds();
+        fetchData();
         fetchRelatedArtists();
-    }, [artistSpotifyId]);
+    }, [artistSpotifyId, contentType]);
 
-    const fetchAlbumDetails = async (albumIds) => {
-        if (albumIds.length === 0) return;
+    const fetchDetails = async (ids) => {
+        if (ids.length === 0) return;
 
         try {
             const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
-                albumIds: albumIds
+                albumIds: ids
             });
-            const sortedAlbums = detailsResponse.data.sort((a, b) => {
-                return new Date(b.release_date) - new Date(a.release_date);
-            });
-            setAlbums(sortedAlbums);
+            const sortedContent = detailsResponse.data.sort((a, b) => new Date(b.release_date) - new Date(a.release_date));
+            setContent(sortedContent);
         } catch (error) {
-            console.error("Error fetching album details:", error);
+            console.error("Error fetching details:", error);
         }
     };
 
-
-
-    const getSpotifyAlbumUrl = (spotifyId) => {
-        return `https://open.spotify.com/artist/${spotifyId}`;
-    };
+    const getSpotifyAlbumUrl = (spotifyId) => `https://open.spotify.com/artist/${spotifyId}`;
 
     return (
         <div className="album-page">
@@ -67,7 +65,27 @@ const ArtistPage = () => {
                 <a onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId))} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
             </h1>
             <div className="artist-page-container">
-                <CardDisplay albums={albums} artistName={artistDetails?.name} />
+                <div className="artist-albums-container">
+                    <div className="content-toggle-buttons">
+                        <button onClick={() => setContentType('albums')} className={`sort-button ${contentType === 'albums' ? 'active' : ''}`}>Albums</button>
+                        <button onClick={() => setContentType('singlesEps')} className={`sort-button ${contentType === 'singlesEps' ? 'active' : ''}`}>Singles</button>
+                    </div>
+                    {content.map((album) => (
+                        <AlbumCard
+                            key={album.id}
+                            spotifyId={album.id}
+                            coverArtUrl={album.coverArtUrl}
+                            title={album.name}
+                            artist={album.artists}
+                            artistIds={album.artistIds}
+                            releaseDate={new Date(album.release_date).getFullYear()}
+                            averageRating={album.averageRating}
+                            numberOfRatings={album.numberOfRatings}
+                            type={album.type}
+                            isClickable={true}
+                        />
+                    ))}
+                </div>
                 <div className='related-artists-container'>
                     <div className='related-artists'>
                         {relatedArtists.map((artist) => (

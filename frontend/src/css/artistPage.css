@@ -37,6 +37,7 @@
 }
 
 .artist-page-container {
+  position: relative;
   display: flex;
   align-items: flex-start;
   width: 100%;
@@ -56,7 +57,7 @@
   padding-left: 10px;
   padding-right: 10px;
   justify-content: center;
-  padding-top: 15px;
+  padding-top: 46px;
   padding-bottom: 5px;
   margin-left: 7px;
   margin-top: -8px;
@@ -134,6 +135,23 @@
 .related-artists-container::-webkit-scrollbar-thumb:hover {
   background-color: #111;
 }
+
+.content-toggle-buttons{
+  position: absolute;
+  display: flex;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #232323;
+  padding: 4px 5px;
+  gap: 5px;
+  z-index: 50;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+
 
 @media (max-width: 835px) {
   .artist-header {
