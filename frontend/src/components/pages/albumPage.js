@@ -30,7 +30,7 @@ const AlbumPage = () => {
     const [comments, setComments] = useState([]);
     const navigate = useNavigate();
     const [tracks, setTracks] = useState([]);
-
+    const [popularity, setPopularity] = useState(null); 
 
 
     useEffect(() => {
@@ -51,6 +51,7 @@ const AlbumPage = () => {
         const fetchAlbumTracks = async () => {
             try {
                 const tracksResponse = await axios.get(`${backendUrl}/api/getTracklist/${spotifyId}`);
+                setPopularity(formatPopularity(tracksResponse.data.popularity));
                 setTracks(tracksResponse.data.tracks);
             } catch (error) {
                 console.error("Error fetching album tracks", error);
@@ -298,6 +299,15 @@ const AlbumPage = () => {
         if (numRating >= 7.5) return 'rating-green';
     };
 
+    const getPopularityClassName = (popularityValue) => {
+        const numPopularity = parseFloat(popularityValue);
+        if (isNaN(numPopularity)) return '';
+    
+        if (numPopularity <= 4.9) return 'rating-red';
+        if (numPopularity >= 5 && numPopularity <= 7.4) return 'rating-orange';
+        if (numPopularity >= 7.5) return 'rating-green';
+    };
+
     const artist = albumDetails.artists ?? 'Unknown Artist';
     const title = albumDetails.name || 'Unknown Title';
     const releaseDate = albumDetails.release_date || 'Unknown Release Date';
@@ -389,6 +399,11 @@ const AlbumPage = () => {
         return `${minutes}:${seconds.padStart(2, '0')}`;
     }
 
+    function formatPopularity(rawPopularity) {
+        const scaledPopularity = rawPopularity / 10;
+        return scaledPopularity === 10 ? '10' : scaledPopularity.toFixed(1);
+    }
+
     return (
         <div className='album-page'>
             <div className="album-header">
@@ -424,6 +439,10 @@ const AlbumPage = () => {
                     <div key={ratingMessageKey} className={`rating-message ${submitMessage ? 'visible' : ''}`}>
                         {submitMessage}
                     </div>
+                    <div className="popularity-section">
+                    <div className="popularity-title">Popularity:</div>
+                    <div className={`popularity-value ${getPopularityClassName(popularity)}`}>{popularity}<span className="slash-ten">/10</span></div>
+                </div>
                 </div>
 
                 <div className="album-actions-wrapper">

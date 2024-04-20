@@ -16,44 +16,54 @@ const HomePage = () => {
   useEffect(() => {
     const fetchInitialData = async () => {
       try {
+        const highestRatedPromise = axios.get(`${backendUrl}/rating/getHighestRatedAlbums`).catch(err => ({ error: err, data: [] }));
+        const newestReleasesPromise = axios.get(`${backendUrl}/api/getNewestAlbums`).catch(err => ({ error: err, data: [] }));
+        const recentListsPromise = axios.get(`${backendUrl}/list/getRecentLists`).catch(err => ({ error: err, data: [] }));
+  
         const [highestRatedResponse, newestReleasesResponse, recentListsResponse] = await Promise.all([
-          axios.get(`${backendUrl}/rating/getHighestRatedAlbums`),
-          axios.get(`${backendUrl}/api/getNewestAlbums`),
-          axios.get(`${backendUrl}/list/getRecentLists`)
+          highestRatedPromise,
+          newestReleasesPromise,
+          recentListsPromise
         ]);
-
-        setHighestRatedAlbums(highestRatedResponse.data);
-        setNewestReleases(newestReleasesResponse.data);
-        setRecentLists(recentListsResponse.data);
-
-        const highestRatedAlbumIds = highestRatedResponse.data.map(album => album.albumId);
-        const newestReleaseAlbumIds = newestReleasesResponse.data.map(album => album.albumId);
-
-        const listAlbumIds = recentListsResponse.data.flatMap(list =>
+  
+        setHighestRatedAlbums(highestRatedResponse.data || []);
+        setNewestReleases(newestReleasesResponse.data || []);
+        setRecentLists(recentListsResponse.data || []);
+  
+        const highestRatedAlbumIds = highestRatedResponse.data ? highestRatedResponse.data.map(album => album.albumId) : [];
+        const newestReleaseAlbumIds = newestReleasesResponse.data ? newestReleasesResponse.data.map(album => album.albumId) : [];
+  
+        const listAlbumIds = recentListsResponse.data ? recentListsResponse.data.flatMap(list =>
           list.albums.slice(0, 3).map(album => album.id)
-        );
+        ) : [];
+        
         const uniqueAlbumIds = Array.from(new Set([...highestRatedAlbumIds, ...newestReleaseAlbumIds, ...listAlbumIds]));
-
-        const albumDetailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
-          albumIds: uniqueAlbumIds
-        });
-
-        setAlbumDetails(albumDetailsResponse.data.reduce((acc, detail) => {
-          acc[detail.id] = detail;
-          return acc;
-        }, {}));
+  
+        if (uniqueAlbumIds.length > 0) {
+          const albumDetailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
+            albumIds: uniqueAlbumIds
+          }).catch(err => ({ error: err, data: {} }));
+  
+          setAlbumDetails(albumDetailsResponse.data ? albumDetailsResponse.data.reduce((acc, detail) => {
+            acc[detail.id] = detail;
+            return acc;
+          }, {}) : {});
+        } else {
+          setAlbumDetails({});
+        }
       } catch (error) {
-        console.error("Error fetching initial data:", error);
+        console.error("Error during overall data fetching:", error);
       }
     };
-
+  
     fetchInitialData();
   }, []);
+  
 
 
   return (
     <div className='home-page'>
-      <div className='highest-rated-albums-container-title'>Highest Rated Albums <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
+      <div className='highest-rated-albums-container-title'>Highest Rated <Link to="/albums" className='see-more' state={{ sortingMode: 'highestRated' }}>see more</Link></div>
       <div className="highest-rated-albums-container">
         {highestRatedAlbums.map(({ albumId }) => {
           const album = albumDetails[albumId];

@@ -356,11 +356,11 @@
 }
 
 .rating-red {
-    color: rgba(190, 31, 31, 0.844);
+    color: rgba(222, 42, 42, 0.844);
 }
 
 .rating-orange {
-    color: rgb(185, 178, 32);
+    color: rgb(227, 218, 37);
 }
 
 .rating-green {
@@ -634,9 +634,46 @@
     color: #aaa;
 }
 
+.popularity-section {
+    display: flex;
+    flex-direction: column;
+    background-color: #181818;
+    border-radius: 10px;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    width: 200px;
+    height: auto;
+    max-height: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.popularity-title {
+    font-size: 16px;
+    color: #fff;
+}
+
+.popularity-value {
+    font-size: 35px;
+}
+
+.slash-ten {
+    color: #aaa;
+}
+
+
+
 @media (max-width: 1710px) {
     .tracklist-section {
         margin-top: -190px;
+        margin-left: 840px;
+    }
+}
+
+@media (max-width: 1283px) {
+    .tracklist-section {
+        margin-top: -80px;
+        margin-left: 0px;
     }
 }
 
@@ -672,6 +709,7 @@
     .list-count,
     .avg-rating-box,
     .submit-rating-box,
+    .popularity-section,
     .rating-box {
         width: 170px;
     }
@@ -751,6 +789,7 @@
     .list-count,
     .avg-rating-box,
     .submit-rating-box,
+    .popularity-section,
     .rating-box {
         width: 155px;
     }
@@ -811,6 +850,10 @@
 
     .album-release-date {
         font-size: 16px;
+    }
+
+    .popularity-value {
+        font-size: 32px;
     }
 
 }
