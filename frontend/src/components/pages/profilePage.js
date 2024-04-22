@@ -18,6 +18,12 @@ const UserProfile = () => {
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
   const { username } = useParams();
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const [profileDetails, setProfileDetails] = useState({
+    joinDate: null,
+    listCount: 0,
+    ratingCount: 0
+  });
+  
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -25,6 +31,21 @@ const UserProfile = () => {
 
       const userInfo = getUserInfo();
       setLoggedInUser(userInfo ? userInfo.username : null);
+
+      const fetchProfileDetails = async () => {
+        try {
+          const { data } = await axios.get(`${backendUrl}/user/getProfileDetails/${username}`);
+          setProfileDetails({
+            joinDate: new Date(data.joinDate).toLocaleDateString(),
+            listCount: data.listCount,
+            ratingCount: data.ratingCount
+          });
+        } catch (error) {
+          console.error('Error fetching profile details:', error);
+        }
+      };
+
+      fetchProfileDetails();
 
       try {
         const userListsResponse = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
@@ -90,7 +111,12 @@ const UserProfile = () => {
 
   return (
     <div className="profile-page">
-
+        <div className="profile-header">
+          <div className="profile-details">
+          <div className="profile-username">{username}</div>
+          <div className="profile-info"><span className="slash-ten">Joined </span>{profileDetails.joinDate} &middot; {profileDetails.ratingCount} <span className="slash-ten">Ratings</span> &middot; {profileDetails.listCount} <span className="slash-ten">Lists</span></div>
+        </div>
+      </div>
       <div className='user-highest-rated-albums-container-title'>
         {username}'s Ratings{' '}
         {topRated.length >= 10 && (
@@ -157,9 +183,9 @@ const UserProfile = () => {
       {loggedInUser === username && (
         <div className="col-md-12 text-center">
           <>
-            <Button className="me-2" onClick={handleShow}>
+            <div className="logout-btn" onClick={handleShow}>
               Log Out
-            </Button>
+            </div>
             <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
               <Modal.Header closeButton>
                 <Modal.Title>Log Out</Modal.Title>

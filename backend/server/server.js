@@ -40,6 +40,7 @@ const getTracklist = require('./routes/api/apiGetTracklist')
 const like = require('./routes/list/listLike')
 const unlike = require('./routes/list/listUnlike')
 const getMostLiked = require('./routes/list/listGetMostLiked')
+const getProfileDetails = require('./routes/user/userGetProfileDetails')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -53,6 +54,7 @@ app.use('/user', getAllUsersRoute)
 app.use('/user', getUserByIdRoute)
 app.use('/user', editUser)
 app.use('/user', deleteUser)
+app.use('/user', getProfileDetails)
 app.use('/list', saveList)
 app.use('/list', deleteList)
 app.use('/list', getListById)
