@@ -12,6 +12,7 @@ const UserProfile = () => {
   const [userLists, setUserLists] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [albumDetails, setAlbumDetails] = useState({});
+  const [ratings, setRatings] = useState([]);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const UserProfile = () => {
     listCount: 0,
     ratingCount: 0
   });
-  
+
 
   useEffect(() => {
     const fetchInitialData = async () => {
@@ -32,58 +33,68 @@ const UserProfile = () => {
       const userInfo = getUserInfo();
       setLoggedInUser(userInfo ? userInfo.username : null);
 
-      const fetchProfileDetails = async () => {
+      if (username === "admin") {
         try {
-          const { data } = await axios.get(`${backendUrl}/user/getProfileDetails/${username}`);
-          setProfileDetails({
-            joinDate: new Date(data.joinDate).toLocaleDateString(),
-            listCount: data.listCount,
-            ratingCount: data.ratingCount
-          });
+          const response = await axios.get(`${backendUrl}/rating/getAll`);
+          setRatings(response.data);
         } catch (error) {
-          console.error('Error fetching profile details:', error);
+          console.error('Error fetching all ratings:', error);
         }
-      };
+      } else {
 
-      fetchProfileDetails();
+        const fetchProfileDetails = async () => {
+          try {
+            const { data } = await axios.get(`${backendUrl}/user/getProfileDetails/${username}`);
+            setProfileDetails({
+              joinDate: new Date(data.joinDate).toLocaleDateString(),
+              listCount: data.listCount,
+              ratingCount: data.ratingCount
+            });
+          } catch (error) {
+            console.error('Error fetching profile details:', error);
+          }
+        };
 
-      try {
-        const userListsResponse = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
-        setUserLists(userListsResponse.data);
-      } catch (error) {
-        console.error('Error fetching user lists:', error);
-      }
+        fetchProfileDetails();
 
-      try {
-        const topRatedResponse = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
-        setTopRated(topRatedResponse.data);
-      } catch (error) {
-        console.error('Error fetching top rated albums:', error);
-        setTopRated([]);
-      }
-
-      try {
-        const userLists = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
-        const topRated = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
-
-        const listAlbumIds = userLists.data.flatMap(list =>
-          list.albums.slice(0, 3).map(album => album.id)
-        );
-        const topRatedAlbumIds = topRated.data.map(rating => rating.albumId);
-        const allAlbumIds = [...new Set([...listAlbumIds, ...topRatedAlbumIds])];
-
-        if (allAlbumIds.length > 0) {
-          const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
-            albumIds: allAlbumIds
-          });
-          const details = detailsResponse.data.reduce((acc, detail) => ({
-            ...acc,
-            [detail.id]: detail
-          }), {});
-          setAlbumDetails(details);
+        try {
+          const userListsResponse = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
+          setUserLists(userListsResponse.data);
+        } catch (error) {
+          console.error('Error fetching user lists:', error);
         }
-      } catch (error) {
-        console.error('Error fetching album details:', error);
+
+        try {
+          const topRatedResponse = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
+          setTopRated(topRatedResponse.data);
+        } catch (error) {
+          console.error('Error fetching top rated albums:', error);
+          setTopRated([]);
+        }
+
+        try {
+          const userLists = await axios.get(`${backendUrl}/list/getAllListsByUser/${username}`);
+          const topRated = await axios.get(`${backendUrl}/rating/topRatings/${username}`);
+
+          const listAlbumIds = userLists.data.flatMap(list =>
+            list.albums.slice(0, 3).map(album => album.id)
+          );
+          const topRatedAlbumIds = topRated.data.map(rating => rating.albumId);
+          const allAlbumIds = [...new Set([...listAlbumIds, ...topRatedAlbumIds])];
+
+          if (allAlbumIds.length > 0) {
+            const detailsResponse = await axios.post(`${backendUrl}/api/getMultipleAlbumDetails`, {
+              albumIds: allAlbumIds
+            });
+            const details = detailsResponse.data.reduce((acc, detail) => ({
+              ...acc,
+              [detail.id]: detail
+            }), {});
+            setAlbumDetails(details);
+          }
+        } catch (error) {
+          console.error('Error fetching album details:', error);
+        }
       }
     };
 
@@ -106,13 +117,70 @@ const UserProfile = () => {
     );
   };
 
+  const deleteRating = async (rating) => {
+    try {
+      const response = await axios({
+        method: 'delete',
+        url: `${backendUrl}/rating/delete`,
+        data: {
+          userName: rating.userName,
+          albumId: rating.albumId
+        }
+      });
+      if (response.status === 200) {
+        setRatings(currentRatings => currentRatings.filter(r => r._id !== rating._id));
+      }
+    } catch (error) {
+      console.error('Error deleting rating:', error);
+    }
+  };
 
-  if (!username) return (<div><h4>User profile not found</h4></div>);
+
+  if (!username) {
+    return <div><h4>User profile not found</h4></div>;
+  }
+
+  if (username === "admin") {
+    return (
+      <div className="admin-ratings-view">
+        {loggedInUser === username && (
+          <div className="col-md-12 text-center">
+            <>
+              <div className="logout-btn" onClick={handleShow}>
+                Log Out
+              </div>
+              <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Log Out</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to Log Out?</Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={handleLogout}>
+                    Yes
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+          </div>
+        )}
+        <h2>All Ratings</h2>
+        {ratings.map(rating => (
+          <div key={rating._id}>
+            {rating.userName} rated album {rating.albumId} with {rating.ratingNum} on {new Date(rating.dateCreated).toLocaleDateString()}
+            <span style={{ color: 'red', cursor: 'pointer' }} onClick={() => deleteRating(rating)}> Delete</span>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="profile-page">
-        <div className="profile-header">
-          <div className="profile-details">
+      <div className="profile-header">
+        <div className="profile-details">
           <div className="profile-username">{username}</div>
           <div className="profile-info"><span className="slash-ten">Joined </span>{profileDetails.joinDate} &middot; {profileDetails.ratingCount} <span className="slash-ten">Ratings</span> &middot; {profileDetails.listCount} <span className="slash-ten">Lists</span></div>
         </div>

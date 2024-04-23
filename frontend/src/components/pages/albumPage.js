@@ -511,7 +511,7 @@ const AlbumPage = () => {
                                     <span className="comment-date">
                                         {new Date(comment.dateCreated).toLocaleDateString()} {new Date(comment.dateCreated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                     </span>
-                                    {user && user.username === comment.userName && (
+                                    {user && (user.username === comment.userName || user.username === 'admin') && (
                                         <span className="delete-comment-btn" onClick={() => deleteComment(comment._id)}>delete</span>
                                     )}
                                 </div>

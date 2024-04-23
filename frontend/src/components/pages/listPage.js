@@ -180,7 +180,7 @@ const ListPage = () => {
                         </div>
                     </span>
                 </div>
-                {currentUser && currentUser.username === listData.userName && (
+                {currentUser && (currentUser.username === listData.userName || currentUser.username === 'admin') && (
                     <div className="edit-list-actions">
                         <div onClick={() => navigate(`/edit/${listData._id}`)} className="edit-btn"> Edit</div>
                         <div onClick={() => deleteList(listData._id)} className="delete-btn"> Delete</div>
@@ -214,7 +214,7 @@ const ListPage = () => {
                                 <span className="comment-date">
                                     {new Date(comment.dateCreated).toLocaleDateString()} at {new Date(comment.dateCreated).toLocaleTimeString()}
                                 </span>
-                                {currentUser && currentUser.username === comment.userName && (
+                                {currentUser && (currentUser.username === comment.userName || currentUser.username === 'admin') && (
                                     <span className="delete-comment-btn" onClick={() => deleteComment(comment._id)}>delete</span>
                                 )}
                             </div>

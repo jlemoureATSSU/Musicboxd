@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import SearchBar from "./searchbar";
 import { UserContext } from "../App";
 import { FaPlus, FaUser } from "react-icons/fa";
 import { FaBars } from "react-icons/fa6";

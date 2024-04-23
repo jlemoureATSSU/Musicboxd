@@ -41,6 +41,7 @@ const like = require('./routes/list/listLike')
 const unlike = require('./routes/list/listUnlike')
 const getMostLiked = require('./routes/list/listGetMostLiked')
 const getProfileDetails = require('./routes/user/userGetProfileDetails')
+const getAll = require('./routes/rating/ratingGetAll')
 
 require('dotenv').config();
 const SERVER_PORT = 8081
@@ -71,6 +72,7 @@ app.use('/rating', getRatingByUserAndAlbum)
 app.use('/rating', getAvgRatingByAlbum)
 app.use('/rating', getHighestRatedAlbums)
 app.use('/rating', getHighestByUser)
+app.use('/rating', getAll)
 app.use('/comment', albumCommentSubmit)
 app.use('/comment', commentGetAllByAlbum)
 app.use('/comment', deleteAlbumComment)

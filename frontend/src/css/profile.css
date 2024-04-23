@@ -227,3 +227,12 @@
   background-color: #444;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
+
+.admin-ratings-view{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
