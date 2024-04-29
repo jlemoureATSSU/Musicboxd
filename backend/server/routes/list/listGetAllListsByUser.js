@@ -22,4 +22,21 @@ router.get('/getAllListsByUser/:userName', async (req, res) => {
   }
 });
 
+router.get('/getAllListsByUser2/:userName', async (req, res) => {
+  try {
+    const { userName } = req.params;
+
+    const lists = await ListModel.find({ userName: userName })
+      .sort({ dateCreated: -1 });
+
+    res.json(lists);
+  } catch (error) {
+    console.error('Error fetching lists by user:', error);
+    res.status(500).json({ message: 'Error fetching lists by user', error: error.message });
+  }
+});
+
+
+
+
 module.exports = router;

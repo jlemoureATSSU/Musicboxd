@@ -662,6 +662,13 @@
     color: #aaa;
 }
 
+.no-comments{
+    font-size: 16px;
+    color: #aaa;
+    text-align: center;
+    margin-top: 5px;
+}
+
 
 
 @media (max-width: 1710px) {
@@ -855,6 +862,14 @@
 
     .popularity-value {
         font-size: 32px;
+    }
+
+    .slash-ten {
+        font-size: 15px;
+    }
+
+    .no-comments{
+        font-size: 14px;
     }
 
 }

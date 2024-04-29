@@ -182,7 +182,7 @@ const UserProfile = () => {
       <div className="profile-header">
         <div className="profile-details">
           <div className="profile-username">{username}</div>
-          <div className="profile-info"><span className="slash-ten">Joined </span>{profileDetails.joinDate} &middot; {profileDetails.ratingCount} <span className="slash-ten">Ratings</span> &middot; {profileDetails.listCount} <span className="slash-ten">Lists</span></div>
+          <div className="profile-info"><span className="grey-text">Joined </span>{profileDetails.joinDate} &middot; {profileDetails.ratingCount} <span className="grey-text">Ratings</span> &middot; {profileDetails.listCount} <span className="grey-text">Lists</span></div>
         </div>
       </div>
       <div className='user-highest-rated-albums-container-title'>

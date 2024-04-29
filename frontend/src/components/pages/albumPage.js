@@ -30,7 +30,7 @@ const AlbumPage = () => {
     const [comments, setComments] = useState([]);
     const navigate = useNavigate();
     const [tracks, setTracks] = useState([]);
-    const [popularity, setPopularity] = useState(null); 
+    const [popularity, setPopularity] = useState(null);
 
 
     useEffect(() => {
@@ -140,7 +140,7 @@ const AlbumPage = () => {
 
     const fetchUserLists = async () => {
         try {
-            const response = await axios.get(`${backendUrl}/list/getAllListsByUser/${user.username}`);
+            const response = await axios.get(`${backendUrl}/list/getAllListsByUser2/${user.username}`);
             setUserLists(response.data);
             setShowModal(true);
         } catch (error) {
@@ -248,13 +248,13 @@ const AlbumPage = () => {
                     albumId: spotifyId
                 }
             });
-    
+
             if (response.status === 200) {
                 setRating('');
                 setSubmitMessage('Rating deleted!');
                 setShowMessage(true);
                 setTimeout(() => setShowMessage(false), 3000);
-                
+
                 if (response.data.avgDeleted) {
                     setAverageRating('NR');
                     setNumberOfRatings(0);
@@ -272,7 +272,7 @@ const AlbumPage = () => {
             setTimeout(() => setShowMessage(false), 3000);
         }
     };
-    
+
 
 
 
@@ -302,7 +302,7 @@ const AlbumPage = () => {
     const getPopularityClassName = (popularityValue) => {
         const numPopularity = parseFloat(popularityValue);
         if (isNaN(numPopularity)) return '';
-    
+
         if (numPopularity <= 4.9) return 'rating-red';
         if (numPopularity >= 5 && numPopularity <= 7.4) return 'rating-orange';
         if (numPopularity >= 7.5) return 'rating-green';
@@ -440,9 +440,9 @@ const AlbumPage = () => {
                         {submitMessage}
                     </div>
                     <div className="popularity-section">
-                    <div className="popularity-title">Popularity:</div>
-                    <div className={`popularity-value ${getPopularityClassName(popularity)}`}>{popularity}<span className="slash-ten">/10</span></div>
-                </div>
+                        <div className="popularity-title">Popularity:</div>
+                        <div className={`popularity-value ${getPopularityClassName(popularity)}`}>{popularity}<span className="slash-ten">/10</span></div>
+                    </div>
                 </div>
 
                 <div className="album-actions-wrapper">
@@ -504,6 +504,7 @@ const AlbumPage = () => {
                 <div className="comments-section">
                     <div className='comments-header'>Comments</div>
                     <div className="comments-container">
+                        {comments.length === 0 && <div className="no-comments">No comments for this album yet. Be the first to comment!</div>}
                         {comments.map(comment => (
                             <div key={comment._id} className="comment">
                                 <div className="comment-header">
