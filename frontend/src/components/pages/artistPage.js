@@ -56,13 +56,15 @@ const ArtistPage = () => {
         }
     };
 
-    const getSpotifyAlbumUrl = (spotifyId) => `https://open.spotify.com/artist/${spotifyId}`;
-
+    const openSpotify = (spotifyId) => {
+        return `spotify:artist:${spotifyId}`;
+    };
+    
     return (
         <div className="album-page">
             <h1 className="artist-header">
                 <div className='artist-name'>{artistDetails?.name || 'Artist'}</div>
-                <a onClick={() => window.open(getSpotifyAlbumUrl(artistSpotifyId))} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
+                <a href={openSpotify(artistSpotifyId)} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
             </h1>
             <div className="artist-page-container">
                 <div className="artist-albums-container">

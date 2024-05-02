@@ -278,7 +278,7 @@ const AlbumPage = () => {
 
 
     if (!albumDetails) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
 
     const displayMessage = (message) => {
@@ -327,9 +327,10 @@ const AlbumPage = () => {
     ) : 'Unknown Artist';
 
 
-    const getSpotifyAlbumUrl = (spotifyId) => {
-        return `https://open.spotify.com/album/${spotifyId}`;
+    const openSpotify = (spotifyId) => {
+        return `spotify:album:${spotifyId}`;
     };
+    
 
     const submitComment = async () => {
         if (!user || !user.username) {
@@ -408,7 +409,7 @@ const AlbumPage = () => {
         <div className='album-page'>
             <div className="album-header">
                 <div className='album-name-header'>{title}</div>
-                <a onClick={() => window.open(getSpotifyAlbumUrl(spotifyId))} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
+                <a href={openSpotify(spotifyId)} className="spotify-btn" target="_blank" rel="noopener noreferrer"><FaSpotify /></a>
             </div>
             <div className="album-page-container">
                 <div className="album-details-wrapper">

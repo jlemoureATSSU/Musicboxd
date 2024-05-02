@@ -205,6 +205,7 @@ const ListPage = () => {
             <div className="list-comments-section">
                 <div className='comments-header'>Comments</div>
                 <div className="comments-container">
+                    {comments.length === 0 && <div className="no-comments">No comments for this list yet. Be the first to comment!</div>}
                     {comments.map((comment) => (
                         <div key={comment._id} className="comment">
                             <div className="comment-header">
